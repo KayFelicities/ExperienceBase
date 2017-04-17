@@ -6,18 +6,77 @@
 <link rel="shortcut icon" href="+1.ico">
 <link rel="icon" href="+1.ico">
 <link href="css/zui.css" rel="stylesheet">
+<link href="css/uploader.css" rel="stylesheet">
 <script src="js/jquery.js"></script>
+<script src="js/zui.js"></script>
+<script src="js/uploader.js"></script>
+<script>
+    $(function () {
+        $('#uploader1').uploader({
+            url: './',
+            limitFilesCount: 1
+        });
+    })
+
+</script>
 
 <body style="width: 80%; margin: auto">
     <nav class="navbar navbar-fixed-top navbar-default" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand">经验分享平台 > 添加经验</a>
+                <a class="navbar-brand" href="./index.html">经验分享平台</a>
+                <a class="navbar-brand">></a>
+                <a class="navbar-brand">添加经验</a>
             </div>
         </div>
     </nav>
-    <p style="margin-top: 60px">hello</p>
+    <div style="margin-top: 60px"></div>
 
+    <div class="row" style="margin-right: 0">
+        <div class="col-xs-4">
+        <div class="input-group">
+            <span class="input-group-addon">选择类别</span>
+            <select class="form-control ">
+                <option value="eat">软件</option>
+                <option value="sleep">硬件</option>
+                <option value="code">结构件</option>
+                <option value="code">流程</option>
+            </select>
+            <span class="input-group-addon fix-border fix-padding"></span>
+            <select class="form-control col-xs-2">
+                <option value="eat">编码技巧</option>
+                <option value="sleep">。。。</option>
+            </select>
+        </div>
+        </div>
+        <div class="input-group col-xs-8">
+            <input type="text" class="form-control col-xs-5" placeholder="请输入经验标题">
+        </div>
+    </div>
+
+
+    <h3>请上传经验文档：</h3>
+    <p>支持上传文件类型：doc/docx/ppt/pptx/pdf</p>
+
+    <div id='uploader1' class="uploader" data-ride="uploader" data-url="./">
+        <div class="uploader-message text-center">
+            <div class="content"></div>
+            <button type="button" class="close">×</button>
+        </div>
+        <div class="uploader-files file-list file-list-lg" style="height:200px" data-drag-placeholder="请拖拽文件到此处"></div>
+        <div class="uploader-actions">
+            <div class="uploader-status pull-right text-muted"></div>
+            <button type="button" class="btn btn-link uploader-btn-browse"><i class="icon icon-plus"></i> 选择文件</button>
+            <button type="button" class="btn btn-link uploader-btn-start"><i class="icon icon-cloud-upload"></i> 开始上传</button>
+        </div>
+    </div>
+
+    <div style="margin:0">
+        <label>添加标签：</label>
+        <label class="label label-badge label-success">标签</label>
+    </div>
+
+    <button id="submitbtn" type="submit" class="btn btn-primary" style="width: 100%">提交经验</button> 
 </body>
 
 </html>
