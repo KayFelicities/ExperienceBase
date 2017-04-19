@@ -14,6 +14,13 @@
 <script src="style/editor/jquery.hotkeys.js"></script>
 <script src="style/editor/google-code-prettify/prettify.js"></script>
 
+<script>
+$(document).ready(function(){
+  $("#submitbtn").click(function(){
+    alert("HTML: " + $("#editor").html());
+  });
+});
+</script>
 
 <style>
   #editor {
