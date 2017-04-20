@@ -75,7 +75,7 @@
     <div class="container">
       <div class="list">
         <header>
-          <h3><i class="icon-list-ul"></i> 最新文章 <small>test</small></h3>
+          <h3><i class="icon-list-ul"></i> 最新经验 <small></small></h3>
         </header>
         <div class="items items-hover">
 
@@ -84,24 +84,24 @@ require_once('config.php');
 $con=mysqli_connect(HOST, USERNAME, PASSWORD);
 mysqli_set_charset($con, "utf8");
 mysqli_select_db($con, 'experience_base');
-$result = mysqli_query($con, "SELECT * FROM eb_contents ORDER BY 'create_tm' DESC LIMIT 5");
+$result = mysqli_query($con, "SELECT * FROM eb_contents ORDER BY create_tm DESC LIMIT 5");
 while($row = mysqli_fetch_array($result))
 {?>
           <div class="item">
             <div class="item-heading">
               <div class="pull-right label label-success">标签</div>
-              <h4><a href="###"><?php echo $row['title'];?></a></h4>
+              <h4><a href="content.php?cid=<?php echo $row['cid'];?>"><?php echo $row['title'];?></a></h4>
             </div>
             <div class="item-content">
               <div class="media pull-right"><img src="img/logo.png" alt=""></div>
-              <div class="text"><?php echo mb_substr(strip_tags($row['content']), 0, 100, 'utf-8').'...';?></div>
+              <div class="text"><?php echo mb_substr(strip_tags($row['content']), 0, 200, 'utf-8').'...';?></div>
             </div>
             <div class="item-footer">
-              <a href="#" class="text-muted"><?php echo $row['uid'];?></a>
+              <a href="#" class="text-muted"><i class="icon-user"></i> <?php echo $row['uid'];?></a>
               &nbsp; &nbsp; 
-              <a href="#" class="text-muted"><i class="icon-comments"></i><?php echo ' '.$row['comment_num'];?></a> 
+              <a href="#" class="text-muted"><i class="icon-comments"></i> <?php echo $row['comment_num'];?></a> 
               &nbsp; &nbsp; 
-              <span class="text-muted"><?php echo $row['create_tm'];?></span>
+              <span class="text-muted"><i class="icon-time"></i> <?php echo $row['create_tm'];?></span>
             </div>
           </div>
 <?php
