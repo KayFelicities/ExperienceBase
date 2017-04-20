@@ -11,10 +11,10 @@
 <script src="style/js/bootstrap.js"></script>
 
 <body>
-<?php include("common.php"); echo_banner("mypage"); ?>
+<?php include("common.php"); echo_banner("hardware"); ?>
 <div style="margin: 60px"></div>
 <div class="container">
-  <p>hello</p>
+  <p>404</p>
 </div>
 
 </body>

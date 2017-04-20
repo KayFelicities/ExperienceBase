@@ -13,7 +13,10 @@
 <body>
 <?php include("common.php"); echo_banner("about"); ?>
 <div style="margin: 60px"></div>
-<p>hello</p>
+
+<div class="container">
+  <p>hello</p>
+</div>
 
 </body>
 

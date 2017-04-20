@@ -22,8 +22,8 @@ function echo_banner($page_name)
           <li <?php if ($page_name == "about"){echo 'class="active"';}?> ><a href="about.php">关于</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li <?php if ($page_name == "add_ex"){echo 'class="active"';}?> ><a href="add_ex.php">添加经验</a></li>
-          <li <?php if ($page_name == "mypage"){echo 'class="active"';}?> ><a href="mypage.php">个人主页</a></li>
+          <li <?php if ($page_name == "add_ex"){echo 'class="active"';}?> ><a href="addex.php">添加经验</a></li>
+          <li <?php if ($page_name == "mypage"){echo 'class="active"';}?> ><a href="login.php">注册/登录</a></li>
         </ul>
         <form class="navbar-form navbar-right">
           <input type="text" class="form-control" placeholder="搜索点什么...">

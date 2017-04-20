@@ -14,14 +14,6 @@
 <script src="style/editor/jquery.hotkeys.js"></script>
 <script src="style/editor/google-code-prettify/prettify.js"></script>
 
-<script>
-$(document).ready(function(){
-  $("#submitbtn").click(function(){
-    alert("HTML: " + $("#editor").html());
-  });
-});
-</script>
-
 <style>
   #editor {
     max-height: 250px;
@@ -44,21 +36,33 @@ $(document).ready(function(){
   #myeditor {
     margin-top: 10px;
   }
+
+  #swap-editor{
+    display: none;
+  }
 </style>
+
+<script>
+function take_editor()
+{
+  $("#swap-editor").val($("#editor").html());
+}
+</script>
 
 <body>
   <?php include("common.php"); echo_banner("add_ex"); ?>
 
-    <div style="margin:30px;">
+    <div style="margin:50px;">
     </div>
 
+    <form name="addex" method="post" action="addex_action.php" onsubmit="return take_editor();">
     <div class="container">
       <div class="page-header">
         <h1>添加经验<small></small></h1>
       </div>
       <div class="row">
         <div class="col-xs-2" style="padding-right: 0;">
-          <select class="form-control">
+          <select name="type1" class="form-control">
             <option>软件</option>
             <option>硬件</option>
             <option>结构件</option>
@@ -66,17 +70,18 @@ $(document).ready(function(){
           </select>
         </div>
         <div class="col-xs-2" style="padding: 0;">
-          <select class="form-control">
+          <select name="type2" class="form-control">
             <option>编程技巧</option>
             <option>...</option>
           </select>
         </div>
         <div class="col-xs-8">
-          <input class="form-control" placeholder="请输入标题"></input>
+          <input name="title" class="form-control" placeholder="请输入标题"></input>
         </div>
       </div>
 
       <!--editor-->
+      <input type="text" name="editor" id="swap-editor" />
       <div id="myeditor">
         <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
           <div class="btn-group">
@@ -212,6 +217,7 @@ $(document).ready(function(){
       <button id="submitbtn" type="submit" class="btn btn-primary btn-block">提交经验</button>
 
     </div>
+    </from>
 </body>
 
 </html>
