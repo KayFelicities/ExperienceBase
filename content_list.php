@@ -14,14 +14,25 @@
 <?php include("common.php"); echo_banner("content_list"); ?>
 <div style="margin: 60px"></div>
 <div class="container">
-<?php
-for ($count = 0; $count < 15; $count++) {
-  if (!echo_content_item($count))
-  {
-    break;
-  }
-}
-?>
+  <div class="list">
+    <header>
+      <h3><i></i> 所有经验 <small>共x条</small></h3>
+    </header>
+    <div class="items items-hover">
+      <?php
+      for ($count = 0; $count < 15; $count++) {
+        if (!echo_content_item($count))
+        {
+          break;
+        }
+      }
+      if ($count == 0)
+      {
+          echo '无记录';
+      }
+      ?>
+    </div>
+  </div>
 </div>
 
 </body>

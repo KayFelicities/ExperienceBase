@@ -15,8 +15,7 @@
     <div style="margin:70px;">
     </div>
 
-    <!-- Carousel
-================================================== -->
+    <!--Carousel-->
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
       <!-- Indicators -->
       <ol class="carousel-indicators">
@@ -64,8 +63,8 @@
         <span class="sr-only">Next</span>
       </a>
     </div>
-    <!-- /.carousel -->
 
+    <!--new contents-->
     <div class="container">
       <div class="list">
         <header>
@@ -79,6 +78,10 @@
           {
             break;
           }
+        }
+        if ($count == 0)
+        {
+            echo '无记录';
         }
         ?>
 

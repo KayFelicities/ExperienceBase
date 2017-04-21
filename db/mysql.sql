@@ -34,7 +34,7 @@ CREATE TABLE `eb_contents` (
   `status` char(16) default 'publish',
   `extype1` char(16) default NULL,
   `extype2` char(32) default NULL,
-  `keywords` char(128) default NULL,
+  `tags` char(128) default NULL,
   `password` varchar(32) default NULL,
   `comment_num` int(10) unsigned default '0',
   PRIMARY KEY  (`cid`)

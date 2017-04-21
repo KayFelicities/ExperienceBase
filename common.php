@@ -41,13 +41,12 @@ function echo_content_item($no)
   mysqli_set_charset($con, "utf8");
   mysqli_select_db($con, 'experience_base');
   $result = mysqli_query($con, "SELECT * FROM eb_contents ORDER BY create_tm DESC LIMIT $no,1");
-  if($result)
+  $row = mysqli_fetch_array($result);
+  if($row)
   {
-   $row = mysqli_fetch_array($result);
    ?>
     <div class="item">
       <div class="item-heading">
-        <div class="pull-right label label-success">标签</div>
         <h4><a href="content.php?cid=<?php echo $row['cid'];?>"><?php echo $row['title'];?></a></h4>
       </div>
       <div class="item-content">
@@ -64,15 +63,24 @@ function echo_content_item($no)
         <a href="#" class="text-muted"><i class="icon-comments"></i> <?php echo $row['comment_num'];?></a> 
         &nbsp; &nbsp; 
         <span class="text-muted"><i class="icon-time"></i> <?php echo $row['create_tm'];?></span>
+        &nbsp;
+        <?php
+        $tags_array = explode(',', $row['tags']);
+        foreach ($tags_array as $tag) 
+        {?>
+          <span class="label label-success"><?php echo $tag;?></span>
+        <?php
+        }?>
       </div>
     </div>
   <?php
+    mysqli_close($con);
     return true;
   }
   else
   {
+    mysqli_close($con);
     return false;
   }
-  mysqli_close($con);
 }
 ?>

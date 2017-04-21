@@ -14,6 +14,10 @@
 <script src="style/editor/jquery.hotkeys.js"></script>
 <script src="style/editor/google-code-prettify/prettify.js"></script>
 
+<link href="style/css/select2.css" rel="stylesheet" />
+<script src="style/js/select2.js"></script>
+
+
 <style>
   #editor {
     max-height: 250px;
@@ -37,13 +41,13 @@
     margin-top: 10px;
   }
   
-  #swap-editor {
+  #swap-editor, #swap-tags {
     display: none;
   }
 </style>
 
 <script>
-$(document).ready(function() { 
+$(document).ready(function() {
   $("#extype1").change(function() {
     $("#extype2").empty();
     var type1 = $("#extype1").val();
@@ -70,10 +74,25 @@ $(document).ready(function() {
         alert("test");
     }
   });
+
+  $("#tagselect").select2({
+    placeholder: "选择标签（可输入新标签）",
+    maximumSelectionLength: 5,
+    minimumResultsForSearch: 3,
+    // allowClear: true,
+    tags: true
+  });
+
 })
 
-function take_editor() {
+function testfun(){
+  var testme = $("#tagselect").val();
+    alert(testme);
+}
+
+function befor_submit() {
   $("#swap-editor").val($("#editor").html());
+  $("#swap-tags").val($("#tagselect").val());
 }
 </script>
 
@@ -83,7 +102,10 @@ function take_editor() {
     <div style="margin:50px;">
     </div>
 
-    <form name="addex" method="post" action="addex_action.php" onsubmit="return take_editor();">
+    <button id="testbtn" onclick="testfun();">test</button>
+    <form name="addex" method="post" action="addex_action.php" onsubmit="return befor_submit();">
+      <input type="text" name="editor" id="swap-editor" />
+      <input type="text" name="tags" id="swap-tags" />
       <div class="container">
         <div class="page-header">
           <h1>添加经验<small></small></h1>
@@ -109,7 +131,6 @@ function take_editor() {
         </div>
 
         <!--editor-->
-        <input type="text" name="editor" id="swap-editor" />
         <div id="myeditor">
           <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
             <div class="btn-group">
@@ -235,11 +256,38 @@ function take_editor() {
             });
           </script>
         </div>
-        <!--editor-->
 
-        <div class="form-group" style="margin-top: 20px">
-          <p>插入经验文档：(支持上传文件类型：doc/docx/ppt/pptx/pdf)</p>
-          <input type="file" id="exampleInputFile">
+        <!--file-->
+        <div class="row">
+          <div class="col-xs-6" style="margin-top:20px">
+            <div class="form-group">
+              <p>插入经验文档：(支持上传文件类型：doc/docx/ppt/pptx/pdf)</p>
+              <input type="file" id="exampleInputFile">
+            </div>
+          </div>
+        </div>
+
+        <!--Tags-->
+        <div class="row">
+          <div class="col-xs-6" style="margin-bottom: 10px">
+            <select id="tagselect" name="labels" class="form-control" multiple="multiple">
+              <optgroup label="软件">
+                <option>C/C++</option>
+                <option>Python</option>
+                <option>STM32</option>
+              </optgroup>
+              <optgroup label="硬件">
+                <option>开关电源</option>
+                <option>液晶</option>
+              </optgroup>
+              <optgroup label="结构件">
+                <option>端钮盒</option>
+              </optgroup>
+              <optgroup label="流程">
+                <option>流程啊</option>
+              </optgroup>
+            </select>
+          </div>
         </div>
 
         <button id="submitbtn" type="submit" class="btn btn-primary btn-block">提交经验</button>
