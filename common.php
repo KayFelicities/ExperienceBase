@@ -41,9 +41,10 @@ function echo_content_item($no)
   mysqli_set_charset($con, "utf8");
   mysqli_select_db($con, 'experience_base');
   $result = mysqli_query($con, "SELECT * FROM eb_contents ORDER BY create_tm DESC LIMIT $no,1");
-  $row = mysqli_fetch_array($result);
-  if($row)
-  {?>
+  if($result)
+  {
+   $row = mysqli_fetch_array($result);
+   ?>
     <div class="item">
       <div class="item-heading">
         <div class="pull-right label label-success">标签</div>
