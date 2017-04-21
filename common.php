@@ -14,29 +14,64 @@ function echo_banner($page_name)
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li <?php if ($page_name == "content_list"){echo 'class="active"';}?> ><a href="content_list.php">所有经验</a></li>
-
-          <!--<li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">分类<span class="caret"></span></a>
-          <ul class="dropdown-menu">-->
-            <li <?php if ($page_name == "software"){echo 'class="active"';}?> ><a href="software.php">软件</a></li>
-            <li <?php if ($page_name == "hardware"){echo 'class="active"';}?> ><a href="hardware.php">硬件</a></li>
-            <li <?php if ($page_name == "structure"){echo 'class="active"';}?> ><a href="structure.php">结构件</a></li>
-            <li <?php if ($page_name == "procedure"){echo 'class="active"';}?> ><a href="procedure.php">流程</a></li>
-          <!--</ul>
-        </li>-->
-          <li <?php if ($page_name == "about"){echo 'class="active"';}?> ><a href="about.php">关于</a></li>
+          <li <?php if ($page_name=="content_list" ){echo 'class="active"';}?> ><a href="content_list.php">所有经验</a></li>
+          <li <?php if ($page_name=="software" ){echo 'class="active"';}?> ><a href="software.php">软件</a></li>
+          <li <?php if ($page_name=="hardware" ){echo 'class="active"';}?> ><a href="hardware.php">硬件</a></li>
+          <li <?php if ($page_name=="structure" ){echo 'class="active"';}?> ><a href="structure.php">结构件</a></li>
+          <li <?php if ($page_name=="procedure" ){echo 'class="active"';}?> ><a href="procedure.php">流程</a></li>
+          <li <?php if ($page_name=="about" ){echo 'class="active"';}?> ><a href="about.php">关于</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li <?php if ($page_name == "add_ex"){echo 'class="active"';}?> ><a href="addex.php">添加经验</a></li>
-          <li <?php if ($page_name == "mypage"){echo 'class="active"';}?> ><a href="login.php">注册/登录</a></li>
+          <li <?php if ($page_name=="add_ex" ){echo 'class="active"';}?> ><a href="addex.php">添加经验</a></li>
+          <li <?php if ($page_name=="mypage" ){echo 'class="active"';}?> ><a href="login.php">注册/登录</a></li>
         </ul>
         <!--<form class="navbar-form navbar-right">
-          <input type="text" class="form-control" placeholder="搜索点什么...">
-        </form>-->
+    <input type="text" class="form-control" placeholder="搜索点什么...">
+    </form>-->
       </div>
     </div>
   </nav>
 <?php
+}
+
+function echo_content_item($no)
+{
+  require_once('config.php');
+  $con=mysqli_connect(HOST, USERNAME, PASSWORD);
+  mysqli_set_charset($con, "utf8");
+  mysqli_select_db($con, 'experience_base');
+  $result = mysqli_query($con, "SELECT * FROM eb_contents ORDER BY create_tm DESC LIMIT $no,1");
+  $row = mysqli_fetch_array($result);
+  if($row)
+  {?>
+    <div class="item">
+      <div class="item-heading">
+        <div class="pull-right label label-success">标签</div>
+        <h4><a href="content.php?cid=<?php echo $row['cid'];?>"><?php echo $row['title'];?></a></h4>
+      </div>
+      <div class="item-content">
+        <div class="media pull-right"><img src="img/logo.png" alt=""></div>
+        <div class="text"><?php echo mb_substr(strip_tags($row['content']), 0, 200, 'utf-8').'...';?></div>
+      </div>
+      <div class="item-footer">
+        <a href="#" class="text-muted"> <?php echo $row['extype1'];?></a>
+        <span> ></span>
+        <a href="#" class="text-muted"> <?php echo $row['extype2'];?></a>
+        &nbsp; &nbsp; 
+        <a href="#" class="text-muted"><i class="icon-user"></i> <?php echo $row['uid'];?></a>
+        &nbsp; &nbsp; 
+        <a href="#" class="text-muted"><i class="icon-comments"></i> <?php echo $row['comment_num'];?></a> 
+        &nbsp; &nbsp; 
+        <span class="text-muted"><i class="icon-time"></i> <?php echo $row['create_tm'];?></span>
+      </div>
+    </div>
+  <?php
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+  mysqli_close($con);
 }
 ?>

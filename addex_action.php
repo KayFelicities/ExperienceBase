@@ -7,6 +7,8 @@ if(PHP_VERSION >= 6 || !get_magic_quotes_gpc())
 
 $title=$_POST["title"];
 $editor=$_POST["editor"];
+$extype1=$_POST["extype1"];
+$extype2=$_POST["extype2"];
 $remote_ip = $_SERVER["REMOTE_ADDR"];
 $timenow = date("Y-m-d H:i:s");
 
@@ -15,8 +17,8 @@ require_once('config.php');
 $con=mysqli_connect(HOST, USERNAME, PASSWORD);
 mysqli_set_charset($con, "utf8");
 mysqli_select_db($con, 'experience_base');
-$insertsql= "INSERT INTO eb_contents(title, create_tm, content, create_ip)
-             VALUES('$title', '$timenow', '$editor', '$remote_ip')";
+$insertsql= "INSERT INTO eb_contents(title, create_tm, content, extype1, extype2, create_ip)
+             VALUES('$title', '$timenow', '$editor', '$extype1', '$extype2','$remote_ip')";
 
 if(!(mysqli_query($con, $insertsql)))
 {
