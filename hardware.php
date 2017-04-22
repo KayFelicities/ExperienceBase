@@ -16,7 +16,7 @@
 <div class="container">
   <div class="list">
     <header>
-      <h3><i></i> 硬件经验 <small>共x条</small></h3>
+      <h3><i></i> 硬件经验 <small>共<?php echo count_content("硬件");?>条</small></h3>
     </header>
     <div class="items items-hover">
       <?php

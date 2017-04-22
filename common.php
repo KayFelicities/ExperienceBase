@@ -102,4 +102,24 @@ function echo_content_item($no, $type="")
     return false;
   }
 }
+
+function count_content($type="")
+{
+  require_once('config.php');
+  $con=mysqli_connect(HOST, USERNAME, PASSWORD);
+  mysqli_set_charset($con, "utf8");
+  mysqli_select_db($con, 'experience_base');
+  if ($type)
+  {
+    $result = mysqli_query($con, "SELECT COUNT(*) AS count FROM eb_contents WHERE extype1='$type'");
+  }
+  else
+  {
+    $result = mysqli_query($con, "SELECT COUNT(*) AS count FROM eb_contents");
+  }
+  $count = mysqli_fetch_array($result)['count'];
+  mysqli_close($con);
+  return $count;
+}
+
 ?>

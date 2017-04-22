@@ -40,6 +40,24 @@ $row = mysqli_fetch_array($result);
     ?>
     </div>
 
+    <div>
+        <hr>
+        <h6>文件列表：</h6>
+        <?php
+        if ($row['file_name'])
+        {
+            $file_name = $row['file_name'];
+            $file_name_array = explode('.', $file_name);
+            $save_file_path = CONTENT_FILE . sprintf("/%06d", $cid) . "_01." . end($file_name_array);
+            echo "<a download=\"$file_name\" href=\"$save_file_path\">$file_name</a>";
+        }
+        else
+        {
+            echo "<p>无</p>";
+        }
+        ?>
+    </div>
+
 </div>
 
 </body>

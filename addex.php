@@ -71,7 +71,7 @@ $(document).ready(function() {
         $("#extype2").append("<option>流程3</option>");
         break;
       default:
-        alert("test");
+        alert("err");
     }
   });
 
@@ -82,15 +82,14 @@ $(document).ready(function() {
     // allowClear: true,
     tags: true
   });
-
 })
 
-function testfun(){
-  var testme = $("#tagselect").val();
-    alert(testme);
-}
-
 function befor_submit() {
+  if (document.getElementById("file").files[0].size > 7000000)
+  {
+    alert("文件不得大于7M");
+    return false;
+  }
   $("#swap-editor").val($("#editor").html());
   $("#swap-tags").val($("#tagselect").val());
 }
@@ -102,8 +101,7 @@ function befor_submit() {
     <div style="margin:50px;">
     </div>
 
-    <button id="testbtn" onclick="testfun();">test</button>
-    <form name="addex" method="post" action="addex_action.php" onsubmit="return befor_submit();">
+    <form name="addex" method="post" enctype="multipart/form-data" action="addex_action.php" onsubmit="return befor_submit();">
       <input type="text" name="editor" id="swap-editor" />
       <input type="text" name="tags" id="swap-tags" />
       <div class="container">
@@ -262,7 +260,7 @@ function befor_submit() {
           <div class="col-xs-6" style="margin-top:20px">
             <div class="form-group">
               <p>插入经验文档：(支持上传文件类型：doc/docx/ppt/pptx/pdf)</p>
-              <input type="file" id="exampleInputFile">
+              <input type="file" name="file" id="file">
             </div>
           </div>
         </div>

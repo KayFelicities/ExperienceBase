@@ -16,7 +16,7 @@
 <div class="container">
   <div class="list">
     <header>
-      <h3><i></i> 所有经验 <small>共x条</small></h3>
+      <h3><i></i> 所有经验 <small>共<?php echo count_content();?>条</small></h3>
     </header>
     <div class="items items-hover">
       <?php
@@ -33,6 +33,13 @@
       ?>
     </div>
   </div>
+
+  <nav aria-label="...">
+    <ul class="pager">
+      <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> 上一页</a></li>
+      <li class="next"><a href="#">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+    </ul>
+  </nav>
 </div>
 
 </body>
