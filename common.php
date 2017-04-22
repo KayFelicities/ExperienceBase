@@ -23,7 +23,19 @@ function echo_banner($page_name)
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li <?php if ($page_name=="add_ex" ){echo 'class="active"';}?> ><a href="addex.php">添加经验</a></li>
-          <li <?php if ($page_name=="mypage" ){echo 'class="active"';}?> ><a href="login.php">注册/登录</a></li>
+
+          <?php 
+          if (isset($_COOKIE["user"]))
+          {?>
+            <li <?php if ($page_name=="mypage" ){echo 'class="active"';}?> ><a href="mypage.php"><?php echo $_COOKIE["user"];?></a></li>
+          <?php
+          }
+          else
+          {?>
+            <li <?php if ($page_name=="login" ){echo 'class="active"';}?> ><a href="login.php">登录/注册</a></li>
+          <?php
+          }
+          ?>
         </ul>
         <!--<form class="navbar-form navbar-right">
     <input type="text" class="form-control" placeholder="搜索点什么...">
@@ -58,7 +70,7 @@ function echo_content_item($no)
         <span> ></span>
         <a href="#" class="text-muted"> <?php echo $row['extype2'];?></a>
         &nbsp; &nbsp; 
-        <a href="#" class="text-muted"><i class="icon-user"></i> <?php echo $row['uid'];?></a>
+        <a href="#" class="text-muted"><i class="icon-user"></i> <?php echo $row['author'];?></a>
         &nbsp; &nbsp; 
         <a href="#" class="text-muted"><i class="icon-comments"></i> <?php echo $row['comment_num'];?></a> 
         &nbsp; &nbsp; 

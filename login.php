@@ -57,7 +57,7 @@ function chk_form()
 </script>
 
 <body>
-  <?php include("common.php"); echo_banner("signup"); ?>
+  <?php include("common.php"); echo_banner("login"); ?>
 
     <div style="margin: 50px">
     </div>

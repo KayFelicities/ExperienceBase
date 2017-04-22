@@ -1,4 +1,7 @@
+<!DOCTYPE HTML>
+<html>
 <meta charset="UTF-8">
+<body>
 <?php
 if(PHP_VERSION >= 6 || !get_magic_quotes_gpc()) 
 {
@@ -15,11 +18,13 @@ $con=mysqli_connect(HOST, USERNAME, PASSWORD);
 mysqli_set_charset($con, "utf8");
 mysqli_select_db($con, 'experience_base');
 
-$result = mysqli_query($con, "SELECT * FROM eb_users WHERE username=$username");
+print_r($username);
+$result = mysqli_query($con, "SELECT * FROM eb_users WHERE username='$username'");
 $row = mysqli_fetch_array($result);
 if ($row['password'] == $password)
 {
-    echo "<script>alert('登录成功');window.location.href='index.php'</script>";
+    setcookie("user", $username, time()+3600);
+    echo "<script>alert('欢迎您，$username');window.location.href='index.php'</script>";
 }
 else
 {
@@ -27,3 +32,6 @@ else
 }
 mysqli_close($con);
 ?>
+
+</body>
+</html>

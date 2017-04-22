@@ -14,7 +14,6 @@
   <?php include("common.php"); echo_banner("home"); ?>
     <div style="margin:70px;">
     </div>
-
     <!--Carousel-->
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
       <!-- Indicators -->
