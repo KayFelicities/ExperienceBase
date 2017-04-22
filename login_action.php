@@ -1,7 +1,12 @@
 <!DOCTYPE HTML>
 <html>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="style/css/smoke.css">
+<script src="style/js/jquery.js"></script>
+<script src="style/js/bootstrap.js"></script>
+<script src="style/js/smoke.js"></script>
 <body>
+    
 <?php
 if(PHP_VERSION >= 6 || !get_magic_quotes_gpc()) 
 {
@@ -18,13 +23,13 @@ $con=mysqli_connect(HOST, USERNAME, PASSWORD);
 mysqli_set_charset($con, "utf8");
 mysqli_select_db($con, 'experience_base');
 
-print_r($username);
 $result = mysqli_query($con, "SELECT * FROM eb_users WHERE username='$username'");
 $row = mysqli_fetch_array($result);
 if ($row['password'] == $password)
 {
-    setcookie("user", $username, time()+3600);
-    echo "<script>alert('欢迎您，$username');window.location.href='index.php'</script>";
+    setcookie("user", $username, time()+24*60*60);
+    print_r("欢迎您，".$username);
+    echo "<script>window.location.href='index.php';</script>";
 }
 else
 {

@@ -7,39 +7,29 @@
 <link rel="icon" href="+1.ico">
 <link rel="stylesheet" href="style/css/bootstrap.css">
 <link rel="stylesheet" href="style/css/carousel.css">
+<link rel="stylesheet" href="style/css/smoke.css">
 <script src="style/js/jquery.js"></script>
 <script src="style/js/bootstrap.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-
-<script type="text/javascript">
-  $(document).ready(function() {
-    $(".js-example-basic-single").select2({
-      // maximumSelectionLength: 5,
-      // allowClear: true,
-      tags: true
+<script src="style/js/smoke.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#btnSuccess').click(function(e) {
+            e.preventDefault();
+            $.smkAlert({
+                text: 'Alert type "success"',
+                type: 'success',
+                position: 'top-right',
+                time: 3
+            });
+        });
     });
-  });
 </script>
 
 <body>
-  <div class="container">
-    <select class="js-example-basic-single" style="width: 50%">
-      <!--<optgroup label="Alaskan/Hawaiian Time Zone">-->
-      <option value="AL">Alabama</option>
-      <option value="WY">Wyong</option>
-      <option value="WY1">Wyomng</option>
-      <option value="WY2">Wyong</option>
-      <option value="WY4">Wyoing</option>
-      <!--</optgroup>-->
-      <option value="WY5">Wyomig</option>
-      <option value="WY6">Wming</option>
-      <option value="WY7">ng</option>
-      <option value="WY8">Wyoing</option>
-      <option value="WY9">Wying</option>
-      <option value="WY42">ing</option>
-    </select>
-  </div>
+    <div class="container">
+        <a href="" class="btn btn-success" id="btnSuccess">Success</a>
+
+    </div>
 
 </body>
 

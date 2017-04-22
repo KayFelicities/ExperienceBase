@@ -46,13 +46,20 @@ function echo_banner($page_name)
 <?php
 }
 
-function echo_content_item($no)
+function echo_content_item($no, $type="")
 {
   require_once('config.php');
   $con=mysqli_connect(HOST, USERNAME, PASSWORD);
   mysqli_set_charset($con, "utf8");
   mysqli_select_db($con, 'experience_base');
-  $result = mysqli_query($con, "SELECT * FROM eb_contents ORDER BY create_tm DESC LIMIT $no,1");
+  if ($type)
+  {
+    $result = mysqli_query($con, "SELECT * FROM eb_contents WHERE extype1='$type' ORDER BY create_tm DESC LIMIT $no,1");
+  }
+  else
+  {
+    $result = mysqli_query($con, "SELECT * FROM eb_contents ORDER BY create_tm DESC LIMIT $no,1");
+  }
   $row = mysqli_fetch_array($result);
   if($row)
   {
