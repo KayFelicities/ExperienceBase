@@ -31,27 +31,29 @@ if(mysqli_query($con, $insertsql))
     $result = mysqli_query($con, "SELECT @@IDENTITY");
     $cid = mysqli_fetch_array($result)[0];
 
-
-    if ($_FILES["file"]["error"] > 0)
+    if (!empty($_FILES['file']['tmp_name']))
     {
-        echo "文件上传失败：" . $_FILES["file"]["error"] . "<br />";
-    }
-    else
-    {
-        echo "正在上传文件" . $_FILES["file"]["name"] . "，请稍后。";
-
-        if (!is_dir(CONTENT_FILE))
+        if ($_FILES["file"]["error"] > 0)
         {
-            mkdir(CONTENT_FILE, 0777, true);
+            echo "文件上传失败：" . $_FILES["file"]["error"] . "<br />";
         }
+        else
+        {
+            echo "正在上传文件" . $_FILES["file"]["name"] . "，请稍后。";
 
-        $file_name = $_FILES["file"]["name"];
-        $file_name_array = explode('.', $file_name);
-        $save_file_path = CONTENT_FILE . sprintf("/%06d", $cid) . "_01." . end($file_name_array);
-        move_uploaded_file($_FILES["file"]["tmp_name"], $save_file_path);
+            if (!is_dir(CONTENT_FILE))
+            {
+                mkdir(CONTENT_FILE, 0777, true);
+            }
 
-        $update_sql = "UPDATE eb_contents SET file_name='$file_name' WHERE cid='$cid'";
-        mysqli_query($con, $update_sql);
+            $file_name = $_FILES["file"]["name"];
+            $file_name_array = explode('.', $file_name);
+            $save_file_path = CONTENT_FILE . sprintf("/%06d", $cid) . "_01." . end($file_name_array);
+            move_uploaded_file($_FILES["file"]["tmp_name"], $save_file_path);
+
+            $update_sql = "UPDATE eb_contents SET file_name='$file_name' WHERE cid='$cid'";
+            mysqli_query($con, $update_sql);
+        }
     }
 
     echo "<script>alert('提交成功');window.location.href='index.php'</script>";
