@@ -181,10 +181,6 @@ function echo_editor()
         <a class="btn btn-default" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="icon icon-picture"></i></a>
         <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" />
       </div>
-      <div class="btn-group">
-        <a class="btn btn-default" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="icon icon-undo"></i></a>
-        <a class="btn btn-default" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="icon icon-repeat"></i></a>
-      </div>
       <input type="text" data-edit="inserttext" id="voiceBtn" x-webkit-speech="">
     </div>
 

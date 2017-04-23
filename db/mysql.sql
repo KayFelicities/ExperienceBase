@@ -39,3 +39,13 @@ CREATE TABLE `eb_contents` (
   `comment_num` int(10) unsigned default '0',
   PRIMARY KEY  (`cid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- 杂项
+CREATE TABLE `eb_others` (
+  `name` varchar(64) default NULL,
+  `content` mediumtext,
+  `modify_user` char(32) default NULL,
+  `modify_ip` char(16) default NULL,
+  `modify_tm` datetime default NULL,
+  PRIMARY KEY  (`name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
