@@ -62,7 +62,6 @@ $(document).ready(function() {
     placeholder: "选择标签（可输入新标签）",
     maximumSelectionLength: 5,
     minimumResultsForSearch: 3,
-    // allowClear: true,
     tags: true
   });
 })
