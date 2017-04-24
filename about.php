@@ -6,36 +6,19 @@
 <link rel="shortcut icon" href="+1.ico">
 <link rel="icon" href="+1.ico">
 <link rel="stylesheet" href="style/css/bootstrap.css">
-<link rel="stylesheet" href="style/css/carousel.css">
-<link href="style/editor/google-code-prettify/prettify.css" rel="stylesheet">
 <script src="style/js/jquery.js"></script>
 <script src="style/js/bootstrap.js"></script>
-<script src="style/editor/bootstrap-wysiwyg.js"></script>
-<script src="style/editor/jquery.hotkeys.js"></script>
-<script src="style/editor/google-code-prettify/prettify.js"></script>
+
+<!--editor-->
+<link href="style/summernote/summernote.css" rel="stylesheet">
+<script src="style/summernote/summernote.js"></script>
+<script src="style/summernote/summernote-zh-CN.js"></script>
 
 <style>
-  #editor {
-    max-height: 250px;
-    height: 250px;
-    background-color: white;
-    border-collapse: separate;
-    border: 1px solid rgb(204, 204, 204);
-    padding: 4px;
-    box-sizing: content-box;
-    -webkit-box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
-    box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    border-bottom-left-radius: 3px;
-    border-top-left-radius: 3px;
-    overflow: scroll;
-    outline: none;
-  }
   #myeditor {
     margin-top: 10px;
   }
-  #myeditor, #submit-btns, #swap-editor{
+  #submit-btns, #swap-editor{
     display: none;
   }
   #edit-btn
@@ -47,22 +30,22 @@
 <script>
 $(document).ready(function() {
   $("#edit-btn").click(function() {
-    $("#edit-btn").hide();
-    $("#about").hide();
-    $("#myeditor").show();
+    $("#editor").summernote({
+      focus: true,
+      
+    });
+    $("#swap-editor").val($('#editor').summernote('code'));
     $("#submit-btns").show();
-    $("#editor").html($("#about").html());
   });
   $("#cancel-btn").click(function() {
-    $("#myeditor").hide();
+    $("#editor").summernote('destroy');
+    $("#editor").html($("#swap-editor").val());
     $("#submit-btns").hide();
-    $("#edit-btn").show();
-    $("#about").show();
   });
 });
 
 function befor_submit() {
-  $("#swap-editor").val($("#editor").html());
+  $("#swap-editor").val($('#editor').summernote('code'));
 }
 </script>
 
@@ -87,7 +70,9 @@ function befor_submit() {
   $row = mysqli_fetch_array($result);
   if ($row)
   {
+    echo "<div id='editor'>";
     echo $row['content'];
+    echo "</div>";
   }
   else
   {
@@ -96,9 +81,9 @@ function befor_submit() {
   ?>
   </div>
 
-  <!--editor-->
+  <!--edit form-->
   <form method="post" action="about_edit_action.php" onsubmit="return befor_submit();">
-    <?php echo_editor();?>
+    <input type="text" id="swap-editor" name="editor"></input>
     <div class="row" id="submit-btns">
       <div class="col-xs-9">
         <button type="submit" class="btn btn-primary btn-block">提交</button>
@@ -107,7 +92,6 @@ function befor_submit() {
         <button type="button" id="cancel-btn" class="btn btn-warning btn-block">取消</button>
       </div>
     </div>
-    <input type="text" id="swap-editor" name="editor"></input>
   </form>
 
   <hr>

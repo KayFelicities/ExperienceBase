@@ -7,36 +7,19 @@
 <link rel="icon" href="+1.ico">
 <link rel="stylesheet" href="style/css/bootstrap.css">
 <link rel="stylesheet" href="style/css/carousel.css">
-<link href="style/editor/google-code-prettify/prettify.css" rel="stylesheet">
 <script src="style/js/jquery.js"></script>
 <script src="style/js/bootstrap.js"></script>
-<script src="style/editor/bootstrap-wysiwyg.js"></script>
-<script src="style/editor/jquery.hotkeys.js"></script>
-<script src="style/editor/google-code-prettify/prettify.js"></script>
+
+<!--editor-->
+<link href="style/summernote/summernote.css" rel="stylesheet">
+<script src="style/summernote/summernote.js"></script>
+<script src="style/summernote/summernote-zh-CN.js"></script>
 
 <link href="style/css/select2.css" rel="stylesheet" />
 <script src="style/js/select2.js"></script>
 
 
 <style>
-  #editor {
-    max-height: 250px;
-    height: 250px;
-    background-color: white;
-    border-collapse: separate;
-    border: 1px solid rgb(204, 204, 204);
-    padding: 4px;
-    box-sizing: content-box;
-    -webkit-box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
-    box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    border-bottom-left-radius: 3px;
-    border-top-left-radius: 3px;
-    overflow: scroll;
-    outline: none;
-  }
-  
   #myeditor {
     margin-top: 10px;
   }
@@ -93,7 +76,7 @@ function befor_submit() {
       return false;
     }
   }
-  $("#swap-editor").val($("#editor").html());
+  $("#swap-editor").val($("#editor").summernote('code'));
   $("#swap-tags").val($("#tagselect").val());
 }
 </script>
@@ -127,12 +110,22 @@ function befor_submit() {
             </select>
           </div>
           <div class="col-xs-8">
-            <input name="title" class="form-control" placeholder="请输入标题"></input>
+            <input name="title" class="form-control" placeholder="请输入标题" required autofocus></input>
           </div>
         </div>
 
         <!--editor-->
-        <?php echo_editor();?>
+        <div id="myeditor">
+          <div id="editor"></div>
+        </div>
+          <script>
+          $(document).ready(function() {
+            $('#editor').summernote({
+              placeholder: '写下你的经验...',
+              
+            });
+          });
+        </script>
 
         <!--file-->
         <div class="row">

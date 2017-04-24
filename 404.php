@@ -11,7 +11,7 @@
 <script src="style/js/bootstrap.js"></script>
 
 <body>
-<?php include("common.php"); echo_banner("hardware"); ?>
+<?php include("common.php"); echo_banner("404"); ?>
 <div style="margin: 60px"></div>
 <div class="container">
   <p>404</p>

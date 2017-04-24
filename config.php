@@ -4,5 +4,5 @@
    define('USERNAME','root');
    define('PASSWORD','');
 
-   define('CONTENT_FILE', '../exbase_files/content_files')
+   define('CONTENT_FILE', 'exbase_files/content_files')
 ?>

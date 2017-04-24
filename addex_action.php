@@ -56,7 +56,7 @@ if(mysqli_query($con, $insertsql))
         }
     }
 
-    echo "<script>alert('提交成功');window.location.href='index.php'</script>";
+    echo "<script>window.location.href='content.php?cid=$cid'</script>";
 }
 else
 {

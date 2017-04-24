@@ -11,21 +11,30 @@
 <script src="style/js/bootstrap.js"></script>
 
 <body>
-<?php include("common.php"); echo_banner("content_list"); ?>
+<?php include("common.php"); ?>
+<?php
+  $items_per_page = 10;  
+  $page = $_GET['p']; 
+  $type = $_GET['t']; 
+  $page_sum = ceil(count_content($type) / $items_per_page);
+  echo_banner($type);
+?>
 <div style="margin: 60px"></div>
 <div class="container">
   <div class="list">
     <header>
-      <h3><i></i> 所有经验 <small>共<?php echo count_content();?>条</small></h3>
+      <h3><i></i> <?php if(!$type)echo "所有经验";else echo $type; ?> <small>第<?php echo ($page + 1) ?>页，共<?php echo $page_sum ?>页</small></h3>
     </header>
     <div class="items items-hover">
       <?php
-      for ($count = 0; $count < 15; $count++) {
-        if (!echo_content_item($count))
+      for ($count = $page*$items_per_page; $count < ($page + 1)*$items_per_page; $count++) 
+      {
+        if (!echo_content_item($count, $type))
         {
           break;
         }
       }
+
       if ($count == 0)
       {
           echo '无记录';
@@ -34,10 +43,23 @@
     </div>
   </div>
 
-  <nav aria-label="...">
-    <ul class="pager">
-      <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> 上一页</a></li>
-      <li class="next"><a href="#">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+  <nav aria-label="Page navigation" style="margin-left: 15px">
+    <ul class="pagination">
+    <?php if($page == 0){?>
+      <li class="disabled"><span aria-hidden="true">上一页</span></li>
+    <?php }else{?>
+      <li class="previous"><a href="content_list.php?p=<?php echo ($page-1)?>"><span aria-hidden="true">上一页</span></a></li>
+    <?php }
+    for ($count=0; $count < $page_sum; $count++)
+    {?>
+      <li <?php if($page == $count)echo "class='active'"?>><a href="content_list.php?p=<?php echo $count?>"><?php echo ($count + 1)?></a></li>
+    <?php 
+    }
+    if($page >= $page_sum-1){?>
+      <li class="disabled"><span aria-hidden="true">下一页</span></li>
+    <?php }else{?>
+      <li class="next"><a href="content_list.php?p=<?php echo ($page+1)?>"><span aria-hidden="true">下一页</span></a></li>
+    <?php }?>
     </ul>
   </nav>
 </div>
