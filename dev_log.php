@@ -73,6 +73,12 @@
     <li>关于页面可编辑</li>
   </ol>
 
+  <h4>2017.04.24:</h4>
+  <ol>
+    <li>放弃bootstrap-wysiwyg，移植SummerNote编辑器，非常好用！致谢：<a href="http://summernote.org/">SummerNote</a></li>
+    <li>列表页添加分页</li>
+  </ol>
+
   <hr>
   
   <h4>todo list:</h4>
