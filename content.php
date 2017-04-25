@@ -62,7 +62,7 @@ $row = mysqli_fetch_array($result);
     <div class="content-header">
         <h1><?php echo $row['title']?></h1>
 
-        <a href="#" class="text-muted"><i class="icon-user"></i> <?php echo get_userinfo($_COOKIE["uid"])['nickname'];?></a>
+        <a href="#" class="text-muted"><i class="icon-user"></i> <?php echo get_userinfo($row['author_id'])['nickname'];?></a>
         &nbsp; &nbsp; 
         <a href="#" class="text-muted"><i class="icon-comments"></i> <?php echo $row['comment_num'];?></a> 
         &nbsp; &nbsp; 

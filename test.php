@@ -1,44 +1,8 @@
-<!DOCTYPE HTML>
-<html>
-<meta charset="UTF-8">
-<title>经验分享平台</title>
-<link rel="bookmark" type="image/x-icon" href="img/+1.ico" />
-<link rel="shortcut icon" href="img/+1.ico">
-<link rel="icon" href="img/+1.ico">
-<link rel="stylesheet" href="style/css/bootstrap.css">
-<link rel="stylesheet" href="style/css/carousel.css">
-<script src="style/js/jquery.js"></script>
-<script src="style/js/bootstrap.js"></script>
-
-<link href="style/summernote/summernote.css" rel="stylesheet">
-<script src="style/summernote/summernote.js"></script>
-<script src="style/summernote/summernote-zh-CN.js"></script>
-
-<script>
-  $(document).ready(function() {
-    $('#summernote').summernote({
-      
-    });
-    $('#test-btn').click(function(){
-      var markupStr = $('#summernote').summernote('code');
-      alert(markupStr);
-    })
-  });
-</script>
-
-
-<body>
-  <?php include("common.php"); echo_banner("hardware"); ?>
-  <div style="margin: 60px"></div>
-  <div class="container">
-    <div id="summernote">
-      <p>Hello Summernote</p>
-    </div>
-    <button id="test-btn" class="btn btn-primary">test</button>
-
-  </div>
-
-
-</body>
-
-</html>
+<?php
+$word = new COM("Word.application") or die("open err");	
+$word ->Visible = 0;	
+$doc = $word->Documents->Open('D:\soft\xampp-win32-5.5.28-0-VC11\xampp\htdocs\ExperienceBase\test1.docx');	
+$doc ->SaveAs2();	
+$doc ->ExportAsFixedFormat('D:\soft\xampp-win32-5.5.28-0-VC11\xampp\htdocs\ExperienceBase\testKay.pdf',17);	
+$word ->Quit();
+?>

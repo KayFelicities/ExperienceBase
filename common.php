@@ -31,19 +31,20 @@ function echo_banner($page_name)
           <li <?php if ($page_name=="add_ex" ){echo 'class="active"';}?> ><a href="addex.php">添加经验</a></li>
 
           <?php
-    if (isset($_COOKIE["uid"]))
+    if (isset($_COOKIE["userid"]))
     {?>
             <li <?php if ($page_name=="mypage" ){echo 'class="active"';}?> >
               <a href="mypage.php">
-                <?php echo get_userinfo($_COOKIE["uid"])['nickname'];?>
+                <?php echo get_userinfo($_COOKIE["userid"])['nickname'];?>
               </a>
             </li>
             <?php
     }
     else
     {?>
-              <li <?php if ($page_name=="login" ){echo 'class="active"';}?> ><a href="login.php">登录/注册</a></li>
-              <?php
+            <script>alert(<?php echo $_COOKIE["userid"];?>);</script>
+            <li <?php if ($page_name=="login" ){echo 'class="active"';}?> ><a href="login.php">登录/注册</a></li>
+            <?php
     }
     ?>
         </ul>
@@ -93,7 +94,7 @@ function echo_content_item($no, $type="")
           <?php echo $row['extype2'];?>
         </a>
         &nbsp; &nbsp;
-        <a href="#" class="text-muted"><i class="icon-user"></i> <?php echo get_userinfo($_COOKIE["uid"])['nickname'];?></a> &nbsp; &nbsp;
+        <a href="#" class="text-muted"><i class="icon-user"></i> <?php echo get_userinfo($row['author_id'])['nickname'];?></a> &nbsp; &nbsp;
         <a href="#" class="text-muted"><i class="icon-comments"></i> <?php echo $row['comment_num'];?></a> &nbsp; &nbsp;
         <span class="text-muted"><i class="icon-time"></i> <?php echo $row['create_tm'];?></span> &nbsp;
         <?php

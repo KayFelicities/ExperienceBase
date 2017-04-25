@@ -22,8 +22,8 @@ function delCookie(name) {
 <?php include("common.php"); echo_banner("mypage"); ?>
 <div style="margin: 60px"></div>
 <div class="container">
-  <p>欢迎您，<?php echo get_userinfo($_COOKIE["uid"])['nickname'];?></p>
-  <button class="btn btn-danger" onclick="delCookie('user');window.location.href='index.php';">退出登录</button>
+  <p>欢迎您，<?php echo get_userinfo($_COOKIE["userid"])['nickname'];?></p>
+  <button class="btn btn-danger" onclick="delCookie('userid');window.location.href='index.php';">退出登录</button>
 </div>
 
 </body>

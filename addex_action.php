@@ -14,9 +14,9 @@ $tags=$_POST["tags"];
 $remote_ip = $_SERVER["REMOTE_ADDR"];
 $timenow = date("Y-m-d H:i:s");
 $author_id = 0;
-if (!empty($_COOKIE["uid"]))
+if (!empty($_COOKIE["userid"]))
 {
-    $author_id = $_COOKIE["uid"];
+    $author_id = $_COOKIE["userid"];
 }
 
 require_once('config.php');
