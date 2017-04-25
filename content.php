@@ -2,9 +2,9 @@
 <html>
 <meta charset="UTF-8">
 <title>经验分享平台</title>
-<link rel="bookmark" type="image/x-icon" href="+1.ico" />
-<link rel="shortcut icon" href="+1.ico">
-<link rel="icon" href="+1.ico">
+<link rel="bookmark" type="image/x-icon" href="img/+1.ico" />
+<link rel="shortcut icon" href="img/+1.ico">
+<link rel="icon" href="img/+1.ico">
 <link rel="stylesheet" href="style/css/bootstrap.css">
 <link rel="stylesheet" href="style/css/carousel.css">
 <script src="style/js/jquery.js"></script>
@@ -62,7 +62,7 @@ $row = mysqli_fetch_array($result);
     <div class="content-header">
         <h1><?php echo $row['title']?></h1>
 
-        <a href="#" class="text-muted"><i class="icon-user"></i> <?php echo $row['author'];?></a>
+        <a href="#" class="text-muted"><i class="icon-user"></i> <?php echo get_userinfo($_COOKIE["uid"])['nickname'];?></a>
         &nbsp; &nbsp; 
         <a href="#" class="text-muted"><i class="icon-comments"></i> <?php echo $row['comment_num'];?></a> 
         &nbsp; &nbsp; 

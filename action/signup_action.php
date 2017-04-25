@@ -24,7 +24,7 @@ if(!(mysqli_query($con, $insertsql)))
 }
 else
 {
-    echo "<script>alert('注册成功，请登录');window.location.href='index.php'</script>";
+    echo "<script>alert('注册成功，请登录');window.location.href='login.php'</script>";
 }
 mysqli_close($con);
 ?>

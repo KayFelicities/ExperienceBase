@@ -30,7 +30,7 @@ CREATE TABLE `eb_contents` (
   `modify_ip` char(16) default NULL,
   `content` mediumtext,
   `file_name` varchar(1024) default NULL,
-  `author` char(32) default 'guest',
+  `author_id` int(10),
   `status` char(16) default 'publish',
   `extype1` char(16) default NULL,
   `extype2` char(32) default NULL,

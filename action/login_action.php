@@ -27,8 +27,8 @@ $result = mysqli_query($con, "SELECT * FROM eb_users WHERE username='$username'"
 $row = mysqli_fetch_array($result);
 if ($row['password'] == $password)
 {
-    setcookie("user", $username, time()+24*60*60);
-    print_r("欢迎您，".$username);
+    setcookie("uid", $row['uid'], time()+24*60*60);
+    print_r("欢迎您，".$nikename);
     echo "<script>window.location.href='index.php';</script>";
 }
 else

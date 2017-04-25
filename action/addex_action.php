@@ -13,18 +13,18 @@ $extype2=$_POST["extype2"];
 $tags=$_POST["tags"];
 $remote_ip = $_SERVER["REMOTE_ADDR"];
 $timenow = date("Y-m-d H:i:s");
-$author = "guest";
-if (!empty($_COOKIE["user"]))
+$author_id = 0;
+if (!empty($_COOKIE["uid"]))
 {
-    $author = $_COOKIE["user"];
+    $author_id = $_COOKIE["uid"];
 }
 
 require_once('config.php');
 $con=mysqli_connect(HOST, USERNAME, PASSWORD);
 mysqli_set_charset($con, "utf8");
 mysqli_select_db($con, 'experience_base');
-$insertsql= "INSERT INTO eb_contents(title, create_tm, author, content, extype1, extype2, tags, create_ip)
-VALUES('$title', '$timenow', '$author', '$editor', '$extype1', '$extype2', '$tags', '$remote_ip')";
+$insertsql= "INSERT INTO eb_contents(title, create_tm, author_id, content, extype1, extype2, tags, create_ip)
+VALUES('$title', '$timenow', '$author_id', '$editor', '$extype1', '$extype2', '$tags', '$remote_ip')";
 
 if(mysqli_query($con, $insertsql))
 {

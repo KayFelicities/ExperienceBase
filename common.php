@@ -5,7 +5,7 @@ function echo_banner($page_name)
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
+          <span class="sr-only">经验分享平台</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -15,21 +15,27 @@ function echo_banner($page_name)
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li <?php if ($page_name=="" ){echo 'class="active"';}?> ><a href="content_list.php?p=0&t=">所有经验</a></li>
-          <li <?php if ($page_name=="软件" ){echo 'class="active"';}?> ><a href="content_list.php?p=0&t=软件">软件</a></li>
-          <li <?php if ($page_name=="硬件" ){echo 'class="active"';}?> ><a href="content_list.php?p=0&t=硬件">硬件</a></li>
-          <li <?php if ($page_name=="结构件" ){echo 'class="active"';}?> ><a href="content_list.php?p=0&t=结构件">结构件</a></li>
-          <li <?php if ($page_name=="流程" ){echo 'class="active"';}?> ><a href="content_list.php?p=0&t=流程">流程</a></li>
+          <li class="dropdown <?php if (in_array($page_name, array(" 软件 ", "硬件 ", "结构件 ", "流程 ")))echo "active "; ?>">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">分类<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="content_list.php?p=0&t=软件">软件</a></li>
+              <li><a href="content_list.php?p=0&t=硬件">硬件</a></li>
+              <li><a href="content_list.php?p=0&t=结构件">结构件</a></li>
+              <li><a href="content_list.php?p=0&t=流程">流程</a></li>
+              <!--<li role="separator" class="divider"></li>-->
+            </ul>
+          </li>
           <li <?php if ($page_name=="about" ){echo 'class="active"';}?> ><a href="about.php">关于</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li <?php if ($page_name=="add_ex" ){echo 'class="active"';}?> ><a href="addex.php">添加经验</a></li>
 
           <?php
-    if (isset($_COOKIE["user"]))
+    if (isset($_COOKIE["uid"]))
     {?>
             <li <?php if ($page_name=="mypage" ){echo 'class="active"';}?> >
               <a href="mypage.php">
-                <?php echo $_COOKIE["user"];?>
+                <?php echo get_userinfo($_COOKIE["uid"])['nickname'];?>
               </a>
             </li>
             <?php
@@ -87,7 +93,7 @@ function echo_content_item($no, $type="")
           <?php echo $row['extype2'];?>
         </a>
         &nbsp; &nbsp;
-        <a href="#" class="text-muted"><i class="icon-user"></i> <?php echo $row['author'];?></a> &nbsp; &nbsp;
+        <a href="#" class="text-muted"><i class="icon-user"></i> <?php echo get_userinfo($_COOKIE["uid"])['nickname'];?></a> &nbsp; &nbsp;
         <a href="#" class="text-muted"><i class="icon-comments"></i> <?php echo $row['comment_num'];?></a> &nbsp; &nbsp;
         <span class="text-muted"><i class="icon-time"></i> <?php echo $row['create_tm'];?></span> &nbsp;
         <?php
@@ -129,4 +135,15 @@ function count_content($type="")
     return $count;
 }
 
+function get_userinfo($uid)
+{
+    include_once("config.php");
+    $con=mysqli_connect(HOST, USERNAME, PASSWORD);
+    mysqli_set_charset($con, "utf8");
+    mysqli_select_db($con, 'experience_base');
+    $result = mysqli_query($con, "SELECT * FROM eb_users WHERE uid='$uid'");
+    $row = mysqli_fetch_array($result);
+    mysqli_close($con);
+    return $row;
+}
 ?>
