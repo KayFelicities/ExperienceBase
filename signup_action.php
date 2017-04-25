@@ -8,6 +8,8 @@ if(PHP_VERSION >= 6 || !get_magic_quotes_gpc())
 $username=$_POST["username"];
 $password=$_POST['password'];
 $nickname=$_POST['nickname'];
+$sx_id=$_POST['sx_id'];
+$department=$_POST['department1'].','.$_POST['department2'];
 $remote_ip = $_SERVER["REMOTE_ADDR"];
 $timenow = date('Y-m-d H:i:s');
 
@@ -15,8 +17,8 @@ require_once('config.php');
 $con=mysqli_connect(HOST, USERNAME, PASSWORD);
 mysqli_set_charset($con, "utf8");
 mysqli_select_db($con, 'experience_base');
-$insertsql= "INSERT INTO eb_users(username, password, nickname, create_tm, create_ip)
-             VALUES('$username', '$password', '$nickname', '$timenow','$remote_ip')";
+$insertsql= "INSERT INTO eb_users(username, password, nickname, sx_id, create_tm, create_ip, department)
+             VALUES('$username', '$password', '$nickname', '$sx_id', '$timenow', '$remote_ip', '$department')";
 
 if(!(mysqli_query($con, $insertsql)))
 {
