@@ -2990,6 +2990,17 @@ textarea {
   line-height: inherit;
 }
 
+button a {
+  color: #fff;
+  text-decoration: none;
+}
+
+button a:hover,
+button a:focus {
+  color: #fff;
+  text-decoration: none;
+}
+
 a {
   color: #337ab7;
   text-decoration: none;

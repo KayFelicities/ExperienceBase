@@ -32,6 +32,11 @@
 </style>
 
 <script>
+var add1 = Math.random()*8 + 1;
+add1 = parseInt(add1, 10);
+var add2 = Math.random()*8 + 1;
+add2 = parseInt(add2, 10);
+
 $(document).ready(function(){
   $("#signup-btn").click(function(){
     $(".page-header").html("<h1>注册</h1>");
@@ -80,14 +85,28 @@ $(document).ready(function(){
         alert("err");
     }
   });
+
+  $("#chklabel").html("请填写"+add1+"+"+add2+"=");
 });
 
 function chk_form()
 {
+  if(document.signup.password.value.length < 6)  
+  {  
+      document.signup.password.focus();  
+      alert("密码不得小于6位");  
+      return false;
+  }
   if(document.signup.password.value != document.signup.password_chk.value)  
   {  
       document.signup.password.focus();  
       alert("两次密码不同，请重新填写");  
+      return false;
+  }
+  if(add1 + add2 != document.signup.sumchk.value)  
+  {
+      document.signup.sumchk.focus();
+      alert("验证码错误，请重新填写");  
       return false;  
   }
 }
@@ -129,15 +148,15 @@ function chk_form()
         <form name="signup" method="post" action="signup_action.php" onsubmit="return chk_form();">
           <div class="form-group">
             <label>用户名</label>
-            <input type="text" class="form-control" name="username" maxlength="32" placeholder="请保持与OA用户名相同，用于登录" required autofocus>
+            <input type="text" class="form-control" name="username" maxlength="32" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" placeholder="请保持与OA用户名相同，用于登录" required autofocus>
           </div>
           <div class="form-group">
             <label>工号</label>
-            <input type="text" class="form-control" name="sx_id" maxlength="32" placeholder="" required>
+            <input type="text" class="form-control" name="sx_id" maxlength="32" onkeyup="this.value=this.value.replace(/\D/g,'')" placeholder="" required>
           </div>
           <div class="form-group">
             <label>密码</label>
-            <input type="password" class="form-control" name="password" maxlength="64" placeholder="" required>
+            <input type="password" class="form-control" name="password" maxlength="64" placeholder="长度不得小于6位" required>
           </div>
           <div class="form-group">
             <label>确认密码</label>
@@ -167,6 +186,10 @@ function chk_form()
                 </select>
               </div>
             </div>
+          </div>
+          <div class="form-group">
+            <label id="chklabel">请填写</label>
+            <input type="text" class="form-control" name="sumchk" maxlength="3" placeholder="" required>
           </div>
           <div class="checkbox">
             <label>
