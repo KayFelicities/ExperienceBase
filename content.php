@@ -28,6 +28,15 @@
     float: right;
   }
 
+  .comments
+  {
+    margin-top: 30px;
+    background: #f5f5f5;
+    padding: 20px;
+    border: 1px solid #dddddd;
+    border-radius:7px;
+  }
+
   #pdf{
     margin: 10px 0;
   }
@@ -122,14 +131,14 @@ $row = mysqli_fetch_array($result);
             $view_file_path = CONTENT_FILE . sprintf("/%06d", $cid) . "_01.pdf";
             if (file_exists($view_file_path))
             {
-              echo "<span> </span><button class=\"btn btn-primary btn-xs showpdf-btn\">预览文件</button></span>";
-              echo "<span> </span><button class=\"btn btn-danger btn-xs openpdf-btn\"><a href='pdfview.php?c=$cid', target='_Blank'>全屏预览</a></button></span>";
+              echo "<span> </span><button class=\"btn btn-success btn-xs showpdf-btn\">预览文件</button></span>";
+              echo "<span> </span><button class=\"btn btn-info btn-xs openpdf-btn\"><a href='pdfview.php?c=$cid', target='_Blank'>全屏预览</a></button></span>";
             }
             ?>
 
             <div id="pdfview">
               <div id="pdf"></div>
-              <button class="btn btn-primary btn-xs showpdf-btn" style="float: right;">收起预览</button>
+              <button class="btn btn-success btn-xs showpdf-btn" style="float: right;">收起预览</button>
             </div>
             <script src="style/js/pdfobject.js"></script>
             <script>
@@ -158,6 +167,59 @@ $row = mysqli_fetch_array($result);
             echo "<p>无</p>";
         }
         ?>
+    </div>
+
+    <!--评论-->
+    <div class="comments">
+      <header>
+        <h3>评论</h3>
+      </header>
+
+      <section class="comments-list">
+        <div class="comment">
+          <a href="###" class="avatar">
+            <img class="avatar-s" src="img/logo.png"></img>
+          </a>
+          <div class="content">
+            <div class="pull-right text-muted">3 个小时前</div>
+            <div><a href="###"><strong>张士超</strong></a></div>
+            <div class="text">今天玩的真开心！~~~~~~</div>
+            <div class="actions">
+              <a href="##">回复</a>
+            </div>
+          </div>
+          <div class="comments-list">
+            <div class="comment">
+              <a href="###" class="avatar">
+                <img class="avatar-s" src="img/logo.png"></img>
+              </a>
+              <div class="content">
+                <div class="pull-right text-muted">2 个小时前</div>
+                <div><a href="###"><strong>Catouse</strong></a> <span class="text-muted">回复</span> <a href="###">张士超</a></div>
+                <div class="text">你到底把我家钥匙放哪里了...</div>
+                <div class="actions">
+                  <a href="##">回复</a>
+                  <a href="##">编辑</a>
+                  <a href="##">删除</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div class="reply-form" id="commentReplyForm2">
+          <a href="###" class="avatar"><img class="avatar-s" src="img/logo.png"></img></a>
+          <form class="form" action="comment_action.php">
+            <div class="form-group">
+                <textarea class="form-control" rows="2" placeholder="撰写评论..."></textarea>
+                <button type="submit" class="btn btn-primary btn-ubmargin pull-right">提交评论</button>
+                <div style="margin: 50px"></div>
+            </div>
+          </form>
+        </div>
+      </footer>
     </div>
 
 </div>
