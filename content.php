@@ -169,7 +169,7 @@ $row = mysqli_fetch_array($result);
         ?>
     </div>
 
-    <!--评论-->
+    <!--comments-->
     <div class="comments">
       <header>
         <h3>评论</h3>

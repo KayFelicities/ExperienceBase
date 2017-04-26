@@ -1,3 +1,12 @@
+<script>
+function delCookie(name) {
+  var d = new Date();
+  d.setTime(d.getTime() - 1);
+  var expires = "expires="+d.toUTCString();
+  document.cookie = name + "=" + "" + "; " + expires;
+}
+</script>
+
 <?php
 function echo_banner($page_name)
 {?>
@@ -15,7 +24,7 @@ function echo_banner($page_name)
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li <?php if ($page_name=="" ){echo 'class="active"';}?> ><a href="content_list.php?p=0&t=">所有经验</a></li>
-          <li class="dropdown <?php if (in_array($page_name, array(" 软件 ", "硬件 ", "结构件 ", "流程 ")))echo "active "; ?>">
+          <li class="dropdown <?php if (in_array($page_name, array("软件", "硬件", "结构件", "流程")))echo "active "; ?>">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">分类<span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="content_list.php?p=0&t=软件">软件</a></li>
@@ -33,10 +42,14 @@ function echo_banner($page_name)
           <?php
     if (isset($_COOKIE["userid"]))
     {?>
-            <li <?php if ($page_name=="mypage" ){echo 'class="active"';}?> >
-              <a href="mypage.php">
-                <?php echo get_userinfo($_COOKIE["userid"])['nickname'];?>
-              </a>
+            <li class="dropdown <?php if (in_array($page_name, array("mypage", "mymessages", "myconfig")))echo "active "; ?>">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo get_userinfo($_COOKIE["userid"])['nickname'];?><span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="mypage.php">我的主页</a></li>
+                <li><a href="mymessages.php">消息</a></li>
+                <li><a href="myconfig.php">设置</a></li>
+                <li><a href="javascript:delCookie('userid');window.location.href='index.php';">退出登录</a></li>
+              </ul>
             </li>
             <?php
     }

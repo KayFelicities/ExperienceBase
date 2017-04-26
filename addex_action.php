@@ -48,8 +48,8 @@ if(mysqli_query($con, $insertsql))
 
             $file_name = $_FILES["file"]["name"];
             $file_name_array = explode('.', $file_name);
-            $save_file_path = CONTENT_FILE . sprintf("/%06d", $cid) . "_01." . end($file_name_array);
-            $pdf_file_path = CONTENT_FILE . sprintf("/%06d", $cid) . "_01.pdf";
+            $save_file_path = str_replace("/", "\\", getcwd()."/".CONTENT_FILE . sprintf("/%06d", $cid) . "_01." . end($file_name_array));
+            $pdf_file_path = str_replace("/", "\\", getcwd()."/".CONTENT_FILE . sprintf("/%06d", $cid) . "_01.pdf");
             move_uploaded_file($_FILES["file"]["tmp_name"], $save_file_path);
 
             $update_sql = "UPDATE eb_contents SET file_name='$file_name' WHERE cid='$cid'";
@@ -59,14 +59,45 @@ if(mysqli_query($con, $insertsql))
             {
               case "doc":
               case "docx":
-                $word = new COM("Word.application") or die("open err");	
-                $word ->Visible = 0;
-                $doc = $word->Documents->Open(getcwd()."/".$save_file_path);	
-                $doc ->SaveAs2();	
-                $doc ->ExportAsFixedFormat(getcwd()."/".$pdf_file_path, 17);	
-                $word ->Quit();
-                $exec_233 = str_replace("/","\\","233 " . getcwd()."/".$pdf_file_path);
-                exec($exec_233);
+                $word = new COM("Word.application") or error_handler("Unable to instanciate word!");
+                $word->Visible = false;
+                $word->Documents->Open($save_file_path);
+                $word->ActiveDocument->SaveAs($pdf_file_path, 17); 
+                $word->ActiveDocument->Close();
+                $word->Quit();
+                $word = null;
+                exec("233 " . $pdf_file_path);
+                break;
+              case "xls":
+              case "xlsx":
+                $excel = new COM("Excel.application") or error_handler("Unable to instanciate excel!");
+                $excel->Visible = false; $excel->Workbooks->Open($save_file_path);
+                $count = $excel->ActiveWorkbook->Sheets->Count;
+                //轮询给每个workbook设定pagesetup参数，横版，papersize，缩放(适合页宽)
+                for($i = 1; $i <= $count; $i ++)
+                {
+                  $excel->ActiveWorkbook->Sheets($i)->Activate;
+                  $excel->ActiveWorkbook->ActiveSheet->PageSetup->Orientation = 2; // Landscape 2 // Portrait 1
+                  $excel->ActiveWorkbook->ActiveSheet->PageSetup->PaperSize = 9; //xlPaperA4 9
+                  $excel->ActiveWorkbook->ActiveSheet->PageSetup->Zoom = false;
+                  $excel->ActiveWorkbook->ActiveSheet->PageSetup->FitToPagesWide = 1; // true
+                }
+                $excel->ActiveWorkbook->ExportAsFixedFormat(0, $pdf_file_path, 0, true, true);
+                $excel->ActiveWorkbook->Close(false);
+                $excel->Quit();
+                $excel = null;
+                exec("233 ".$pdf_file_path);
+                break;
+              case "ppt":
+              case "pptx":
+                $ppt = new COM("PowerPoint.application") or error_handler("Unable to instanciate PowerPoint!");
+                $ppt->Visible = true;
+                $ppt->Presentations->Open($save_file_path);
+                $ppt->ActivePresentation->SaveAs($pdf_file_path, 32);
+                $ppt->ActivePresentation->Close();
+                $ppt->Quit(); 
+                $ppt = null;
+                exec("233 ".$pdf_file_path);
                 break;
             }
         }
