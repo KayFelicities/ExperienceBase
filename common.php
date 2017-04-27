@@ -111,7 +111,7 @@ function echo_content_item($no, $type="")
         <a href="#" class="text-muted"><i class="icon-comments"></i> <?php echo $row['comment_num'];?></a> &nbsp; &nbsp;
         <span class="text-muted"><i class="icon-time"></i> <?php echo $row['create_tm'];?></span> &nbsp;
         <?php
-        $tags_array = explode(',', $row['tags']);
+        $tags_array = explode(SEPARATOR, $row['tags']);
         foreach ($tags_array as $tag)
         {?>
           <span class="label label-success"><?php echo $tag;?></span>

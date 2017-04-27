@@ -20,7 +20,7 @@
   {
     float: right;
   }
-  #submit-btns, #swap-editor, #pdfview{
+  #submit-btns, #swap-editor, .pdfview{
     display: none;
   }
   #edit-btn
@@ -59,10 +59,6 @@ $(document).ready(function() {
     $("#editor").html($("#swap-editor").val());
     $("#submit-btns").hide();
   });
-  $(".showpdf-btn").click(function() {
-    $("#pdfview").toggle("fast");
-    $('html,body').animate({scrollTop:$('#pdfview').offset().top}, 200);
-  });
 });
 </script>
 
@@ -89,13 +85,13 @@ $row = mysqli_fetch_array($result);
         <span class="text-muted"><i class="icon-time"></i> <?php echo $row['create_tm'];?></span>
         &nbsp; &nbsp; 
         <?php
-        $tags_array = explode(',', $row['tags']);
+        $tags_array = explode(SEPARATOR, $row['tags']);
         foreach ($tags_array as $tag)
         {?>
           <span class="label label-success"><?php echo $tag;?></span>
           <?php
         }?>
-        <!--<button id="edit-btn" class="btn btn-default btn-xs">修改</button>-->
+        <button id="edit-btn" class="btn btn-default btn-xs">修改</button>
 
     </div>
 
@@ -120,47 +116,56 @@ $row = mysqli_fetch_array($result);
     
     <div>
         <hr>
-        <h6>文件列表：</h6>
+        <h6 id='filelist'>文件列表：</h6>
         <?php
         if ($row['file_name'])
         {
-            $file_name = $row['file_name'];
-            $file_name_array = explode('.', $file_name);
-            $save_file_path = CONTENT_FILE . sprintf("/%06d", $cid) . "_01." . end($file_name_array);
-            echo "<span><a download=\"$file_name\" href=\"$save_file_path\">$file_name</a>";
-            $view_file_path = CONTENT_FILE . sprintf("/%06d", $cid) . "_01.pdf";
-            if (file_exists($view_file_path))
-            {
-              echo "<span> </span><button class=\"btn btn-success btn-xs showpdf-btn\">预览文件</button></span>";
-              echo "<span> </span><button class=\"btn btn-info btn-xs openpdf-btn\"><a href='pdfview.php?c=$cid', target='_Blank'>全屏预览</a></button></span>";
-            }
-            ?>
+          $file_array = explode(SEPARATOR, $row['file_name']);
+          for ($file_count = 0; $file_count < count($file_array); $file_count++)
+          {
+              $file_name = $file_array[$file_count];
+              $file_name_array = explode('.', $file_name);
+              $save_file_path = CONTENT_FILE . sprintf("/%06d", $cid) . sprintf("_%02d.", $file_count) . end($file_name_array);
+              echo "<div><span><a download=\"$file_name\" href=\"$save_file_path\">$file_name</a>";
+              $view_file_path = CONTENT_FILE . sprintf("/%06d", $cid) . sprintf("_%02d.pdf", $file_count);
+              if (file_exists($view_file_path))
+              {
+                $pdfview = "pdfview".$file_count;
+                $pdfbed = "pdfbed".$file_count;
+                // $pdfviewbtn = "pdfviewbtn".$file_count;
+                echo "<span> </span><button class=\"btn btn-success btn-xs\" onclick=\"$('#$pdfview').toggle('fast');$('html,body').animate({scrollTop:$('#$pdfview').offset().top}, 200);\">预览文件</button></span>";
+                echo "<span> </span><button class=\"btn btn-info btn-xs openpdf-btn\"><a href='pdfview.php?c=$cid&f=$file_count', target='_Blank'>全屏预览</a></button>";
+                echo "</span></div>";
+              }
+              ?>
 
-            <div id="pdfview">
-              <div id="pdf"></div>
-              <button class="btn btn-success btn-xs showpdf-btn" style="float: right;">收起预览</button>
-            </div>
-            <script src="style/js/pdfobject.js"></script>
-            <script>
-            if(PDFObject.supportsPDFs)
-            {
-              var options = {
-                pdfOpenParams: {
-                  pagemode: "thumbs",
-                  navpanes: 0,
-                  toolbar: 0,
-                  statusbar: 0,
-                  view: "FitV"
-                }
-              };
-              PDFObject.embed("<?php echo $view_file_path?>", "#pdf", options);
-            }
-            else
-            {
-              $("#pdf").html("抱歉，当前浏览器不支持预览，推荐使用Chrome");
-            }
-            </script>
-<?php
+              <div id="<?php echo $pdfview ?>" class="pdfview">
+                <div id="<?php echo $pdfbed ?>"></div>
+                <button class="btn btn-success btn-xs" style="float: right;" onclick="$('#<?php echo $pdfview?>').toggle('fast');$('html,body').animate({scrollTop:$('#filelist').offset().top}, 200);">收起预览</button>
+                <div style="height: 20px;"></div>
+              </div>
+              <script src="style/js/pdfobject.js"></script>
+              <script>
+              if(PDFObject.supportsPDFs)
+              {
+                var options = {
+                  pdfOpenParams: {
+                    pagemode: "thumbs",
+                    navpanes: 0,
+                    toolbar: 0,
+                    statusbar: 0,
+                    view: "FitV"
+                  }
+                };
+                PDFObject.embed("<?php echo $view_file_path?>", "#<?php echo $pdfbed ?>", options);
+              }
+              else
+              {
+                $("#<?php echo $pdfview ?>").html("抱歉，当前浏览器不支持预览，推荐使用Chrome");
+              }
+              </script>
+  <?php
+          }
         }
         else
         {

@@ -2,7 +2,7 @@
 <html>
 <meta charset="UTF-8">
 <title>经验分享平台</title>
-<link rel="bookmark" type="image/x-icon" href="img/+1.ico" />
+<link rel="bookmark" type="image/x-icon" href="img/+1.ico">
 <link rel="shortcut icon" href="img/+1.ico">
 <link rel="icon" href="img/+1.ico">
 <link rel="stylesheet" href="style/css/bootstrap.css">
@@ -15,8 +15,14 @@
 <script src="style/summernote/summernote.js"></script>
 <script src="style/summernote/summernote-zh-CN.js"></script>
 
-<link href="style/css/select2.css" rel="stylesheet" />
+<link href="style/css/select2.css" rel="stylesheet">
 <script src="style/js/select2.js"></script>
+
+<!--fileinput-->
+<link rel="stylesheet" href="style/css/fileinput.css">
+<script src="style/js/fileinput/canvas-to-blob.js"></script>
+<script src="style/js/fileinput/fileinput.js"></script>
+<script src="style/js/fileinput/zh.js"></script>
 
 
 <style>
@@ -67,14 +73,6 @@ $(document).ready(function() {
 })
 
 function befor_submit() {
-  if (document.getElementById("file").value)
-  {
-    if (document.getElementById("file").files[0].size > 7000000)
-    {
-      alert("文件不得大于7M");
-      return false;
-    }
-  }
   $("#swap-editor").val($("#editor").summernote('code'));
   $("#swap-tags").val($("#tagselect").val());
 }
@@ -131,7 +129,22 @@ function befor_submit() {
           <div class="col-xs-6" style="margin-top:20px">
             <div class="form-group">
               <p>插入经验文档：(支持上传文件类型：doc/docx/ppt/pptx/pdf)</p>
-              <input type="file" name="file" id="file">
+                <input id="input" name="file[]" type="file" multiple class="file-loading">
+                <script>
+                $(document).on('ready', function() {
+                    $("#input").fileinput({
+                        language: 'zh',
+                        // uploadUrl: './uploader.php',
+                        allowedFileExtensions : ['doc', 'docx', 'ppt', 'pptx', 'pdf', 'jpg', 'png'],
+                        // minFileCount: 0,
+                        maxFilesNum: 10,
+                        showUpload: false,
+                        showRemove: true,
+                        showCaption: true,//是否显示输入框
+                        maxFilePreviewSize: 10240
+                    });
+                });
+                </script>
             </div>
           </div>
         </div>

@@ -14,7 +14,7 @@
 <?php include("common.php"); echo_banner("myconfig"); ?>
 <div style="margin: 60px"></div>
 <div class="container">
-  <p>欢迎您，<?php echo get_userinfo($_COOKIE["userid"])['nickname'];?></p>
+  <p>欢迎您，<?php if (isset($_COOKIE["userid"]))echo get_userinfo($_COOKIE["userid"])['nickname'];else echo "游客";?></p>
 </div>
 
 </body>

@@ -5,12 +5,13 @@ if(PHP_VERSION >= 6 || !get_magic_quotes_gpc())
     $_POST = array_map( 'addslashes', $_POST);
 }
 
+require_once('config.php');
 
 $title=$_POST["title"];
 $editor=$_POST["editor"];
 $extype1=$_POST["extype1"];
 $extype2=$_POST["extype2"];
-$tags=$_POST["tags"];
+$tags=str_replace(',', SEPARATOR, $_POST["tags"]);
 $remote_ip = $_SERVER["REMOTE_ADDR"];
 $timenow = date("Y-m-d H:i:s");
 $author_id = 0;
@@ -19,7 +20,6 @@ if (!empty($_COOKIE["userid"]))
     $author_id = $_COOKIE["userid"];
 }
 
-require_once('config.php');
 $con=mysqli_connect(HOST, USERNAME, PASSWORD);
 mysqli_set_charset($con, "utf8");
 mysqli_select_db($con, 'experience_base');
@@ -33,26 +33,36 @@ if(mysqli_query($con, $insertsql))
 
     if (!empty($_FILES['file']['name']))
     {
-        if ($_FILES["file"]["error"] > 0)
+      for ($i = 0; $i < count($_FILES['file']['name']); $i++)
+      {
+        if ($_FILES["file"]["error"][$i] > 0)
         {
-            echo "文件上传失败：" . $_FILES["file"]["error"] . "<br />";
+            echo "文件上传失败：" . $_FILES["file"]["error"][$i] . "<br />";
         }
         else
         {
-            echo "正在上传文件" . $_FILES["file"]["name"] . "，请稍后。";
+            echo "正在上传文件" . $_FILES["file"]["name"][$i] . "，请稍后。";
 
             if (!is_dir(CONTENT_FILE))
             {
                 mkdir(CONTENT_FILE, 0777, true);
             }
 
-            $file_name = $_FILES["file"]["name"];
+            $file_name = $_FILES["file"]["name"][$i];
             $file_name_array = explode('.', $file_name);
-            $save_file_path = str_replace("/", "\\", getcwd()."/".CONTENT_FILE . sprintf("/%06d", $cid) . "_01." . end($file_name_array));
-            $pdf_file_path = str_replace("/", "\\", getcwd()."/".CONTENT_FILE . sprintf("/%06d", $cid) . "_01.pdf");
-            move_uploaded_file($_FILES["file"]["tmp_name"], $save_file_path);
+            $save_file_path = str_replace("/", "\\", getcwd()."/".CONTENT_FILE . sprintf("/%06d", $cid) . sprintf("_%02d.", $i) . end($file_name_array));
+            $pdf_file_path = str_replace("/", "\\", getcwd()."/".CONTENT_FILE . sprintf("/%06d", $cid) . sprintf("_%02d.pdf", $i));
+            move_uploaded_file($_FILES["file"]["tmp_name"][$i], $save_file_path);
 
-            $update_sql = "UPDATE eb_contents SET file_name='$file_name' WHERE cid='$cid'";
+            if ($i == 0)
+            {
+              $update_sql = "UPDATE eb_contents SET file_name='$file_name' WHERE cid='$cid'";
+            }
+            else 
+            {
+              $separator = SEPARATOR;
+              $update_sql = "UPDATE eb_contents SET file_name=CONCAT_WS('$separator',file_name,'$file_name') WHERE cid='$cid'";
+            }
             mysqli_query($con, $update_sql);
 
             switch(end($file_name_array))
@@ -101,6 +111,7 @@ if(mysqli_query($con, $insertsql))
                 break;
             }
         }
+      }
     }
     else
     {
@@ -110,7 +121,7 @@ if(mysqli_query($con, $insertsql))
       echo "<script>alert();</script>";
     }
 
-    echo "<script>window.location.href='content.php?cid=$cid'</script>";
+    echo "<script>alert();window.location.href='content.php?cid=$cid'</script>";
 }
 else
 {

@@ -4,5 +4,7 @@
    define('USERNAME','root');
    define('PASSWORD','');
 
-   define('CONTENT_FILE', 'exbase_files/content_files')
+   define('SEPARATOR', '$#$');
+   define('CONTENT_FILE', 'exbase_files/content_files');
+   define('TEMP_FILE_PATH', 'exbase_files/temp_files');
 ?>
