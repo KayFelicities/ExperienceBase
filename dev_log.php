@@ -85,12 +85,24 @@
     <li>显示用户昵称</li>
   </ol>
 
+  <h4>2017.04.26:</h4>
+  <ol>
+    <li>文档自动另存pdf，移植pdf预览控件。致谢：<a href="https://pdfobject.com/">PDFObject</a></li>
+    <li>经验评论框架搭建</li>
+  </ol>
+
+  <h4>2017.04.27:</h4>
+  <ol>
+    <li>移植多文档上传控件。致谢：<a href="http://plugins.krajee.com/file-input">FileInput</a></li>
+    <li>完善经验提交逻辑</li>
+  </ol>
+
   <hr>
   
   <h4>todo list:</h4>
   <ol>
     <li>注册限制、登录限制√</li>
-    <li>文件显示</li>
+    <li>文件显示√</li>
     <li>用户个人界面搭建</li>
     <li>用户信息数据库优化</li>
     <li>标签系统优化、标签数据库搭建</li>
