@@ -91,7 +91,7 @@ $row = mysqli_fetch_array($result);
           <span class="label label-success"><?php echo $tag;?></span>
           <?php
         }?>
-        <button id="edit-btn" class="btn btn-default btn-xs">修改</button>
+        <!--<button id="edit-btn" class="btn btn-default btn-xs">修改</button>-->
 
     </div>
 
@@ -132,7 +132,6 @@ $row = mysqli_fetch_array($result);
               {
                 $pdfview = "pdfview".$file_count;
                 $pdfbed = "pdfbed".$file_count;
-                // $pdfviewbtn = "pdfviewbtn".$file_count;
                 echo "<span> </span><button class=\"btn btn-success btn-xs\" onclick=\"$('#$pdfview').toggle('fast');$('html,body').animate({scrollTop:$('#$pdfview').offset().top}, 200);\">预览文件</button></span>";
                 echo "<span> </span><button class=\"btn btn-info btn-xs openpdf-btn\"><a href='pdfview.php?c=$cid&f=$file_count', target='_Blank'>全屏预览</a></button>";
                 echo "</span></div>";

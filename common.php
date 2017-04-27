@@ -37,27 +37,28 @@ function echo_banner($page_name)
           <li <?php if ($page_name=="about" ){echo 'class="active"';}?> ><a href="about.php">关于</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li <?php if ($page_name=="add_ex" ){echo 'class="active"';}?> ><a href="addex.php">添加经验</a></li>
 
-          <?php
+    <?php
     if (isset($_COOKIE["userid"]))
     {?>
-            <li class="dropdown <?php if (in_array($page_name, array("mypage", "mymessages", "myconfig")))echo "active "; ?>">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo get_userinfo($_COOKIE["userid"])['nickname'];?><span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="mypage.php">我的主页</a></li>
-                <li><a href="mymessages.php">消息</a></li>
-                <li><a href="myconfig.php">设置</a></li>
-                <li><a href="javascript:delCookie('userid');window.location.href='index.php';">退出登录</a></li>
-              </ul>
-            </li>
-            <?php
+          <li <?php if ($page_name=="add_ex" ){echo 'class="active"';}?> ><a href="addex.php">添加经验</a></li>
+          <li class="dropdown <?php if (in_array($page_name, array("mypage", "mymessages", "myconfig")))echo "active "; ?>">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo get_userinfo($_COOKIE["userid"])['nickname'];?><span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="mypage.php">我的主页</a></li>
+              <li><a href="mymessages.php">消息</a></li>
+              <li><a href="myconfig.php">设置</a></li>
+              <li><a href="javascript:delCookie('userid');window.location.href='index.php';">退出登录</a></li>
+            </ul>
+          </li>
+    <?php
     }
     else
     {?>
-            <script>alert(<?php echo $_COOKIE["userid"];?>);</script>
-            <li <?php if ($page_name=="login" ){echo 'class="active"';}?> ><a href="login.php">登录/注册</a></li>
-            <?php
+          <li <?php if ($page_name=="add_ex" ){echo 'class="active"';}?> ><a href="login.php">添加经验</a></li>
+          <script>alert(<?php echo $_COOKIE["userid"];?>);</script>
+          <li <?php if ($page_name=="login" ){echo 'class="active"';}?> ><a href="login.php">登录/注册</a></li>
+    <?php
     }
     ?>
         </ul>

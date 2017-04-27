@@ -72,10 +72,22 @@ $(document).ready(function() {
   });
 })
 
-function befor_submit() {
-  $("#swap-editor").val($("#editor").summernote('code'));
-  $("#swap-tags").val($("#tagselect").val());
+  function before_submit() {
+<?php 
+if (isset($_COOKIE["userid"]))
+{?>
+    $("#swap-editor").val($("#editor").summernote('code'));
+    $("#swap-tags").val($("#tagselect").val());
+<?php
 }
+else
+{?>
+    alert("登录后才能提交经验！");
+    return false;
+<?php
+}
+?>
+  }
 </script>
 
 <body>
@@ -84,7 +96,7 @@ function befor_submit() {
     <div style="margin:50px;">
     </div>
 
-    <form name="addex" method="post" enctype="multipart/form-data" action="addex_action.php" onsubmit="return befor_submit();">
+    <form name="addex" method="post" enctype="multipart/form-data" action="addex_action.php" onsubmit="return before_submit();">
       <input type="text" name="editor" id="swap-editor" />
       <input type="text" name="tags" id="swap-tags" />
       <div class="container">
@@ -119,7 +131,6 @@ function befor_submit() {
           $(document).ready(function() {
             $('#editor').summernote({
               placeholder: '写下你的经验...',
-              
             });
           });
         </script>
@@ -145,36 +156,36 @@ function befor_submit() {
                     });
                 });
                 </script>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!--Tags-->
-        <div class="row">
-          <div class="col-xs-6" style="margin-bottom: 10px">
-            <select id="tagselect" name="labels" class="form-control" multiple="multiple">
-              <optgroup label="软件">
-                <option>C/C++</option>
-                <option>Python</option>
-                <option>STM32</option>
-              </optgroup>
-              <optgroup label="硬件">
-                <option>开关电源</option>
-                <option>液晶</option>
-              </optgroup>
-              <optgroup label="结构件">
-                <option>端钮盒</option>
-              </optgroup>
-              <optgroup label="流程">
-                <option>流程啊</option>
-              </optgroup>
-            </select>
+          <!--Tags-->
+          <div class="row">
+            <div class="col-xs-6" style="margin-bottom: 10px">
+              <select id="tagselect" name="labels" class="form-control" multiple="multiple">
+                <optgroup label="软件">
+                  <option>C/C++</option>
+                  <option>Python</option>
+                  <option>STM32</option>
+                </optgroup>
+                <optgroup label="硬件">
+                  <option>开关电源</option>
+                  <option>液晶</option>
+                </optgroup>
+                <optgroup label="结构件">
+                  <option>端钮盒</option>
+                </optgroup>
+                <optgroup label="流程">
+                  <option>流程啊</option>
+                </optgroup>
+              </select>
+            </div>
           </div>
+
+          <button id="submitbtn" type="submit" class="btn btn-primary btn-block">提交经验</button>
+
         </div>
-
-        <button id="submitbtn" type="submit" class="btn btn-primary btn-block">提交经验</button>
-
-      </div>
       </from>
 </body>
 

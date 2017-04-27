@@ -15,7 +15,7 @@ $tags=str_replace(',', SEPARATOR, $_POST["tags"]);
 $remote_ip = $_SERVER["REMOTE_ADDR"];
 $timenow = date("Y-m-d H:i:s");
 $author_id = 0;
-if (!empty($_COOKIE["userid"]))
+if (isset($_COOKIE["userid"]))
 {
     $author_id = $_COOKIE["userid"];
 }

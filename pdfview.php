@@ -12,7 +12,7 @@
     <script>
     if(PDFObject.supportsPDFs)
     {
-      var view_file_path = "<?php require_once('config.php'); echo CONTENT_FILE . sprintf("/%06d", $_GET['c']) . "_01.pdf";?>";
+      var view_file_path = "<?php require_once('config.php'); echo CONTENT_FILE . sprintf("/%06d", $_GET['c']) . sprintf("_%02d.pdf", $_GET['f']);?>";
       PDFObject.embed(view_file_path);
     }
     else

@@ -28,8 +28,8 @@ $row = mysqli_fetch_array($result);
 if ($row['password'] == $password)
 {
     setcookie("userid", $row['uid'], time()+24*60*60);
-    print_r("欢迎您，".$row['nickname']);
-    echo "<script>window.location.href='index.php';</script>";
+    echo ("欢迎您，".$row['nickname']);
+    header("Refresh: 1; url=index.php");
 }
 else
 {
