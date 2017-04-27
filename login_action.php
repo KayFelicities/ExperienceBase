@@ -1,10 +1,14 @@
 <!DOCTYPE HTML>
 <html>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="style/css/smoke.css">
+<link rel="stylesheet" href="style/css/bootstrap.css">
 <script src="style/js/jquery.js"></script>
 <script src="style/js/bootstrap.js"></script>
+
+<!--smoke-->
+<link rel="stylesheet" href="style/css/smoke.css">
 <script src="style/js/smoke.js"></script>
+
 <body>
     
 <?php

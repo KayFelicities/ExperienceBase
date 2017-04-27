@@ -24,6 +24,9 @@
 <script src="style/js/fileinput/fileinput.js"></script>
 <script src="style/js/fileinput/zh.js"></script>
 
+<!--smoke-->
+<link rel="stylesheet" href="style/css/smoke.css">
+<script src="style/js/smoke.js"></script>
 
 <style>
   #myeditor {
@@ -38,6 +41,7 @@
 <script>
 $(document).ready(function() {
   $("#extype1").change(function() {
+    $.smkAlert({text: 'Confirmado!!', type:'success'});
     $("#extype2").empty();
     var type1 = $("#extype1").val();
     switch (type1)

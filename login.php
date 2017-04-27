@@ -10,6 +10,10 @@
 <script src="style/js/jquery.js"></script>
 <script src="style/js/bootstrap.js"></script>
 
+<!--smoke-->
+<link rel="stylesheet" href="style/css/smoke.css">
+<script src="style/js/smoke.js"></script>
+
 <style>
   .login, .signup{
     float: left;
@@ -97,13 +101,13 @@ function chk_form()
       alert("密码不得小于6位");  
       return false;
   }
-  if(document.signup.password.value != document.signup.password_chk.value)  
+  if(document.signup.password.value != document.signup.password_chk.value)
   {  
       document.signup.password.focus();  
       alert("两次密码不同，请重新填写");  
       return false;
   }
-  if(add1 + add2 != document.signup.sumchk.value)  
+  if(add1 + add2 != document.signup.sumchk.value)
   {
       document.signup.sumchk.focus();
       alert("验证码错误，请重新填写");  
