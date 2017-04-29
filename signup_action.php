@@ -1,4 +1,15 @@
+<!DOCTYPE HTML>
+<html>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="style/css/bootstrap.css">
+<script src="style/js/jquery.js"></script>
+<script src="style/js/bootstrap.js"></script>
+
+<!--notify-->
+<link rel="stylesheet" href="style/css/animate.css">
+<script src="style/js/bootstrap-notify.js"></script>
+
+<body>
 <?php
 if(PHP_VERSION >= 6 || !get_magic_quotes_gpc()) 
 {
@@ -26,7 +37,11 @@ if(!(mysqli_query($con, $insertsql)))
 }
 else
 {
-    echo "<script>alert('注册成功，请登录');window.location.href='login.php'</script>";
+    echo ("<script>$.notify({message: '注册成功，请登录'}, {type: 'success'});</script>");
+    header("Refresh: 1; url=login.php");
 }
 mysqli_close($con);
 ?>
+
+</body>
+</html>

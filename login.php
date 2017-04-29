@@ -10,9 +10,9 @@
 <script src="style/js/jquery.js"></script>
 <script src="style/js/bootstrap.js"></script>
 
-<!--smoke-->
-<link rel="stylesheet" href="style/css/smoke.css">
-<script src="style/js/smoke.js"></script>
+<!--notify-->
+<link rel="stylesheet" href="style/css/animate.css">
+<script src="style/js/bootstrap-notify.js"></script>
 
 <style>
   .login, .signup{
@@ -98,19 +98,19 @@ function chk_form()
   if(document.signup.password.value.length < 6)  
   {  
       document.signup.password.focus();  
-      alert("密码不得小于6位");  
+      $.notify({message: '密码不得小于6位'}, {type: 'danger'});
       return false;
   }
   if(document.signup.password.value != document.signup.password_chk.value)
   {  
       document.signup.password.focus();  
-      alert("两次密码不同，请重新填写");  
+      $.notify({message: '两次密码不同，请重新填写'}, {type: 'danger'});
       return false;
   }
   if(add1 + add2 != document.signup.sumchk.value)
   {
       document.signup.sumchk.focus();
-      alert("验证码错误，请重新填写");  
+      $.notify({message: '验证码错误，请重新填写'}, {type: 'danger'});
       return false;  
   }
 }

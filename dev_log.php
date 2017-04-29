@@ -97,6 +97,11 @@
     <li>完善经验提交逻辑</li>
   </ol>
 
+  <h4>2017.04.29:</h4>
+  <ol>
+    <li>移植提示消息系统，修改弹窗提示为更友善的提示消息。致谢：<a href="http://bootstrap-notify.remabledesigns.com/">bootstrap-notify</a></li>
+  </ol>
+
   <hr>
   
   <h4>todo list:</h4>

@@ -5,9 +5,9 @@
 <script src="style/js/jquery.js"></script>
 <script src="style/js/bootstrap.js"></script>
 
-<!--smoke-->
-<link rel="stylesheet" href="style/css/smoke.css">
-<script src="style/js/smoke.js"></script>
+<!--notify-->
+<link rel="stylesheet" href="style/css/animate.css">
+<script src="style/js/bootstrap-notify.js"></script>
 
 <body>
     
@@ -32,12 +32,14 @@ $row = mysqli_fetch_array($result);
 if ($row['password'] == $password)
 {
     setcookie("userid", $row['uid'], time()+24*60*60);
-    echo ("欢迎您，".$row['nickname']);
+    // echo ("欢迎您，".$row['nickname']);
+    echo ("<script>$.notify({message: '欢迎您，".$row['nickname']."'}, {type: 'success'});</script>");
     header("Refresh: 1; url=index.php");
 }
 else
 {
-    echo "<script>alert('用户名或密码错误');window.location.href='login.php'</script>";
+    echo ("<script>$.notify({message: '用户名或密码错误！'}, {type: 'danger'});</script>");
+    header("Refresh: 1; url=login.php");
 }
 mysqli_close($con);
 ?>

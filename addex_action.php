@@ -1,4 +1,15 @@
+<!DOCTYPE HTML>
+<html>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="style/css/bootstrap.css">
+<script src="style/js/jquery.js"></script>
+<script src="style/js/bootstrap.js"></script>
+
+<!--notify-->
+<link rel="stylesheet" href="style/css/animate.css">
+<script src="style/js/bootstrap-notify.js"></script>
+
+<body>
 <?php
 if(PHP_VERSION >= 6 || !get_magic_quotes_gpc())
 {
@@ -31,17 +42,17 @@ if(mysqli_query($con, $insertsql))
     $result = mysqli_query($con, "SELECT @@IDENTITY");
     $cid = mysqli_fetch_array($result)[0];
 
-    if (!empty($_FILES['file']['name']))
+    if ($_FILES['file']['name'][0])
     {
       for ($i = 0; $i < count($_FILES['file']['name']); $i++)
       {
         if ($_FILES["file"]["error"][$i] > 0)
         {
-            echo "文件上传失败：" . $_FILES["file"]["error"][$i] . "<br />";
+            echo ("<script>$.notify({message: '".$_FILES["file"]["name"][$i]."上传失败:".$_FILES["file"]["error"][$i]."'}, {type: 'danger'});</script>");
         }
         else
         {
-            echo "正在上传文件" . $_FILES["file"]["name"][$i] . "，请稍后。";
+            echo ("<script>$.notify({message: '正在上传".$_FILES["file"]["name"][$i]."，请稍后。'}, {type: 'info'});</script>");
 
             if (!is_dir(CONTENT_FILE))
             {
@@ -115,13 +126,11 @@ if(mysqli_query($con, $insertsql))
     }
     else
     {
-      print_r($_FILES['file']['tmp_name']);
-      print_r($_FILES['file']['name']);
-      print_r($_FILES['file']['error']);
-      echo "<script>alert();</script>";
+      print_r('未上传文件');
     }
 
-    echo "<script>alert();window.location.href='content.php?cid=$cid'</script>";
+    echo ("<script>$.notify({message: '提交成功！'}, {type: 'success'});</script>");
+    header("Refresh: 1; url=content.php?cid=$cid");
 }
 else
 {
@@ -129,3 +138,7 @@ else
 }
 mysqli_close($con);
 ?>
+
+</body>
+
+</html>

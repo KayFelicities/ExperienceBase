@@ -10,7 +10,7 @@
 <script src="style/js/bootstrap.js"></script>
 <script src="style/js/jquery.js"></script>
 
-<!--smoke-->
+<!--notify-->
 <script src="style/js/bootstrap-notify.js"></script>
 
 <body>

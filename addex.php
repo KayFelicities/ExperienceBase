@@ -24,9 +24,9 @@
 <script src="style/js/fileinput/fileinput.js"></script>
 <script src="style/js/fileinput/zh.js"></script>
 
-<!--smoke-->
-<link rel="stylesheet" href="style/css/smoke.css">
-<script src="style/js/smoke.js"></script>
+<!--notify-->
+<link rel="stylesheet" href="style/css/animate.css">
+<script src="style/js/bootstrap-notify.js"></script>
 
 <style>
   #myeditor {
@@ -82,11 +82,12 @@ if (isset($_COOKIE["userid"]))
 {?>
     $("#swap-editor").val($("#editor").summernote('code'));
     $("#swap-tags").val($("#tagselect").val());
+    $.notify({message: '经验正在提交中，请稍后……'}, {type: 'info', delay: 0});
 <?php
 }
 else
 {?>
-    alert("登录后才能提交经验！");
+    $.notify({message: '登录后才能提交经验！'}, {type: 'danger'});
     return false;
 <?php
 }
