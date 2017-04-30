@@ -151,6 +151,7 @@ function chk_form()
 
       <div id="signup-form" class="signup">
         <form name="signup" method="post" action="signup_action.php" onsubmit="return chk_form();">
+          <input type="hidden" name="lasturl" value="<?php echo (isset($_GET['lu']) ? $_GET['lu'] : $_SERVER['HTTP_REFERER']);?>">
           <div class="form-group">
             <label>用户名</label>
             <input type="text" class="form-control" name="username" maxlength="32" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" placeholder="请保持与OA用户名相同，用于登录" required autofocus>

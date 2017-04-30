@@ -9544,11 +9544,11 @@ button.close {
   float: left;
   width: 40px;
   height: 40px;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 .comments>footer>.reply-form>.avatar+.form {
-  padding-left: 50px;
+  padding-left: 55px;
 }
 
 .comment {
@@ -9589,11 +9589,11 @@ button.close {
   float: left;
   width: 40px;
   height: 40px;
-  margin-top: 10px;
+  margin-top: 0px;
 }
 
 .comment>.avatar+.content {
-  padding-left: 50px;
+  padding-left: 55px;
 }
 
 .comment>.content>.text {

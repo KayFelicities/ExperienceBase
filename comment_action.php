@@ -31,10 +31,10 @@ if (isset($_COOKIE["userid"]))
 $con=mysqli_connect(HOST, USERNAME, PASSWORD);
 mysqli_set_charset($con, "utf8");
 mysqli_select_db($con, 'experience_base');
-$insertsql= "INSERT INTO eb_comments(cid, create_tm, create_ip, co_author_id, comment)
+$insertsql_add= "INSERT INTO eb_comments(cid, create_tm, create_ip, co_author_id, comment)
                               VALUES('$cid', '$timenow', '$remote_ip', '$author_id', '$comment')";         
-
-if(mysqli_query($con, $insertsql))
+$insertsql_update= "UPDATE eb_contents SET comment_num=comment_num+1 WHERE cid='$cid'";         
+if(mysqli_query($con, $insertsql_add) and mysqli_query($con, $insertsql_update))
 {
     echo ("<script>$.notify({message: '评论成功！'}, {type: 'success'});</script>");
     header("Refresh: 1; url=content.php?cid=$cid");

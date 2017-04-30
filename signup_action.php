@@ -19,6 +19,7 @@ if(PHP_VERSION >= 6 || !get_magic_quotes_gpc())
 $username=$_POST["username"];
 $password=$_POST['password'];
 $nickname=$_POST['nickname'];
+$lasturl=$_POST['lasturl'];
 $sx_id=$_POST['sx_id'];
 $department=$_POST['department1'].','.$_POST['department2'];
 $remote_ip = $_SERVER["REMOTE_ADDR"];
@@ -38,7 +39,7 @@ if(!(mysqli_query($con, $insertsql)))
 else
 {
     echo ("<script>$.notify({message: '注册成功，请登录'}, {type: 'success'});</script>");
-    header("Refresh: 1; url=login.php");
+    header("Refresh: 1; url=login.php?lu=$lasturl");
 }
 mysqli_close($con);
 ?>

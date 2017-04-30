@@ -75,6 +75,13 @@ mysqli_select_db($con, 'experience_base');
 $result = mysqli_query($con, "SELECT * FROM eb_contents WHERE cid=$cid");
 $row = mysqli_fetch_array($result);
 $c_author_id = $row['author_id'];
+
+if (count_comment($cid) != $row['comment_num'])
+{//评论数纠错
+  $comment_num = count_comment($cid);
+  mysqli_query($con, "UPDATE eb_contents SET comment_num='$comment_num' WHERE cid='$cid'");
+  $row['comment_num'] = $comment_num;
+}
 ?>
     <div class="content-header">
         <h1><?php echo $row['title']?></h1>
@@ -175,7 +182,7 @@ $c_author_id = $row['author_id'];
     </div>
 
     <!--comments-->
-    <div class="comments">
+    <div class="comments" id="excomments">
       <header>
         <h3>评论(共<?php echo count_comment($cid); ?>条)</h3>
       </header>
@@ -187,7 +194,7 @@ while ($row = mysqli_fetch_array($result))
       <div class="comments-list">
         <div class="comment">
           <a href="###" class="avatar">
-            <img class="avatar-s" src="<?php echo get_avatar($row['co_author_id']); ?>"></img>
+            <img class="avatar-m" src="<?php echo get_avatar($row['co_author_id']); ?>"></img>
           </a>
           <div class="content">
             <div class="pull-right text-muted"><?php echo $row['create_tm']; ?></div>
@@ -208,8 +215,8 @@ while ($row = mysqli_fetch_array($result))
 if (isset($_COOKIE["userid"]))
 {
 ?>
-        <div class="reply-form" id="commentReplyForm2">
-          <a href="###" class="avatar"><img class="avatar-s" src="<?php echo get_avatar($_COOKIE["userid"]);?>"></img></a>
+        <div class="reply-form">
+          <a href="###" class="avatar"><img class="avatar-m" src="<?php echo get_avatar($_COOKIE["userid"]);?>"></img></a>
           <form class="form" method="post" action="comment_action.php">
             <input type="hidden" name="cid" value="<?php echo $cid; ?>">
             <div class="form-group">

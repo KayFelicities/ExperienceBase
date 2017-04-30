@@ -105,6 +105,7 @@
   <h4>2017.04.30:</h4>
   <ol>
     <li>移植图片裁剪插件，实现头像更换。致谢：<a href="https://github.com/alexk111/ngImgCrop">ngImgCrop</a></li>
+    <li>文章评论数据库搭建，功能实现</li>
   </ol>
 
   <hr>
