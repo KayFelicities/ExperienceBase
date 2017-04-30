@@ -78,7 +78,15 @@ $row = mysqli_fetch_array($result);
     <div class="content-header">
         <h1><?php echo $row['title']?></h1>
 
-        <a href="#" class="text-muted"><i class="icon-user"></i> <?php echo get_userinfo($row['author_id'])['nickname'];?></a>
+        <?php 
+        $avatar = USER_AVATAR_PATH.sprintf("/%06d.png", $row['author_id']);
+        if (!file_exists($avatar))
+        {
+          $avatar = USER_AVATAR_PATH."/d01.png";
+        }
+        ?>
+
+        <a href="#" class="text-muted"><img class="avatar-xs" src="<?php echo $avatar?>" /> <?php echo get_userinfo($row['author_id'])['nickname'];?></a>
         &nbsp; &nbsp; 
         <a href="#" class="text-muted"><i class="icon-comments"></i> <?php echo $row['comment_num'];?></a> 
         &nbsp; &nbsp; 

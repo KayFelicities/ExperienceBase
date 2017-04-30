@@ -102,6 +102,11 @@
     <li>移植提示消息系统，修改弹窗提示为更友善的提示消息。致谢：<a href="http://bootstrap-notify.remabledesigns.com/">bootstrap-notify</a></li>
   </ol>
 
+  <h4>2017.04.30:</h4>
+  <ol>
+    <li>移植图片裁剪插件，实现头像更换。致谢：<a href="https://github.com/alexk111/ngImgCrop">ngImgCrop</a></li>
+  </ol>
+
   <hr>
   
   <h4>todo list:</h4>
@@ -111,7 +116,7 @@
     <li>用户个人界面搭建</li>
     <li>用户信息数据库优化</li>
     <li>标签系统优化、标签数据库搭建</li>
-    <li>文章评论系统搭建</li>
+    <li>文章评论、点赞系统搭建</li>
     <li>个人订阅、消息系统搭建</li>
     <li>搜索系统搭建</li>
   </ol>

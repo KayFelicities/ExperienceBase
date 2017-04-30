@@ -108,9 +108,21 @@ function echo_content_item($no, $type="")
           <?php echo $row['extype2'];?>
         </a>
         &nbsp; &nbsp;
-        <a href="#" class="text-muted"><i class="icon-user"></i> <?php echo get_userinfo($row['author_id'])['nickname'];?></a> &nbsp; &nbsp;
-        <a href="#" class="text-muted"><i class="icon-comments"></i> <?php echo $row['comment_num'];?></a> &nbsp; &nbsp;
-        <span class="text-muted"><i class="icon-time"></i> <?php echo $row['create_tm'];?></span> &nbsp;
+
+        <?php 
+        $avatar = USER_AVATAR_PATH.sprintf("/%06d.png", $row['author_id']);
+        if (!file_exists($avatar))
+        {
+          $avatar = USER_AVATAR_PATH."/d01.png";
+        }
+        ?>
+
+        <a href="#" class="text-muted"><img class="avatar-xs" src="<?php echo $avatar?>" /> <?php echo get_userinfo($row['author_id'])['nickname'];?></a>
+        &nbsp; &nbsp;
+        <a href="#" class="text-muted"><i class="icon-comments"></i> <?php echo $row['comment_num'];?></a> 
+        &nbsp; &nbsp;
+        <span class="text-muted"><i class="icon-time"></i> <?php echo $row['create_tm'];?></span> 
+        &nbsp;
         <?php
         $tags_array = explode(SEPARATOR, $row['tags']);
         foreach ($tags_array as $tag)

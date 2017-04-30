@@ -9638,19 +9638,48 @@ button.close {
   content: '\e679';
 }
 
+.avatar-xs{
+  height: 16px;
+  width: 16px;
+  border-radius: 2px;
+  vertical-align: sub;
+}
+
 .avatar-s{
   height: 28px;
   width: 28px;
+  border-radius: 2px;
+  vertical-align: sub;
 }
 
 .avatar-m {
   height: 42px;
   width: 42px;
+  border-radius: 3px;
 }
 
 .avatar-l {
   height: 56px;
   width: 56px;
+  border-radius: 4px;
+}
+
+.avatar-xl {
+  height: 80px;
+  width: 80px;
+  border-radius: 5px;
+}
+
+.avatar-xxl {
+  height: 150px;
+  width: 150px;
+  border-radius: 5px;
+}
+
+.avatar-xxxl {
+  height: 200px;
+  width: 200px;
+  border-radius: 5px;
 }
 
 @media (max-width: 767px) {
