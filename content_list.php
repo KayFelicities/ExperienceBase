@@ -14,8 +14,8 @@
 <?php include("common.php"); ?>
 <?php
   $items_per_page = 10;  
-  $page = $_GET['p']; 
-  $type = $_GET['t']; 
+  $page = isset($_GET['p']) ? $_GET['p'] : '0'; 
+  $type = isset($_GET['t']) ? $_GET['t'] : ''; 
   $page_sum = ceil(count_content($type) / $items_per_page);
   echo_banner($type);
 ?>

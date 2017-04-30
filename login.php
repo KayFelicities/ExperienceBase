@@ -129,6 +129,7 @@ function chk_form()
 
       <div id="login-form" class="login">
         <form name="login" method="post" action="login_action.php">
+          <input type="hidden" name="lasturl" value="<?php echo (isset($_GET['lu']) ? $_GET['lu'] : $_SERVER['HTTP_REFERER']);?>">
           <div class="form-group">
             <label>用户名</label>
             <input type="text" class="form-control" name="username" maxlength="32" placeholder="" required autofocus>

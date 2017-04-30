@@ -37,7 +37,23 @@ CREATE TABLE `eb_contents` (
   `tags` char(128) default NULL,
   `password` varchar(32) default NULL,
   `comment_num` int(10) unsigned default '0',
-  PRIMARY KEY  (`cid`)
+  PRIMARY KEY  (`cid`),
+  KEY `author_id` (`author_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- 评论
+CREATE TABLE `eb_comments` (
+  `coid` int(10) unsigned NOT NULL auto_increment,
+  `cid` int(10) unsigned default '0',
+  `create_tm` datetime default NULL,
+  `create_ip` char(16) default NULL,
+  `co_author_id` int(10),
+  `status` char(16) default 'publish',
+  `comment` text,
+  `parent_coid` int(10) unsigned default '0',
+  PRIMARY KEY  (`coid`),
+  KEY `cid` (`cid`),
+  KEY `co_author_id` (`co_author_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- 杂项

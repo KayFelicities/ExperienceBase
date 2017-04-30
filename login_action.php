@@ -19,6 +19,7 @@ if(PHP_VERSION >= 6 || !get_magic_quotes_gpc())
 
 $username=$_POST["username"];
 $password=$_POST['password'];
+$lasturl=$_POST['lasturl'];
 $remote_ip = $_SERVER["REMOTE_ADDR"];
 $timenow = date('Y-m-d H:i:s');
 
@@ -34,12 +35,13 @@ if ($row['password'] == $password)
     setcookie("userid", $row['uid'], time()+24*60*60);
     // echo ("欢迎您，".$row['nickname']);
     echo ("<script>$.notify({message: '欢迎您，".$row['nickname']."'}, {type: 'success'});</script>");
-    header("Refresh: 1; url=index.php");
+    header("Refresh: 1; url={$lasturl}");
 }
 else
 {
     echo ("<script>$.notify({message: '用户名或密码错误！'}, {type: 'danger'});</script>");
-    header("Refresh: 1; url=login.php");
+    print_r($lasturl);
+    header("Refresh: 1; url=login.php?lu=$lasturl");
 }
 mysqli_close($con);
 ?>

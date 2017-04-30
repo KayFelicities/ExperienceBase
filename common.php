@@ -48,7 +48,7 @@ function echo_banner($page_name)
               <li><a href="mypage.php">我的主页</a></li>
               <li><a href="mymessages.php">消息</a></li>
               <li><a href="myconfig.php">设置</a></li>
-              <li><a href="javascript:delCookie('userid');window.location.href='index.php';">退出登录</a></li>
+              <li><a href="javascript:delCookie('userid');window.location.href='<?php echo $_SERVER["PHP_SELF"]."?".$_SERVER["QUERY_STRING"]?>';">退出登录</a></li>
             </ul>
           </li>
     <?php
@@ -109,15 +109,7 @@ function echo_content_item($no, $type="")
         </a>
         &nbsp; &nbsp;
 
-        <?php 
-        $avatar = USER_AVATAR_PATH.sprintf("/%06d.png", $row['author_id']);
-        if (!file_exists($avatar))
-        {
-          $avatar = USER_AVATAR_PATH."/d01.png";
-        }
-        ?>
-
-        <a href="#" class="text-muted"><img class="avatar-xs" src="<?php echo $avatar?>" /> <?php echo get_userinfo($row['author_id'])['nickname'];?></a>
+        <a href="#" class="text-muted"><img class="avatar-xs" src="<?php echo get_avatar($row['author_id']);?>" /> <?php echo get_userinfo($row['author_id'])['nickname'];?></a>
         &nbsp; &nbsp;
         <a href="#" class="text-muted"><i class="icon-comments"></i> <?php echo $row['comment_num'];?></a> 
         &nbsp; &nbsp;
@@ -160,6 +152,29 @@ function count_content($type="")
     $count = mysqli_fetch_array($result)['count'];
     mysqli_close($con);
     return $count;
+}
+
+function count_comment($cid)
+{
+    require_once('config.php');
+    $con=mysqli_connect(HOST, USERNAME, PASSWORD);
+    mysqli_set_charset($con, "utf8");
+    mysqli_select_db($con, 'experience_base');
+    $result = mysqli_query($con, "SELECT COUNT(*) AS count FROM eb_comments WHERE cid='$cid'");
+    $count = mysqli_fetch_array($result)['count'];
+    mysqli_close($con);
+    return $count;
+}
+
+function get_avatar($uid)
+{
+  require_once('config.php');
+  $avatar = USER_AVATAR_PATH.sprintf("/%06d.png", $uid);
+  if (!file_exists($avatar))
+  {
+    $avatar = USER_AVATAR_PATH."/d01.png";
+  }
+  return $avatar;
 }
 
 function get_userinfo($uid)

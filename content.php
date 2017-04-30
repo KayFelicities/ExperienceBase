@@ -74,19 +74,12 @@ mysqli_set_charset($con, "utf8");
 mysqli_select_db($con, 'experience_base');
 $result = mysqli_query($con, "SELECT * FROM eb_contents WHERE cid=$cid");
 $row = mysqli_fetch_array($result);
+$c_author_id = $row['author_id'];
 ?>
     <div class="content-header">
         <h1><?php echo $row['title']?></h1>
 
-        <?php 
-        $avatar = USER_AVATAR_PATH.sprintf("/%06d.png", $row['author_id']);
-        if (!file_exists($avatar))
-        {
-          $avatar = USER_AVATAR_PATH."/d01.png";
-        }
-        ?>
-
-        <a href="#" class="text-muted"><img class="avatar-xs" src="<?php echo $avatar?>" /> <?php echo get_userinfo($row['author_id'])['nickname'];?></a>
+        <a href="#" class="text-muted"><img class="avatar-xs" src="<?php echo get_avatar($c_author_id); ?>" /> <?php echo get_userinfo($row['author_id'])['nickname'];?></a>
         &nbsp; &nbsp; 
         <a href="#" class="text-muted"><i class="icon-comments"></i> <?php echo $row['comment_num'];?></a> 
         &nbsp; &nbsp; 
@@ -184,58 +177,67 @@ $row = mysqli_fetch_array($result);
     <!--comments-->
     <div class="comments">
       <header>
-        <h3>评论</h3>
+        <h3>评论(共<?php echo count_comment($cid); ?>条)</h3>
       </header>
 
-      <section class="comments-list">
+<?php
+$result = mysqli_query($con, "SELECT * FROM eb_comments WHERE cid=$cid");
+while ($row = mysqli_fetch_array($result))
+{?>
+      <div class="comments-list">
         <div class="comment">
           <a href="###" class="avatar">
-            <img class="avatar-s" src="img/logo.png"></img>
+            <img class="avatar-s" src="<?php echo get_avatar($row['co_author_id']); ?>"></img>
           </a>
           <div class="content">
-            <div class="pull-right text-muted">3 个小时前</div>
-            <div><a href="###"><strong>张士超</strong></a></div>
-            <div class="text">今天玩的真开心！~~~~~~</div>
+            <div class="pull-right text-muted"><?php echo $row['create_tm']; ?></div>
+            <div><a href="###"><strong><?php echo get_userinfo($row['co_author_id'])['nickname'];?></strong></a></div>
+            <div class="text"><?php echo $row['comment'];?></div>
             <div class="actions">
               <a href="##">回复</a>
             </div>
           </div>
-          <div class="comments-list">
-            <div class="comment">
-              <a href="###" class="avatar">
-                <img class="avatar-s" src="img/logo.png"></img>
-              </a>
-              <div class="content">
-                <div class="pull-right text-muted">2 个小时前</div>
-                <div><a href="###"><strong>Catouse</strong></a> <span class="text-muted">回复</span> <a href="###">张士超</a></div>
-                <div class="text">你到底把我家钥匙放哪里了...</div>
-                <div class="actions">
-                  <a href="##">回复</a>
-                  <a href="##">编辑</a>
-                  <a href="##">删除</a>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-      </section>
+      </div>
+<?php
+}
+?>
 
       <footer>
+<?php 
+if (isset($_COOKIE["userid"]))
+{
+?>
         <div class="reply-form" id="commentReplyForm2">
-          <a href="###" class="avatar"><img class="avatar-s" src="img/logo.png"></img></a>
-          <form class="form" action="comment_action.php">
+          <a href="###" class="avatar"><img class="avatar-s" src="<?php echo get_avatar($_COOKIE["userid"]);?>"></img></a>
+          <form class="form" method="post" action="comment_action.php">
+            <input type="hidden" name="cid" value="<?php echo $cid; ?>">
             <div class="form-group">
-                <textarea class="form-control" rows="2" placeholder="撰写评论..."></textarea>
+                <textarea class="form-control" name="comment" rows="2" placeholder="撰写评论..."></textarea>
                 <button type="submit" class="btn btn-primary btn-ubmargin pull-right">提交评论</button>
                 <div style="margin: 50px"></div>
             </div>
           </form>
         </div>
+<?php
+}
+else
+{
+?>
+        <div>
+          <p><a href="login.php">登录</a>后回复</p>
+        </div>
+<?php
+}
+?>
       </footer>
     </div>
 
 </div>
 
+<?php
+mysqli_close($con);
+?>
 </body>
 
 </html>
