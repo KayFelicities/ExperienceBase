@@ -220,7 +220,7 @@ if (isset($_COOKIE["userid"]))
           <form class="form" method="post" action="comment_action.php">
             <input type="hidden" name="cid" value="<?php echo $cid; ?>">
             <div class="form-group">
-                <textarea class="form-control" name="comment" rows="2" placeholder="撰写评论..."></textarea>
+                <textarea class="form-control" name="comment" rows="2" placeholder="撰写评论..." required></textarea>
                 <button type="submit" class="btn btn-primary btn-ubmargin pull-right">提交评论</button>
                 <div style="margin: 50px"></div>
             </div>
