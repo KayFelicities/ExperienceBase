@@ -63,19 +63,12 @@ angular.module('app', ['ngImgCrop'])
 <div class="container">
 <?php if (!isset($_COOKIE["userid"])){echo "请<a href='login.php'>登录</a>";}else{?>
   <header>
-    <h3><i></i> <?php echo get_userinfo($_COOKIE["userid"])['nickname'];?> <small>个人设置</small></h3>
+    <h3><i></i>个人设置<small></small></h3>
   </header>
   <hr>
   <form method="post" action="myconfig_action.php">
     <div id="myavatar">
-      <?php 
-      $avatar = USER_AVATAR_PATH.sprintf("/%06d.png", $_COOKIE["userid"]);
-      if (!file_exists($avatar))
-      {
-        $avatar = USER_AVATAR_PATH."/d01.png";
-      }
-      ?>
-      <img class="avatar-xxxl" src="<?php echo $avatar?>" />
+      <img class="avatar-xxxl" src="<?php echo get_avatar($_COOKIE["userid"]);?>" />
       <div ng-app="app" ng-controller="Ctrl">
         <div>选择新头像: <input type="file" id="fileInput" /></div>
         <div class="cropArea">

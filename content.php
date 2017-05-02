@@ -193,12 +193,12 @@ while ($row = mysqli_fetch_array($result))
 {?>
       <div class="comments-list">
         <div class="comment">
-          <a href="###" class="avatar">
+          <a href="userpage.php?u=<?php echo $row['co_author_id'];?>" class="avatar">
             <img class="avatar-m" src="<?php echo get_avatar($row['co_author_id']); ?>"></img>
           </a>
           <div class="content">
             <div class="pull-right text-muted"><?php echo $row['create_tm']; ?></div>
-            <div><a href="###"><strong><?php echo get_userinfo($row['co_author_id'])['nickname'];?></strong></a></div>
+            <div><a href="userpage.php?u=<?php echo $row['co_author_id'];?>"><strong><?php echo get_userinfo($row['co_author_id'])['nickname'];?></strong></a></div>
             <div class="text"><?php echo $row['comment'];?></div>
             <div class="actions">
               <a href="##">回复</a>

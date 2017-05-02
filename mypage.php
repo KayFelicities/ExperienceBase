@@ -33,7 +33,7 @@ else
   <hr>
 
   <div class="col-xs-3">
-    <img class="avatar-xxxl" src="<?php  get_avatar($_COOKIE["userid"])?>" />
+    <img class="avatar-xxxl" src="<?php echo get_avatar($_COOKIE["userid"]);?>" />
     <h3><?php echo $userinfo['nickname'];?> </h3>
     <h5><?php echo $userinfo['department'];?> </h5>
   </div>
