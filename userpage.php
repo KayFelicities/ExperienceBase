@@ -22,18 +22,18 @@ column-count:2;
 <?php include("common.php"); echo_banner("mypage"); ?>
 <div style="margin: 60px"></div>
 <div class="container">
-<?php if (!isset($_COOKIE["userid"])){echo "请<a href='login.php'>登录</a>";}
-else
-{
-  $userinfo = get_userinfo($_COOKIE["userid"]);
+<?php 
+  $userinfo = get_userinfo($_GET['u']);
+  if ($userinfo)
+  {
 ?>
   <header>
-    <h3><i></i>个人主页<small></small></h3>
+    <h3><i></i><?php echo $userinfo['nickname'];?><small></small></h3>
   </header>
   <hr>
 
   <div class="col-xs-3">
-    <img class="avatar-xxxl" src="<?php  get_avatar($_COOKIE["userid"])?>" />
+    <img class="avatar-xxxl" src="<?php echo get_avatar($_GET['u'])?>" />
     <h3><?php echo $userinfo['nickname'];?> </h3>
     <h5><?php echo $userinfo['department'];?> </h5>
   </div>
@@ -58,7 +58,14 @@ else
     </div>
   </div>
 
-<?php }?>
+<?php
+  }
+  else
+  {
+    echo "未查找到该用户";
+  }
+?>
+
 </div>
 
 </body>

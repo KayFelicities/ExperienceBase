@@ -109,7 +109,7 @@ function echo_content_item($no, $type="")
         </a>
         &nbsp; &nbsp;
 
-        <a href="#" class="text-muted"><img class="avatar-xs" src="<?php echo get_avatar($row['author_id']);?>" /> <?php echo get_userinfo($row['author_id'])['nickname'];?></a>
+        <a href="userpage.php?u=<?php echo $row['author_id'];?>" class="text-muted"><img class="avatar-xs" src="<?php echo get_avatar($row['author_id']);?>" /> <?php echo get_userinfo($row['author_id'])['nickname'];?></a>
         &nbsp; &nbsp;
         <a href="content.php?cid=<?php echo $row['cid'];?>#excomments" class="text-muted"><i class="icon-comments"></i> <?php echo $row['comment_num'];?></a> 
         &nbsp; &nbsp;

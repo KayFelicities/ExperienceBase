@@ -86,9 +86,9 @@ if (count_comment($cid) != $row['comment_num'])
     <div class="content-header">
         <h1><?php echo $row['title']?></h1>
 
-        <a href="#" class="text-muted"><img class="avatar-xs" src="<?php echo get_avatar($c_author_id); ?>" /> <?php echo get_userinfo($row['author_id'])['nickname'];?></a>
+        <a href="userpage.php?u=<?php echo $row['author_id'];?>" class="text-muted"><img class="avatar-xs" src="<?php echo get_avatar($c_author_id); ?>" /> <?php echo get_userinfo($row['author_id'])['nickname'];?></a>
         &nbsp; &nbsp; 
-        <a href="#" class="text-muted"><i class="icon-comments"></i> <?php echo $row['comment_num'];?></a> 
+        <a href="#excomments" class="text-muted"><i class="icon-comments"></i> <?php echo $row['comment_num'];?></a> 
         &nbsp; &nbsp; 
         <span class="text-muted"><i class="icon-time"></i> <?php echo $row['create_tm'];?></span>
         &nbsp; &nbsp; 
