@@ -9,83 +9,62 @@
 <script src="style/js/jquery.js"></script>
 <script src="style/js/bootstrap.js"></script>
 
-<!--imgcrop-->
-<script src="style/js/angular.js"></script>
-<script src="style/js/ng-img-crop.js"></script>
-<link rel="stylesheet" type="text/css" href="style/css/ng-img-crop.css">
-
-<style>
-.cropArea {
-  background: #E4E4E4;
-  overflow: hidden;
-  width:300px;
-  height:200px;
-}
-#swapimg {
-  display: none;
-}
-#mypage-avatar
+<style> 
+.col-display
 {
-  /*float: right;*/
+-moz-column-count:2; /* Firefox */
+-webkit-column-count:2; /* Safari and Chrome */
+column-count:2;
 }
 </style>
-
-<script>
-function delCookie(name) {
-  var d = new Date();
-  d.setTime(d.getTime() - 1);
-  var expires = "expires="+d.toUTCString();
-  document.cookie = name + "=" + "" + "; " + expires;
-}
-
-angular.module('app', ['ngImgCrop'])
-.controller('Ctrl', function($scope) {
-  $scope.myImage='';
-  $scope.myCroppedImage='';
-
-  var handleFileSelect=function(evt) {
-    var file=evt.currentTarget.files[0];
-    var reader = new FileReader();
-    reader.onload = function (evt) {
-      $scope.$apply(function($scope){
-        $scope.myImage=evt.target.result;
-      });
-    };
-    reader.readAsDataURL(file);
-  };
-  angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
-});
-</script>
 
 <body>
 <?php include("common.php"); echo_banner("mypage"); ?>
 <div style="margin: 60px"></div>
 <div class="container">
+<?php if (!isset($_COOKIE["userid"])){echo "请<a href='login.php'>登录</a>";}
+else
+{
+  $userinfo = get_userinfo($_COOKIE["userid"]);
+?>
   <header>
-    <h3><i></i> <?php if (isset($_COOKIE["userid"]))echo get_userinfo($_COOKIE["userid"])['nickname'];else header("url=login.php");?> <small>个人主页</small></h3>
+    <h3><i></i> <?php echo $userinfo['nickname'];?> <small>个人主页</small></h3>
   </header>
   <hr>
-  <form method="post" action="mypage_action.php">
-    <div id="mypage-avatar">
-      <?php 
-      $avatar = USER_AVATAR_PATH.sprintf("/%06d.png", $_COOKIE["userid"]);
-      if (!file_exists($avatar))
-      {
-        $avatar = USER_AVATAR_PATH."/d01.png";
-      }
-      ?>
-      <img class="avatar-xxxl" src="<?php echo $avatar?>" />
-      <div ng-app="app" ng-controller="Ctrl">
-        <div>选择新头像: <input type="file" id="fileInput" /></div>
-        <div class="cropArea">
-          <img-crop image="myImage" result-image="myCroppedImage" result-image-size="400" area-type="square"></img-crop>
-        </div>
-        <input class="text" id="swapimg" name="imgbase64" value="{{myCroppedImage}}">
-        <button class="btn btn-primary">保存</button>
-      </div>
-    </div>
-  </form>
 
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">我的资料
+        <small><button id="edit-btn" class="btn btn-default btn-xs pull-right">修改</button></small>
+      </h3>
+    </div>
+    <div class="panel-body col-display">
+      <p>用户名：<?php echo $userinfo['username'];?> </p>
+      <p>姓名：<?php echo $userinfo['nickname'];?> </p>
+      <p>工号：<?php echo $userinfo['sx_id'];?> </p>
+      <p>部门：<?php echo $userinfo['department'];?> </p>
+    </div>
+  </div>
+  
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">我的关注</h3>
+    </div>
+    <div class="panel-body col-display">
+
+    </div>
+  </div>
+  
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">我发表的经验</h3>
+    </div>
+    <div class="panel-body col-display">
+
+    </div>
+  </div>
+
+<?php }?>
 </div>
 
 </body>

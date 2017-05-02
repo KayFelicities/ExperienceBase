@@ -43,10 +43,10 @@ function echo_banner($page_name)
     {?>
           <li <?php if ($page_name=="add_ex" ){echo 'class="active"';}?> ><a href="addex.php">添加经验</a></li>
           <li class="dropdown <?php if (in_array($page_name, array("mypage", "mymessages", "myconfig")))echo "active "; ?>">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo get_userinfo($_COOKIE["userid"])['nickname'];?><span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo get_userinfo($_COOKIE["userid"])['nickname'];?> <span class="badge">1</span><span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="mypage.php">我的主页</a></li>
-              <li><a href="mymessages.php">消息</a></li>
+              <li><a href="mymessages.php">消息 <span class="badge">1</span></a></li>
               <li><a href="myconfig.php">设置</a></li>
               <li><a href="javascript:delCookie('userid');window.location.href='<?php echo $_SERVER["PHP_SELF"]."?".$_SERVER["QUERY_STRING"]?>';">退出登录</a></li>
             </ul>
