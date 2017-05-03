@@ -37,7 +37,7 @@ $insertsql_update= "UPDATE eb_contents SET comment_num=comment_num+1 WHERE cid='
 if(mysqli_query($con, $insertsql_add) and mysqli_query($con, $insertsql_update))
 {
     echo ("<script>$.notify({message: '评论成功！'}, {type: 'success'});</script>");
-    header("Refresh: 1; url=content.php?cid=$cid");
+    header("Refresh: 1; url=content.php?cid=$cid#excomments");
 }
 else
 {

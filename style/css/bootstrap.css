@@ -9463,14 +9463,6 @@ button.close {
   margin-top: 5px;
 }
 
-.items .item-content:before,
-.items .item-content:after {
-  /* 1 */
-  display: table;
-  content: " ";
-  /* 2 */
-}
-
 .items .item-content:after {
   clear: both;
 }
@@ -9509,7 +9501,7 @@ button.close {
 }
 
 .items .item-footer {
-  padding-top: 5px;
+  padding-top: 10px;
 }
 
 .items .item-footer>a {

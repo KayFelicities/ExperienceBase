@@ -87,7 +87,7 @@ function echo_content_item($no, $type="", $author_id="", $tag="")
         <h4><a href="content.php?cid=<?php echo $row['cid'];?>"><?php echo $row['title'];?></a></h4>
       </div>
       <div class="item-content">
-        <div class="media pull-right"><img src="img/logo.png" alt=""></div>
+        <div class="media pull-right"></div>
         <div class="text">
           <?php echo mb_substr(strip_tags($row['content']), 0, 200, 'utf-8').'...';?>
         </div>
