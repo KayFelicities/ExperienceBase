@@ -86,20 +86,8 @@ if (count_comment($cid) != $row['comment_num'])
     <div class="content-header">
         <h1><?php echo $row['title']?></h1>
 
-        <a href="userpage.php?u=<?php echo $row['author_id'];?>" class="text-muted"><img class="avatar-xs" src="<?php echo get_avatar($c_author_id); ?>" /> <?php echo get_userinfo($row['author_id'])['nickname'];?></a>
-        &nbsp; &nbsp; 
-        <a href="#excomments" class="text-muted"><i class="icon-comments"></i> <?php echo $row['comment_num'];?></a> 
-        &nbsp; &nbsp; 
-        <span class="text-muted"><i class="icon-time"></i> <?php echo $row['create_tm'];?></span>
-        &nbsp; &nbsp; 
-        <?php
-        $tags_array = explode(SEPARATOR, $row['tags']);
-        foreach ($tags_array as $tag)
-        {?>
-          <span class="label label-success"><?php echo $tag;?></span>
-          <?php
-        }?>
-        <!--<button id="edit-btn" class="btn btn-default btn-xs">修改</button>-->
+    <?php echo_content_footer($row) ?>
+    <!--<button id="edit-btn" class="btn btn-default btn-xs">修改</button>-->
 
     </div>
 

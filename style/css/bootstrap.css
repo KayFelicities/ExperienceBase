@@ -9513,7 +9513,7 @@ button.close {
 }
 
 .items .item-footer>a {
-  color: #808080;
+  /*color: #808080;*/
 }
 
 .items-hover .item:hover {

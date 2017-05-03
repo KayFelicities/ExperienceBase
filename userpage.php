@@ -56,7 +56,12 @@ else
       
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">发表的经验(共<?php echo count_content("", $userid);?>篇)<span class="pull-right"><a href="#" class="btn btn-xs btn-default">更多</a></h3>
+          <h3 class="panel-title">
+            发表的经验(共<?php echo count_content("", $userid);?>篇)
+            <span class="pull-right">
+              <a href="content_list.php?u=<?php echo $userid;?>" class="btn btn-xs btn-default">更多</a>
+            </span>
+          </h3>
         </div>
         <div class="panel-body">
           <?php

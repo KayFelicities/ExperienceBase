@@ -15,21 +15,34 @@
 <?php
   $items_per_page = 10;  
   $page = isset($_GET['p']) ? $_GET['p'] : '0'; 
-  $type = isset($_GET['t']) ? $_GET['t'] : ''; 
-  $page_sum = ceil(count_content($type) / $items_per_page);
-  echo_banner($type);
+  $se_type = isset($_GET['t']) ? $_GET['t'] : ''; 
+  $se_userid = isset($_GET['u']) ? $_GET['u'] : "";
+  $se_tag = isset($_GET['tag']) ? $_GET['tag'] : "";
+  $se_content = isset($_GET['c']) ? $_GET['c'] : "";
+
+  $item_num = count_content($se_type, $se_userid, $se_tag);
+  $page_sum = ceil($item_num / $items_per_page);
+  echo_banner($se_type);
 ?>
 <div style="margin: 60px"></div>
 <div class="container">
   <div class="list">
     <header>
-      <h3><i></i> <?php if(!$type)echo "所有经验";else echo $type; ?> <small>第<?php echo ($page + 1) ?>页，共<?php echo $page_sum ?>页</small></h3>
+      <h3>
+        搜索结果(共<?php echo $item_num;?>篇) 
+        <small>
+          <?php if($se_userid)echo get_userinfo($se_userid)['nickname']."的";?>
+          <?php if($se_type)echo $se_type."分类下的";?>
+          <?php if($se_tag)echo "包含“".$se_tag."”标签的";?>
+          所有文章
+        </small>
+      </h3>
     </header>
     <div class="items items-hover">
       <?php
       for ($count = $page*$items_per_page; $count < ($page + 1)*$items_per_page; $count++) 
       {
-        if (!echo_content_item($count, $type))
+        if (!echo_content_item($count, $se_type, $se_userid, $se_tag))
         {
           break;
         }
