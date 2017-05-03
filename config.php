@@ -8,4 +8,5 @@
    define('CONTENT_FILE', 'exbase_files/content_files');
    define('TEMP_FILE_PATH', 'exbase_files/temp_files');
    define('USER_AVATAR_PATH', 'exbase_files/avatars');
+   define('FILE_PREVIEW', true);
 ?>

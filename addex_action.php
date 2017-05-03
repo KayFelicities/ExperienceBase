@@ -48,34 +48,36 @@ if(mysqli_query($con, $insertsql))
       {
         if ($_FILES["file"]["error"][$i] > 0)
         {
-            echo ("<script>$.notify({message: '".$_FILES["file"]["name"][$i]."上传失败:".$_FILES["file"]["error"][$i]."'}, {type: 'danger'});</script>");
+          echo ("<script>$.notify({message: '".$_FILES["file"]["name"][$i]."上传失败:".$_FILES["file"]["error"][$i]."'}, {type: 'danger'});</script>");
         }
         else
         {
-            echo ("<script>$.notify({message: '正在上传".$_FILES["file"]["name"][$i]."，请稍后。'}, {type: 'info'});</script>");
+          echo ("<script>$.notify({message: '正在上传".$_FILES["file"]["name"][$i]."，请稍后。'}, {type: 'info'});</script>");
 
-            if (!is_dir(CONTENT_FILE))
-            {
-                mkdir(CONTENT_FILE, 0777, true);
-            }
+          if (!is_dir(CONTENT_FILE))
+          {
+              mkdir(CONTENT_FILE, 0777, true);
+          }
 
-            $file_name = $_FILES["file"]["name"][$i];
-            $file_name_array = explode('.', $file_name);
-            $save_file_path = str_replace("/", "\\", getcwd()."/".CONTENT_FILE . sprintf("/%06d", $cid) . sprintf("_%02d.", $i) . end($file_name_array));
-            $pdf_file_path = str_replace("/", "\\", getcwd()."/".CONTENT_FILE . sprintf("/%06d", $cid) . sprintf("_%02d.pdf", $i));
-            move_uploaded_file($_FILES["file"]["tmp_name"][$i], $save_file_path);
+          $file_name = $_FILES["file"]["name"][$i];
+          $file_name_array = explode('.', $file_name);
+          $save_file_path = str_replace("/", "\\", getcwd()."/".CONTENT_FILE . sprintf("/%06d", $cid) . sprintf("_%02d.", $i) . end($file_name_array));
+          $pdf_file_path = str_replace("/", "\\", getcwd()."/".CONTENT_FILE . sprintf("/%06d", $cid) . sprintf("_%02d.pdf", $i));
+          move_uploaded_file($_FILES["file"]["tmp_name"][$i], $save_file_path);
 
-            if ($i == 0)
-            {
-              $update_sql = "UPDATE eb_contents SET file_name='$file_name' WHERE cid='$cid'";
-            }
-            else 
-            {
-              $separator = SEPARATOR;
-              $update_sql = "UPDATE eb_contents SET file_name=CONCAT_WS('$separator',file_name,'$file_name') WHERE cid='$cid'";
-            }
-            mysqli_query($con, $update_sql);
+          if ($i == 0)
+          {
+            $update_sql = "UPDATE eb_contents SET file_name='$file_name' WHERE cid='$cid'";
+          }
+          else 
+          {
+            $separator = SEPARATOR;
+            $update_sql = "UPDATE eb_contents SET file_name=CONCAT_WS('$separator',file_name,'$file_name') WHERE cid='$cid'";
+          }
+          mysqli_query($con, $update_sql);
 
+          if (FILE_PREVIEW)
+          {
             switch(end($file_name_array))
             {
               case "doc":
@@ -87,7 +89,6 @@ if(mysqli_query($con, $insertsql))
                 $word->ActiveDocument->Close();
                 $word->Quit();
                 $word = null;
-                exec("233 " . $pdf_file_path);
                 break;
               case "xls":
               case "xlsx":
@@ -107,7 +108,6 @@ if(mysqli_query($con, $insertsql))
                 $excel->ActiveWorkbook->Close(false);
                 $excel->Quit();
                 $excel = null;
-                exec("233 ".$pdf_file_path);
                 break;
               case "ppt":
               case "pptx":
@@ -118,9 +118,10 @@ if(mysqli_query($con, $insertsql))
                 $ppt->ActivePresentation->Close();
                 $ppt->Quit(); 
                 $ppt = null;
-                exec("233 ".$pdf_file_path);
                 break;
             }
+            exec("233 ".$pdf_file_path);
+          }
         }
       }
     }

@@ -45,7 +45,7 @@ function echo_banner($page_name)
           <li class="dropdown <?php if (in_array($page_name, array("mypage", "mymessages", "myconfig")))echo "active "; ?>">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo get_userinfo($_COOKIE["userid"])['nickname'];?> <span class="badge">1</span><span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="mypage.php">我的主页</a></li>
+              <li><a href="userpage.php?u=0">我的主页</a></li>
               <li><a href="mymessages.php">消息 <span class="badge">1</span></a></li>
               <li><a href="myconfig.php">设置</a></li>
               <li><a href="javascript:delCookie('userid');window.location.href='<?php echo $_SERVER["PHP_SELF"]."?".$_SERVER["QUERY_STRING"]?>';">退出登录</a></li>
@@ -71,20 +71,26 @@ function echo_banner($page_name)
   <?php
 }
 
-function echo_content_item($no, $type="")
+function echo_content_item($no, $type="", $author_id="")
 {
     require_once('config.php');
     $con=mysqli_connect(HOST, USERNAME, PASSWORD);
     mysqli_set_charset($con, "utf8");
     mysqli_select_db($con, 'experience_base');
+    $search_condition = "";
     if ($type)
     {
-        $result = mysqli_query($con, "SELECT * FROM eb_contents WHERE extype1='$type' ORDER BY cid DESC LIMIT $no,1");
+      $search_condition = "WHERE extype1='$type'";
+      if ($author_id)
+      {
+        $search_condition = "WHERE extype1='$type' AND author_id='$author_id'";
+      }
     }
-    else
+    elseif ($author_id)
     {
-        $result = mysqli_query($con, "SELECT * FROM eb_contents ORDER BY cid DESC LIMIT $no,1");
+        $search_condition = "WHERE author_id='$author_id'";
     }
+    $result = mysqli_query($con, "SELECT * FROM eb_contents ".$search_condition." ORDER BY cid DESC LIMIT $no,1");
     $row = mysqli_fetch_array($result);
     if($row)
     {
@@ -135,20 +141,65 @@ function echo_content_item($no, $type="")
     }
 }
 
-function count_content($type="")
+function echo_content_title($no, $type="", $author_id="")
 {
     require_once('config.php');
     $con=mysqli_connect(HOST, USERNAME, PASSWORD);
     mysqli_set_charset($con, "utf8");
     mysqli_select_db($con, 'experience_base');
+    $search_condition = "";
     if ($type)
     {
-        $result = mysqli_query($con, "SELECT COUNT(*) AS count FROM eb_contents WHERE extype1='$type'");
+      $search_condition = "WHERE extype1='$type'";
+      if ($author_id)
+      {
+        $search_condition = "WHERE extype1='$type' AND author_id='$author_id'";
+      }
+    }
+    elseif ($author_id)
+    {
+        $search_condition = "WHERE author_id='$author_id'";
+    }
+    $result = mysqli_query($con, "SELECT * FROM eb_contents ".$search_condition." ORDER BY cid DESC LIMIT $no,1");
+    $row = mysqli_fetch_array($result);
+    if($row)
+    {
+    ?>
+      <p>
+        <a href="content.php?cid=<?php echo $row['cid'];?>"><?php echo $row['title'];?></a>
+        <span class="pull-right"><?php echo $row['create_tm'];?></span>
+      </p>
+    <?php
+        mysqli_close($con);
+        return true;
     }
     else
     {
-        $result = mysqli_query($con, "SELECT COUNT(*) AS count FROM eb_contents");
+        mysqli_close($con);
+        return false;
     }
+}
+
+function count_content($type="", $author_id="")
+{
+    require_once('config.php');
+    $con=mysqli_connect(HOST, USERNAME, PASSWORD);
+    mysqli_set_charset($con, "utf8");
+    mysqli_select_db($con, 'experience_base');
+    $search_condition = "";
+    if ($type)
+    {
+      $search_condition = "WHERE extype1='$type'";
+      if ($author_id)
+      {
+        $search_condition = "WHERE extype1='$type' AND author_id='$author_id'";
+      }
+    }
+    elseif ($author_id)
+    {
+        $search_condition = "WHERE author_id='$author_id'";
+    }
+    $result = mysqli_query($con, "SELECT COUNT(*) AS count FROM eb_contents ".$search_condition);
     $count = mysqli_fetch_array($result)['count'];
     mysqli_close($con);
     return $count;
