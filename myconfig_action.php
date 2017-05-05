@@ -35,7 +35,7 @@ if (isset($_COOKIE["userid"]))
     if (file_put_contents($new_file, base64_decode(str_replace($result[1], '', $imgbase64))))
     {
       echo ("<script>$.notify({message: '保存成功！'}, {type: 'success'});</script>");
-      header("Refresh: 1; url=mypage.php");
+      header("Refresh: 1; url=userpage.php");
     }
   }
 }
