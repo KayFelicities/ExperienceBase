@@ -1,4 +1,8 @@
 <meta charset="UTF-8">
+<title>经验分享平台</title>
+<link rel="bookmark" type="image/x-icon" href="img/+1.ico" />
+<link rel="shortcut icon" href="img/+1.ico">
+<link rel="icon" href="img/+1.ico">
 <?php
 if(PHP_VERSION >= 6 || !get_magic_quotes_gpc())
 {

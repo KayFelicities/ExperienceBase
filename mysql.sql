@@ -20,6 +20,14 @@ CREATE TABLE `eb_users` (
   UNIQUE KEY `sx_id` (`sx_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
+-- 注册匹配检查
+CREATE TABLE `eb_signup` (
+  `sx_id` char(9) default NULL,
+  `nickname` varchar(32) default NULL,
+  PRIMARY KEY  (`sx_id`),
+  UNIQUE KEY `sx_id` (`sx_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
 -- 文章
 CREATE TABLE `eb_contents` (
   `cid` int(10) unsigned NOT NULL auto_increment,

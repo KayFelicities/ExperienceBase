@@ -57,10 +57,10 @@ $(document).ready(function() {
         $("#extype2").append("<option>CAD设计</option>");
         $("#extype2").append("<option>3D建模</option>");
         break;
-      case "流程":
-        $("#extype2").append("<option>流程1</option>");
-        $("#extype2").append("<option>流程2</option>");
-        $("#extype2").append("<option>流程3</option>");
+      case "制度":
+        $("#extype2").append("<option>制度1</option>");
+        $("#extype2").append("<option>制度2</option>");
+        $("#extype2").append("<option>制度3</option>");
         break;
       default:
         alert("err");
@@ -113,7 +113,7 @@ else
               <option>软件</option>
               <option>硬件</option>
               <option>结构件</option>
-              <option>流程</option>
+              <option>制度</option>
             </select>
           </div>
           <div id="software-options" class="col-xs-2" style="padding: 0;">
@@ -180,8 +180,8 @@ else
                 <optgroup label="结构件">
                   <option>端钮盒</option>
                 </optgroup>
-                <optgroup label="流程">
-                  <option>流程啊</option>
+                <optgroup label="制度">
+                  <option>制度啊</option>
                 </optgroup>
               </select>
             </div>

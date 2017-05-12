@@ -169,8 +169,8 @@ function chk_form()
             <input type="password" class="form-control" name="password_chk" maxlength="64" placeholder="" required>
           </div>
           <div class="form-group">
-            <label>名字</label>
-            <input type="text" class="form-control" name="nickname" maxlength="16" placeholder="用于网站显示，建议使用真实姓名（不超过16个字）" required>
+            <label>姓名</label>
+            <input type="text" class="form-control" name="nickname" maxlength="16" placeholder="用于网站显示，请使用真实姓名" required>
           </div>
           <div class="form-group">
             <label>部门</label>
