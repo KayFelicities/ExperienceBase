@@ -85,8 +85,10 @@ if (count_comment($cid) != $row['comment_num'])
 ?>
     <div class="content-header">
         <h1><?php echo $row['title']?></h1>
+      <div style="margin-top: 10px;">
+        <?php echo_content_footer($row) ?>
+      </div>
 
-    <?php echo_content_footer($row) ?>
     <!--<button id="edit-btn" class="btn btn-default btn-xs">修改</button>-->
 
     </div>

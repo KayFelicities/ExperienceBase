@@ -46,12 +46,17 @@ $(document).ready(function() {
     switch (type1)
     {
       case "软件":
+        $("#extype2").append("<option>业务逻辑</option>");
+        $("#extype2").append("<option>需求理解</option>");
         $("#extype2").append("<option>编程技巧</option>");
         $("#extype2").append("<option>单元测试</option>");
         break;
       case "硬件":
-        $("#extype2").append("<option>PCB原理图</option>");
-        $("#extype2").append("<option>EMC</option>");
+        $("#extype2").append("<option>电路设计</option>");
+        $("#extype2").append("<option>元器件特性</option>");
+        $("#extype2").append("<option>元器件选型</option>");
+        $("#extype2").append("<option>PCB设计</option>");
+        $("#extype2").append("<option>测试技巧</option>");
         break;
       case "结构件":
         $("#extype2").append("<option>CAD设计</option>");
@@ -118,6 +123,8 @@ else
           </div>
           <div id="software-options" class="col-xs-2" style="padding: 0;">
             <select id="extype2" name="extype2" class="form-control">
+              <option>业务逻辑</option>
+              <option>需求理解</option>
               <option>编程技巧</option>
               <option>单元测试</option>
             </select>
@@ -168,20 +175,7 @@ else
           <div class="row">
             <div class="col-xs-6" style="margin-bottom: 10px">
               <select id="tagselect" name="labels" class="form-control" multiple="multiple">
-                <optgroup label="软件">
-                  <option>C/C++</option>
-                  <option>Python</option>
-                  <option>STM32</option>
-                </optgroup>
-                <optgroup label="硬件">
-                  <option>开关电源</option>
-                  <option>液晶</option>
-                </optgroup>
-                <optgroup label="结构件">
-                  <option>端钮盒</option>
-                </optgroup>
-                <optgroup label="制度">
-                  <option>制度啊</option>
+                <optgroup label="请自行输入标签">
                 </optgroup>
               </select>
             </div>
