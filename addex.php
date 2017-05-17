@@ -41,32 +41,54 @@
 
 <script>
 $(document).ready(function() {
+    $("#extype2").append("<option>外部异常分析</option>");
+    $("#extype2").append("<option>内部异常分析</option>");
+    $("#extype2").append("<option>技术规范</option>");
+    $("#extype2").append("<option>管理制度</option>");
+    $("#extype2").append("<option>开发经验分享</option>");
+    $("#extype2").append("<option>测试经验分享</option>");
+    $("#extype2").append("<option>行业信息</option>");
+
   $("#extype1").change(function() {
     $("#extype2").empty();
     var type1 = $("#extype1").val();
     switch (type1)
     {
       case "软件":
-        $("#extype2").append("<option>业务逻辑</option>");
-        $("#extype2").append("<option>需求理解</option>");
-        $("#extype2").append("<option>编程技巧</option>");
-        $("#extype2").append("<option>单元测试</option>");
+        $("#extype2").append("<option>外部异常分析</option>");
+        $("#extype2").append("<option>内部异常分析</option>");
+        $("#extype2").append("<option>技术规范</option>");
+        $("#extype2").append("<option>管理制度</option>");
+        $("#extype2").append("<option>开发经验分享</option>");
+        $("#extype2").append("<option>测试经验分享</option>");
+        $("#extype2").append("<option>行业信息</option>");
         break;
       case "硬件":
-        $("#extype2").append("<option>电路设计</option>");
-        $("#extype2").append("<option>元器件特性</option>");
-        $("#extype2").append("<option>元器件选型</option>");
-        $("#extype2").append("<option>PCB设计</option>");
-        $("#extype2").append("<option>测试技巧</option>");
+        $("#extype2").append("<option>外部异常分析</option>");
+        $("#extype2").append("<option>内部异常分析</option>");
+        $("#extype2").append("<option>技术规范</option>");
+        $("#extype2").append("<option>管理制度</option>");
+        $("#extype2").append("<option>开发经验分享</option>");
+        $("#extype2").append("<option>测试经验分享</option>");
+        $("#extype2").append("<option>行业信息</option>");
         break;
       case "结构件":
-        $("#extype2").append("<option>CAD设计</option>");
-        $("#extype2").append("<option>3D建模</option>");
+        $("#extype2").append("<option>外部异常分析</option>");
+        $("#extype2").append("<option>内部异常分析</option>");
+        $("#extype2").append("<option>技术规范</option>");
+        $("#extype2").append("<option>管理制度</option>");
+        $("#extype2").append("<option>开发经验分享</option>");
+        $("#extype2").append("<option>测试经验分享</option>");
+        $("#extype2").append("<option>行业信息</option>");
         break;
-      case "制度":
-        $("#extype2").append("<option>制度1</option>");
-        $("#extype2").append("<option>制度2</option>");
-        $("#extype2").append("<option>制度3</option>");
+      case "综合":
+        $("#extype2").append("<option>外部异常分析</option>");
+        $("#extype2").append("<option>内部异常分析</option>");
+        $("#extype2").append("<option>技术规范</option>");
+        $("#extype2").append("<option>管理制度</option>");
+        $("#extype2").append("<option>开发经验分享</option>");
+        $("#extype2").append("<option>测试经验分享</option>");
+        $("#extype2").append("<option>行业信息</option>");
         break;
       default:
         alert("err");
@@ -119,15 +141,11 @@ else
               <option>软件</option>
               <option>硬件</option>
               <option>结构件</option>
-              <option>制度</option>
+              <option>综合</option>
             </select>
           </div>
           <div id="software-options" class="col-xs-2" style="padding: 0;">
             <select id="extype2" name="extype2" class="form-control">
-              <option>业务逻辑</option>
-              <option>需求理解</option>
-              <option>编程技巧</option>
-              <option>单元测试</option>
             </select>
           </div>
           <div class="col-xs-8">

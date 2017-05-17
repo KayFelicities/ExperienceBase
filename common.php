@@ -24,13 +24,13 @@ function echo_banner($page_name)
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
           <li <?php if ($page_name=="" ){echo 'class="active"';}?> ><a href="content_list.php?p=0&t=">所有经验</a></li>
-          <li class="dropdown <?php if (in_array($page_name, array("软件", "硬件", "结构件", "制度")))echo "active "; ?>">
+          <li class="dropdown <?php if (in_array($page_name, array("软件", "硬件", "结构件", "综合")))echo "active "; ?>">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">分类<span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="content_list.php?p=0&t=软件">软件</a></li>
               <li><a href="content_list.php?p=0&t=硬件">硬件</a></li>
               <li><a href="content_list.php?p=0&t=结构件">结构件</a></li>
-              <li><a href="content_list.php?p=0&t=制度">制度</a></li>
+              <li><a href="content_list.php?p=0&t=综合">综合</a></li>
               <!--<li role="separator" class="divider"></li>-->
             </ul>
           </li>
