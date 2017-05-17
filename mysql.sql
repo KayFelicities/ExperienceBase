@@ -45,6 +45,7 @@ CREATE TABLE `eb_contents` (
   `tags` char(128) default NULL,
   `password` varchar(32) default NULL,
   `comment_num` int(10) unsigned default '0',
+  `like_num` int(10) unsigned default '0',
   PRIMARY KEY  (`cid`),
   KEY `author_id` (`author_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
@@ -57,6 +58,7 @@ CREATE TABLE `eb_comments` (
   `create_ip` char(16) default NULL,
   `co_author_id` int(10),
   `status` char(16) default 'publish',
+  `type` char(16) default 'comment',
   `comment` text,
   `parent_coid` int(10) unsigned default '0',
   PRIMARY KEY  (`coid`),

@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <html>
+<meta name="renderer" content="webkit"> 
 <meta charset="UTF-8">
 <title>经验分享平台</title>
 <link rel="bookmark" type="image/x-icon" href="img/+1.ico" />
@@ -23,6 +24,7 @@ else
     <h3><i></i>我的消息<small></small></h3>
   </header>
   <hr>
+  <p>并没有消息╮(╯_╰)╭</p>
 
 <?php }?>
 </div>

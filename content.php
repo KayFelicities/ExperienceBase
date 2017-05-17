@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <html>
+<meta name="renderer" content="webkit"> 
 <meta charset="UTF-8">
 <title>经验分享平台</title>
 <link rel="bookmark" type="image/x-icon" href="img/+1.ico" />
@@ -82,11 +83,29 @@ if (count_comment($cid) != $row['comment_num'])
   mysqli_query($con, "UPDATE eb_contents SET comment_num='$comment_num' WHERE cid='$cid'");
   $row['comment_num'] = $comment_num;
 }
+
+if (count_like($cid) != $row['like_num'])
+{//点赞数纠错
+  $like_num = count_like($cid);
+  mysqli_query($con, "UPDATE eb_contents SET like_num='$like_num' WHERE cid='$cid'");
+  $row['like_num'] = $like_num;
+}
 ?>
     <div class="content-header">
         <h1><?php echo $row['title']?></h1>
       <div style="margin-top: 10px;">
         <?php echo_content_footer($row) ?>
+      </div>
+      <div style="margin-top: 10px;">
+      <span>
+        <a href="#"><?php echo $row['like_num']?></a>人赞了这篇文章
+          <form class="form" style="display: inline;" method="post" action="comment_action.php">
+            <button type="submit" style="padding: 0 10px; margin: 0 10px;" class="btn btn-primary btn-xs">赞</button>
+            <input type="hidden" name="cid" value="<?php echo $cid; ?>">
+            <input type="hidden" name="type" value="like">
+          </from>
+        
+      </span>
       </div>
 
     <!--<button id="edit-btn" class="btn btn-default btn-xs">修改</button>-->
@@ -178,7 +197,7 @@ if (count_comment($cid) != $row['comment_num'])
       </header>
 
 <?php
-$result = mysqli_query($con, "SELECT * FROM eb_comments WHERE cid=$cid");
+$result = mysqli_query($con, "SELECT * FROM eb_comments WHERE cid=$cid and type='comment'");
 while ($row = mysqli_fetch_array($result))
 {?>
       <div class="comments-list">
@@ -209,6 +228,7 @@ if (isset($_COOKIE["userid"]))
           <a href="###" class="avatar"><img class="avatar-m" src="<?php echo get_avatar($_COOKIE["userid"]);?>"></img></a>
           <form class="form" method="post" action="comment_action.php">
             <input type="hidden" name="cid" value="<?php echo $cid; ?>">
+            <input type="hidden" name="type" value="comment">
             <div class="form-group">
                 <textarea class="form-control" name="comment" rows="2" placeholder="撰写评论..." required></textarea>
                 <button type="submit" class="btn btn-primary btn-ubmargin pull-right">提交评论</button>

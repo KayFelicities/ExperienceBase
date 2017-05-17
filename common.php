@@ -123,6 +123,8 @@ function echo_content_footer($row)
     &nbsp; &nbsp;
     <a href="content.php?cid=<?php echo $row['cid'];?>#excomments" class="text-muted"><i class="icon-comments"></i> <?php echo $row['comment_num'];?></a> 
     &nbsp; &nbsp;
+    <a href="content.php?cid=<?php echo $row['cid'];?>#excomments" class="text-muted"><i class="icon-thumbs-o-up"></i> <?php echo $row['like_num'];?></a> 
+    &nbsp; &nbsp;
     <span class="text-muted"><i class="icon-time"></i> <?php echo $row['create_tm'];?></span> 
     &nbsp;
     <span>
@@ -133,7 +135,7 @@ function echo_content_footer($row)
       if ($tag)
       {
       ?>
-        <a class="label label-success" href="content_list.php?tag=<?php echo $tag;?>">
+        <a class="label label-success" href="content_list.php?tag=<?php echo urlencode($tag);?>">
           <?php echo $tag;?>
         </a>
         &nbsp;
@@ -188,7 +190,19 @@ function count_comment($cid)
     $con=mysqli_connect(HOST, USERNAME, PASSWORD);
     mysqli_set_charset($con, "utf8");
     mysqli_select_db($con, 'experience_base');
-    $result = mysqli_query($con, "SELECT COUNT(*) AS count FROM eb_comments WHERE cid='$cid'");
+    $result = mysqli_query($con, "SELECT COUNT(*) AS count FROM eb_comments WHERE cid='$cid' and type='comment'");
+    $count = mysqli_fetch_array($result)['count'];
+    mysqli_close($con);
+    return $count;
+}
+
+function count_like($cid)
+{
+    require_once('config.php');
+    $con=mysqli_connect(HOST, USERNAME, PASSWORD);
+    mysqli_set_charset($con, "utf8");
+    mysqli_select_db($con, 'experience_base');
+    $result = mysqli_query($con, "SELECT COUNT(*) AS count FROM eb_comments WHERE cid='$cid' and type='like'");
     $count = mysqli_fetch_array($result)['count'];
     mysqli_close($con);
     return $count;

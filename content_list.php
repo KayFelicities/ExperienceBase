@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <html>
+<meta name="renderer" content="webkit"> 
 <meta charset="UTF-8">
 <title>经验分享平台</title>
 <link rel="bookmark" type="image/x-icon" href="img/+1.ico" />
@@ -13,7 +14,7 @@
 <body>
 <?php include("common.php"); ?>
 <?php
-  $items_per_page = 10;  
+  $items_per_page = 10;
   $page = isset($_GET['p']) ? $_GET['p'] : '0'; 
   $se_type = isset($_GET['t']) ? $_GET['t'] : ''; 
   $se_userid = isset($_GET['u']) ? $_GET['u'] : "";
