@@ -211,8 +211,9 @@ function count_like($cid)
 function get_avatar($uid)
 {
   require_once('config.php');
+  $avatar_store = USER_AVATAR_STORE_PATH.sprintf("/%06d.png", $uid);
   $avatar = USER_AVATAR_PATH.sprintf("/%06d.png", $uid);
-  if (!file_exists($avatar))
+  if (!file_exists($avatar_store))
   {
     $avatar = "img/avatar.png";
   }

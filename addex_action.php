@@ -34,7 +34,7 @@ if (isset($_COOKIE["userid"]))
 {
     $author_id = $_COOKIE["userid"];
 }
-
+print_r($_FILES);
 $con=mysqli_connect(HOST, USERNAME, PASSWORD);
 mysqli_set_charset($con, "utf8");
 mysqli_select_db($con, 'experience_base');
@@ -58,15 +58,15 @@ if(mysqli_query($con, $insertsql))
         {
           echo ("<script>$.notify({message: '正在上传".$_FILES["file"]["name"][$i]."，请稍后。'}, {type: 'info'});</script>");
 
-          if (!is_dir(CONTENT_FILE))
+          if (!is_dir(CONTENT_FILE_STORE_PATH))
           {
-              mkdir(CONTENT_FILE, 0777, true);
+              mkdir(CONTENT_FILE_STORE_PATH, 0777, true);
           }
 
           $file_name = $_FILES["file"]["name"][$i];
           $file_name_array = explode('.', $file_name);
-          $save_file_path = str_replace("/", "\\", getcwd()."/".CONTENT_FILE . sprintf("/%06d", $cid) . sprintf("_%02d.", $i) . end($file_name_array));
-          $pdf_file_path = str_replace("/", "\\", getcwd()."/".CONTENT_FILE . sprintf("/%06d", $cid) . sprintf("_%02d.pdf", $i));
+          $save_file_path = str_replace("/", "\\", CONTENT_FILE_STORE_PATH . sprintf("/%06d", $cid) . sprintf("_%02d.", $i) . end($file_name_array));
+          $pdf_file_path = str_replace("/", "\\", CONTENT_FILE_STORE_PATH . sprintf("/%06d", $cid) . sprintf("_%02d.pdf", $i));
           move_uploaded_file($_FILES["file"]["tmp_name"][$i], $save_file_path);
 
           if ($i == 0)

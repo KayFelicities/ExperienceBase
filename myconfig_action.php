@@ -24,9 +24,9 @@ $remote_ip = $_SERVER["REMOTE_ADDR"];
 $timenow = date('Y-m-d H:i:s');
 
 require_once('config.php');
-if (!is_dir(USER_AVATAR_PATH))
+if (!is_dir(USER_AVATAR_STORE_PATH))
 {
-    mkdir(USER_AVATAR_PATH, 0777, true);
+    mkdir(USER_AVATAR_STORE_PATH, 0777, true);
 }
 
 if (isset($_COOKIE["userid"]))
@@ -35,7 +35,7 @@ if (isset($_COOKIE["userid"]))
 
   if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $imgbase64, $result)){
     // $type = $result[2];
-    $new_file = USER_AVATAR_PATH.sprintf("/%06d.png", $user_id);
+    $new_file = USER_AVATAR_STORE_PATH.sprintf("/%06d.png", $user_id);
     if (file_put_contents($new_file, base64_decode(str_replace($result[1], '', $imgbase64))))
     {
       echo ("<script>$.notify({message: '保存成功！'}, {type: 'success'});</script>");

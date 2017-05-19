@@ -5,8 +5,10 @@
    define('PASSWORD','');
 
    define('SEPARATOR', '$#$');
-   define('CONTENT_FILE', 'exbase_files/content_files');
-   define('TEMP_FILE_PATH', 'exbase_files/temp_files');
-   define('USER_AVATAR_PATH', 'exbase_files/avatars');
+  
+   define('CONTENT_FILE_STORE_PATH', 'E:/Seafile/ExBaseFiles/content_files');
+   define('USER_AVATAR_STORE_PATH', 'E:/Seafile/ExBaseFiles/avatars');
+   define('CONTENT_FILE_PATH', '/ExperienceBase/exfiles/content_files');
+   define('USER_AVATAR_PATH', '/ExperienceBase/exfiles/avatars');
    define('FILE_PREVIEW', true);
 ?>

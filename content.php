@@ -142,10 +142,11 @@ if (count_like($cid) != $row['like_num'])
           {
               $file_name = $file_array[$file_count];
               $file_name_array = explode('.', $file_name);
-              $save_file_path = CONTENT_FILE . sprintf("/%06d", $cid) . sprintf("_%02d.", $file_count) . end($file_name_array);
+              $save_file_path = CONTENT_FILE_PATH . sprintf("/%06d", $cid) . sprintf("_%02d.", $file_count) . end($file_name_array);
               echo "<div><span><a download=\"$file_name\" href=\"$save_file_path\">$file_name</a>";
-              $view_file_path = CONTENT_FILE . sprintf("/%06d", $cid) . sprintf("_%02d.pdf", $file_count);
-              if (file_exists($view_file_path))
+              $store_file_path = CONTENT_FILE_STORE_PATH . sprintf("/%06d", $cid) . sprintf("_%02d.pdf", $file_count);
+              $view_file_path = CONTENT_FILE_PATH . sprintf("/%06d", $cid) . sprintf("_%02d.pdf", $file_count);
+              if (file_exists($store_file_path))
               {
                 $pdfview = "pdfview".$file_count;
                 $pdfbed = "pdfbed".$file_count;
@@ -153,6 +154,7 @@ if (count_like($cid) != $row['like_num'])
                 echo "<span> </span><button class=\"btn btn-info btn-xs openpdf-btn\"><a href='pdfview.php?c=$cid&f=$file_count', target='_Blank'>全屏预览</a></button>";
                 echo "</span></div>";
               }
+              else{print_r($view_file_path);}
               ?>
 
               <div id="<?php echo $pdfview ?>" class="pdfview">

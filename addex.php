@@ -182,6 +182,7 @@ else
                         showUpload: false,
                         showRemove: true,
                         showCaption: true,//是否显示输入框
+                        maxFileSize: 8000,
                         maxFilePreviewSize: 10240
                     });
                 });
