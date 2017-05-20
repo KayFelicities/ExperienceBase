@@ -26,25 +26,24 @@
       </ol>
       <div class="carousel-inner" role="listbox">
         <div class="item active">
-          <img class="first-slide" src="img/运作流程.png" alt="First slide">
+          <img class="first-slide" src="img/img1.png" alt="First slide">
           <div class="brief">
             <p>运作流程</p>
           </div>
         </div>
         <div class="item">
-          <img class="second-slide" src="img/工作分配.png" alt="Second slide">
+          <img class="second-slide" src="img/img2.png" alt="Second slide">
           <div class="brief">
             <p>工作分配</p>
           </div>
         </div>
         <div class="item">
-          <img class="third-slide" src="img/时间节点.png" alt="Third slide">
+          <img class="third-slide" src="img/img3.png" alt="Third slide">
           <div class="brief">
             <p>时间节点</p>
           </div>
         </div>
         <div class="item">
-          <!--<img class="third-slide" src="img/时间节点.png" alt="Third slide">-->
           <div class="container">
             <div class="carousel-caption">
               <h1>经验分享平台</h1>
