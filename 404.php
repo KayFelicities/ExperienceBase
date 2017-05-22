@@ -15,7 +15,7 @@
 <?php include("common.php"); echo_banner("404"); ?>
 <div style="margin: 60px"></div>
 <div class="container">
-  <p>404</p>
+  <p>页面不存在啦！</p>
 </div>
 
 </body>
