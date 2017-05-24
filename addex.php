@@ -89,6 +89,7 @@ $(document).ready(function() {
         $("#extype2").append("<option>开发经验分享</option>");
         $("#extype2").append("<option>测试经验分享</option>");
         $("#extype2").append("<option>行业信息</option>");
+        $("#extype2").append("<option>其他</option>");
         break;
       default:
         alert("err");

@@ -37,6 +37,14 @@
           <?php if($se_tag)echo "包含“".$se_tag."”标签的";?>
           所有文章
         </small>
+        <div class="col-xs-5 pull-right">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="搜索点什么...">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button">搜索</button>
+            </span>
+          </div>
+        </div>
       </h3>
     </header>
     <div class="items items-hover">

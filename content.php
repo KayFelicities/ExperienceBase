@@ -100,7 +100,7 @@ if (count_like($cid) != $row['like_num'])
       <span>
         <a href="#"><?php echo $row['like_num']?></a>人赞了这篇文章
           <form class="form" style="display: inline;" method="post" action="comment_action.php">
-            <button type="submit" style="padding: 0 10px; margin: 0 10px;" class="btn btn-primary btn-xs">赞</button>
+            <button type="submit" style="padding: 0 5px; margin: 0 5px;" class="btn btn-primary btn-xs">点赞</button>
             <input type="hidden" name="cid" value="<?php echo $cid; ?>">
             <input type="hidden" name="type" value="like">
           </from>

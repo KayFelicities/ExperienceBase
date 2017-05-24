@@ -97,6 +97,7 @@ function befor_submit() {
 
   <hr>
   <a href="dev_log.php">开发日志</a>
+  <div style="margin-top: 100px;"></div>
 </div>
 
 </body>

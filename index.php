@@ -22,15 +22,24 @@
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
         <li data-target="#myCarousel" data-slide-to="1"></li>
         <li data-target="#myCarousel" data-slide-to="2"></li>
-        <li data-target="#myCarousel" data-slide-to="3"></li>
+        <!--<li data-target="#myCarousel" data-slide-to="3"></li>-->
       </ol>
       <div class="carousel-inner" role="listbox">
         <div class="item active">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>经验分享平台</h1>
+              <p>为您提供最新、最全的经验，让我们每天都能经验+1</p>
+              <p><a class="btn btn-lg btn-primary" href="about.php" role="button">了解更多</a></p>
+            </div>
+          </div>
+        </div>
+        <!--<div class="item">
           <img class="first-slide" src="img/img1.png" alt="First slide">
           <div class="brief">
             <p>运作流程</p>
           </div>
-        </div>
+        </div>-->
         <div class="item">
           <img class="second-slide" src="img/img2.png" alt="Second slide">
           <div class="brief">
@@ -41,15 +50,6 @@
           <img class="third-slide" src="img/img3.png" alt="Third slide">
           <div class="brief">
             <p>时间节点</p>
-          </div>
-        </div>
-        <div class="item">
-          <div class="container">
-            <div class="carousel-caption">
-              <h1>经验分享平台</h1>
-              <p>提供最新、最全的经验，让我们每天都能经验+1</p>
-              <p><a class="btn btn-lg btn-primary" href="about.php" role="button">了解更多</a></p>
-            </div>
           </div>
         </div>
       </div>
