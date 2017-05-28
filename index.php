@@ -11,6 +11,12 @@
 <script src="style/js/jquery.js"></script>
 <script src="style/js/bootstrap.js"></script>
 
+<?php
+    if (strpos($_SERVER['HTTP_USER_AGENT'],'MSIE'))
+    {?>
+       <script>alert("系统检测到您正在使用IE浏览器(IE内核)，我们强烈建议您使用Chrome或Firefox浏览器浏览本网站！");</script>
+<?php }?>
+
 <body>
   <?php include("common.php"); echo_banner("home"); ?>
     <div style="margin:70px;">
