@@ -33,31 +33,47 @@ if (isset($_COOKIE["userid"]))
     $author_id = $_COOKIE["userid"];
 }
 
-$con=mysqli_connect(HOST, USERNAME, PASSWORD);
-mysqli_set_charset($con, "utf8");
-mysqli_select_db($con, 'experience_base');
-$insertsql_add= "INSERT INTO eb_comments(cid, create_tm, create_ip, co_author_id, comment, type)
-                              VALUES('$cid', '$timenow', '$remote_ip', '$author_id', '$comment', '$comment_type')";
-if ($comment_type == 'comment')
+if (!$author_id)
 {
-  $insertsql_update= "UPDATE eb_contents SET comment_num=comment_num+1 WHERE cid='$cid'";
+    echo ("<script>$.notify({message: '请先登录'}, {type: 'danger'});</script>");
+    header("Refresh: 1; url=login.php");
 }
-else
+else if ($comment_type == 'like')
 {
-  $insertsql_update= "UPDATE eb_contents SET like_num=like_num+1 WHERE cid='$cid'";
-}
+    include("common.php");
+    if (is_i_liked($cid))
+    {
+        echo ("<script>$.notify({message: '您已赞过该文章啦'}, {type: 'danger'});</script>");
+        header("Refresh: 1; url=content.php?cid=$cid");
+    }
+    else
+    {
+        $con=mysqli_connect(HOST, USERNAME, PASSWORD);
+        mysqli_set_charset($con, "utf8");
+        mysqli_select_db($con, 'experience_base');
+        $insertsql_add= "INSERT INTO eb_comments(cid, create_tm, create_ip, co_author_id, comment, type)
+                                    VALUES('$cid', '$timenow', '$remote_ip', '$author_id', '$comment', '$comment_type')";
+        if ($comment_type == 'comment')
+        {
+        $insertsql_update= "UPDATE eb_contents SET comment_num=comment_num+1 WHERE cid='$cid'";
+        }
+        else
+        {
+        $insertsql_update= "UPDATE eb_contents SET like_num=like_num+1 WHERE cid='$cid'";
+        }
 
-if(mysqli_query($con, $insertsql_add) and mysqli_query($con, $insertsql_update))
-{
-    echo ("<script>$.notify({message: '评论成功！'}, {type: 'success'});</script>");
-    header("Refresh: 1; url=content.php?cid=$cid#excomments");
-}
-else
-{
-    echo mysqli_error($con);
-}
-mysqli_close($con);
-?>
+        if(mysqli_query($con, $insertsql_add) and mysqli_query($con, $insertsql_update))
+        {
+            echo ("<script>$.notify({message: '评论成功！'}, {type: 'success'});</script>");
+            header("Refresh: 1; url=content.php?cid=$cid");
+        }
+        else
+        {
+            echo mysqli_error($con);
+        }
+        mysqli_close($con);
+    }
+}?>
 
 </body>
 

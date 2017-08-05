@@ -43,10 +43,10 @@ function echo_banner($page_name)
     {?>
           <li <?php if ($page_name=="add_ex" ){echo 'class="active"';}?> ><a href="addex.php">添加经验</a></li>
           <li class="dropdown <?php if (in_array($page_name, array("mypage", "mymessages", "myconfig")))echo "active "; ?>">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo get_userinfo($_COOKIE["userid"])['nickname'];?> <span class="badge">1</span><span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo get_userinfo($_COOKIE["userid"])['nickname'];?> <span class="badge">^.^</span><span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="userpage.php?u=0">我的主页</a></li>
-              <li><a href="mymessages.php">消息 <span class="badge">1</span></a></li>
+               <li><a href="mymessages.php">消息 <span class="badge"></span></a></li> 
               <li><a href="myconfig.php">设置</a></li>
               <li><a href="javascript:delCookie('userid');window.location.href='<?php echo $_SERVER["PHP_SELF"]."?".$_SERVER["QUERY_STRING"]?>';">退出登录</a></li>
             </ul>
@@ -123,7 +123,7 @@ function echo_content_footer($row)
     &nbsp; &nbsp;
     <a href="content.php?cid=<?php echo $row['cid'];?>#excomments" class="text-muted"><i class="icon-comments"></i> <?php echo $row['comment_num'];?></a> 
     &nbsp; &nbsp;
-    <a href="content.php?cid=<?php echo $row['cid'];?>#excomments" class="text-muted"><i class="icon-thumbs-o-up"></i> <?php echo $row['like_num'];?></a> 
+    <a href="content.php?cid=<?php echo $row['cid'];?>#excomments" class="text-muted"><i class="icon-heart-empty"></i> <?php echo $row['like_num'];?></a> 
     &nbsp; &nbsp;
     <span class="text-muted"><i class="icon-time"></i> <?php echo $row['create_tm'];?></span> 
     &nbsp;
@@ -206,6 +206,49 @@ function count_like($cid)
     $count = mysqli_fetch_array($result)['count'];
     mysqli_close($con);
     return $count;
+}
+
+function echo_like_people($cid)
+{
+    require_once('config.php');
+    $con=mysqli_connect(HOST, USERNAME, PASSWORD);
+    mysqli_set_charset($con, "utf8");
+    mysqli_select_db($con, 'experience_base');
+    $result = mysqli_query($con, "SELECT * FROM eb_comments WHERE cid='$cid' and type='like'");
+    $ret = '';
+    while ($row = mysqli_fetch_array($result))
+    {
+      $ret .= '<a href="userpage.php?u=' . get_userinfo($row['co_author_id'])['uid'] . '">' . get_userinfo($row['co_author_id'])['nickname'] . '</a> ';
+    }
+    mysqli_close($con);
+
+    if ($ret)
+    {
+      echo $ret . '赞了这篇文章';
+    }
+    else
+    {
+      echo '快来点赞吧！';
+    }
+}
+
+function is_i_liked($cid)
+{
+    if (!isset($_COOKIE["userid"]))
+    {
+      return FALSE;
+    }
+
+    require_once('config.php');
+    $con=mysqli_connect(HOST, USERNAME, PASSWORD);
+    mysqli_set_charset($con, "utf8");
+    mysqli_select_db($con, 'experience_base');
+    $logined_userid = $_COOKIE["userid"];
+    $result = mysqli_query($con, "SELECT * FROM eb_comments WHERE cid='$cid' and type='like' and co_author_id='$logined_userid'");
+    $is_liked = FALSE;
+    if (mysqli_fetch_array($result)) {$is_liked = TRUE;}
+    mysqli_close($con);
+    return $is_liked;
 }
 
 function get_avatar($uid)

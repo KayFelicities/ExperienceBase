@@ -104,23 +104,23 @@ $(document).ready(function() {
   });
 })
 
-  function before_submit() {
-<?php 
-if (isset($_COOKIE["userid"]))
-{?>
-    $("#swap-editor").val($("#editor").summernote('code'));
-    $("#swap-tags").val($("#tagselect").val());
-    $.notify({message: '经验正在提交中，请稍后……'}, {type: 'info', delay: 0});
-<?php
-}
-else
-{?>
-    $.notify({message: '登录后才能提交经验！'}, {type: 'danger'});
-    return false;
-<?php
-}
-?>
+function before_submit() {
+  <?php 
+  if (isset($_COOKIE["userid"]))
+  {?>
+      $("#swap-editor").val($("#editor").summernote('code'));
+      $("#swap-tags").val($("#tagselect").val());
+      $.notify({message: '经验正在提交中，请稍后……'}, {type: 'info', delay: 0});
+  <?php
   }
+  else
+  {?>
+      $.notify({message: '登录后才能提交经验！'}, {type: 'danger'});
+      return false;
+  <?php
+  }
+  ?>
+}
 </script>
 
 <body>
@@ -161,6 +161,7 @@ else
           <script>
           $(document).ready(function() {
             $('#editor').summernote({
+              height: 300,
               placeholder: '写下你的经验...',
             });
           });
@@ -195,7 +196,7 @@ else
           <!--Tags-->
           <div class="row">
             <div class="col-xs-6" style="margin-bottom: 10px">
-              <select id="tagselect" name="labels" class="form-control" multiple="multiple">
+              <select id="tagselect" name="labels" class="form-control" multiple="multiple" required>
                 <optgroup label="请自行输入标签">
                 </optgroup>
               </select>

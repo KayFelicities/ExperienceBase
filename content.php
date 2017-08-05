@@ -21,7 +21,7 @@
   {
     float: right;
   }
-  #submit-btns, #swap-editor, .pdfview{
+  #submit-btns, #swap-editor{
     display: none;
   }
   #edit-btn
@@ -50,6 +50,7 @@
 $(document).ready(function() {
   $("#edit-btn").click(function() {
     $("#editor").summernote({
+      height: 300,
       focus: true,
     });
     $("#swap-editor").val($('#editor').summernote('code'));
@@ -98,17 +99,16 @@ if (count_like($cid) != $row['like_num'])
       </div>
       <div style="margin-top: 10px;">
       <span>
-        <a href="#"><?php echo $row['like_num']?></a>人赞了这篇文章
-          <form class="form" style="display: inline;" method="post" action="comment_action.php">
-            <button type="submit" style="padding: 0 5px; margin: 0 5px;" class="btn btn-primary btn-xs">点赞</button>
-            <input type="hidden" name="cid" value="<?php echo $cid; ?>">
-            <input type="hidden" name="type" value="like">
-          </from>
-        
+        <?php echo_like_people($cid)?>
+        <form class="form" style="display: inline;" method="post" action="comment_action.php">
+          <button type="submit" style="padding: 0 5px; margin: 0 5px;" class="btn btn-primary btn-xs"><i class="icon-heart-empty"></i> 赞</button>
+          <input type="hidden" name="cid" value="<?php echo $cid; ?>">
+          <input type="hidden" name="type" value="like">
+        </from>
       </span>
       </div>
 
-    <!--<button id="edit-btn" class="btn btn-default btn-xs">修改</button>-->
+    <!-- <button id="edit-btn" class="btn btn-default btn-xs">修改</button> -->
 
     </div>
 
@@ -143,14 +143,15 @@ if (count_like($cid) != $row['like_num'])
               $file_name = $file_array[$file_count];
               $file_name_array = explode('.', $file_name);
               $save_file_path = CONTENT_FILE_PATH . sprintf("/%06d", $cid) . sprintf("_%02d.", $file_count) . end($file_name_array);
-              echo "<div><span><a download=\"$file_name\" href=\"$save_file_path\">$file_name</a>";
+              // echo "<div><span><a download=\"$file_name\" href=\"$save_file_path\">$file_name</a>";
+              echo "<div><span>$file_name";
               $store_file_path = CONTENT_FILE_STORE_PATH . sprintf("/%06d", $cid) . sprintf("_%02d.pdf", $file_count);
               $view_file_path = CONTENT_FILE_PATH . sprintf("/%06d", $cid) . sprintf("_%02d.pdf", $file_count);
               if (file_exists($store_file_path))
               {
                 $pdfview = "pdfview".$file_count;
                 $pdfbed = "pdfbed".$file_count;
-                echo "<span> </span><button class=\"btn btn-success btn-xs\" onclick=\"$('#$pdfview').toggle('fast');$('html,body').animate({scrollTop:$('#$pdfview').offset().top}, 200);\">预览文件</button></span>";
+                echo "<span> </span><button class=\"btn btn-success btn-xs\" onclick=\"$('#$pdfview').toggle('fast');$('html,body').animate({scrollTop:$('#$pdfview').offset().top}, 200);\">预览/收起</button></span>";
                 echo "<span> </span><button class=\"btn btn-info btn-xs openpdf-btn\"><a href='pdfview.php?c=$cid&f=$file_count', target='_Blank'>全屏预览</a></button>";
                 echo "</span></div>";
               }
