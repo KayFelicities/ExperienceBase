@@ -107,7 +107,7 @@ $(document).ready(function() {
 function before_submit() {
   <?php 
   if (isset($_COOKIE["userid"]))
-  {?>
+{?>
       $("#swap-editor").val($("#editor").summernote('code'));
       $("#swap-tags").val($("#tagselect").val());
       $.notify({message: '经验正在提交中，请稍后……'}, {type: 'info', delay: 0});
@@ -160,10 +160,36 @@ function before_submit() {
         </div>
           <script>
           $(document).ready(function() {
-            $('#editor').summernote({
+            var $summernote = $('#editor').summernote({
               height: 300,
               placeholder: '写下你的经验...',
+              callbacks: {
+                  onImageUpload: function (files) {
+                      sendFile($summernote, files[0]);
+                  }
+              }
             });
+
+            //ajax上传图片
+            function sendFile($summernote, file) {
+                var formData = new FormData();
+                formData.append("file", file);
+                formData.append("dir", 'content');
+                $.ajax({
+                    url: "upload_img_ajax.php",//路径是你控制器中上传图片的方法，下面controller里面我会写到
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    success: function (data) {
+                        $summernote.summernote('insertImage', data, function ($image) {
+                            $image.attr('src', data);
+                            $image.css('width', '50%');
+                        });
+                    }
+                });
+            }
           });
         </script>
 
@@ -207,6 +233,8 @@ function before_submit() {
 
         </div>
       </from>
+
+<?php echo_webfooter(); ?>
 </body>
 
 </html>

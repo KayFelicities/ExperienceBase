@@ -8,6 +8,14 @@ function delCookie(name) {
 </script>
 
 <?php
+function echo_webfooter()
+{?>
+    <div style="margin-top: 30px; margin-bottom: 10px; text-align: center;">
+        <p>Designed by A1-工匠组. Powered by Bootstrap. | <a href="about.php">关于</a></p>
+    </div>
+<?php
+}
+
 function echo_banner($page_name)
 {?>
   <nav class="navbar navbar-inverse navbar-fixed-top">

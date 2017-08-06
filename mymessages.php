@@ -28,6 +28,8 @@ else
 
 <?php }?>
 </div>
+
+<?php echo_webfooter(); ?>
 </body>
 
 </html>

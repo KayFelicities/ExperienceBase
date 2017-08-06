@@ -83,6 +83,7 @@ angular.module('app', ['ngImgCrop'])
 <?php }?>
 </div>
 
+<?php echo_webfooter(); ?>
 </body>
 
 </html>

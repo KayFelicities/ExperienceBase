@@ -258,6 +258,8 @@ else
 <?php
 mysqli_close($con);
 ?>
+
+<?php echo_webfooter(); ?>
 </body>
 
 </html>

@@ -31,9 +31,13 @@
 <script>
 $(document).ready(function() {
   $("#edit-btn").click(function() {
-    $("#editor").summernote({
+    var $summernote = $('#editor').summernote({
       focus: true,
-      
+      callbacks: {
+          onImageUpload: function (files) {
+              sendFile($summernote, files[0]);
+          }
+      }
     });
     $("#swap-editor").val($('#editor').summernote('code'));
     $("#submit-btns").show();
@@ -43,6 +47,27 @@ $(document).ready(function() {
     $("#editor").html($("#swap-editor").val());
     $("#submit-btns").hide();
   });
+
+  //ajax上传图片
+  function sendFile($summernote, file) {
+      var formData = new FormData();
+      formData.append("file", file);
+      formData.append("dir", 'about');
+      $.ajax({
+          url: "upload_img_ajax.php",//路径是你控制器中上传图片的方法，下面controller里面我会写到
+          data: formData,
+          cache: false,
+          contentType: false,
+          processData: false,
+          type: 'POST',
+          success: function (data) {
+              $summernote.summernote('insertImage', data, function ($image) {
+                  $image.attr('src', data);
+                  $image.css('width', '50%');
+              });
+          }
+      });
+  }
 });
 
 function befor_submit() {
@@ -100,6 +125,7 @@ function befor_submit() {
   <div style="margin-top: 100px;"></div>
 </div>
 
+<?php echo_webfooter(); ?>
 </body>
 
 </html>
