@@ -204,7 +204,7 @@ function before_submit() {
                     $("#input").fileinput({
                         language: 'zh',
                         // uploadUrl: './uploader.php',
-                        allowedFileExtensions : ['doc', 'docx', 'ppt', 'pptx', 'pdf', 'jpg', 'png'],
+                        allowedFileExtensions : ['doc', 'docx', 'ppt', 'pptx', 'pdf'],
                         // minFileCount: 0,
                         maxFilesNum: 10,
                         showUpload: false,

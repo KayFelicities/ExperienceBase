@@ -22,9 +22,6 @@ if(PHP_VERSION >= 6 || !get_magic_quotes_gpc())
 
 require_once('config.php');
 
-$cid=$_POST["cid"];
-$comment=isset($_POST["comment"]) ? $_POST["comment"] : "";
-$comment_type=$_POST["type"];
 $remote_ip = $_SERVER["REMOTE_ADDR"];
 $timenow = date("Y-m-d H:i:s");
 $author_id = 0;
@@ -32,16 +29,20 @@ if (isset($_COOKIE["userid"]))
 {
     $author_id = $_COOKIE["userid"];
 }
+$cid=$_POST["cid"];
+
+$comment=isset($_POST["comment"]) ? $_POST["comment"] : "";
+$comment_type=$_POST["type"];
 
 if (!$author_id)
 {
     echo ("<script>$.notify({message: '请先登录'}, {type: 'danger'});</script>");
     header("Refresh: 1; url=login.php");
 }
-else if ($comment_type == 'like')
+else
 {
     include("common.php");
-    if (is_i_liked($cid))
+    if ($comment_type == 'like' && is_i_liked($cid))
     {
         echo ("<script>$.notify({message: '您已赞过该文章啦'}, {type: 'danger'});</script>");
         header("Refresh: 1; url=content.php?cid=$cid");
@@ -55,11 +56,11 @@ else if ($comment_type == 'like')
                                     VALUES('$cid', '$timenow', '$remote_ip', '$author_id', '$comment', '$comment_type')";
         if ($comment_type == 'comment')
         {
-        $insertsql_update= "UPDATE eb_contents SET comment_num=comment_num+1 WHERE cid='$cid'";
+            $insertsql_update= "UPDATE eb_contents SET comment_num=comment_num+1 WHERE cid='$cid'";
         }
         else
         {
-        $insertsql_update= "UPDATE eb_contents SET like_num=like_num+1 WHERE cid='$cid'";
+            $insertsql_update= "UPDATE eb_contents SET like_num=like_num+1 WHERE cid='$cid'";
         }
 
         if(mysqli_query($con, $insertsql_add) and mysqli_query($con, $insertsql_update))
@@ -73,8 +74,8 @@ else if ($comment_type == 'like')
         }
         mysqli_close($con);
     }
-}?>
+}
+?>
 
 </body>
-
 </html>

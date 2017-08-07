@@ -16,19 +16,14 @@
 <script src="style/summernote/summernote.js"></script>
 <script src="style/summernote/summernote-zh-CN.js"></script>
 
+<!--notify-->
+<link rel="stylesheet" href="style/css/animate.css">
+<script src="style/js/bootstrap-notify.js"></script>
+
 <style>
-  #edit-btn
-  {
-    float: right;
-  }
-  #submit-btns, #swap-editor{
+  #submit-btns, #swap-editor, #del-confirm{
     display: none;
   }
-  #edit-btn
-  {
-    float: right;
-  }
-
   .comments
   {
     margin-top: 30px;
@@ -62,6 +57,22 @@ $(document).ready(function() {
     $("#submit-btns").hide();
   });
 });
+  
+function before_edit_submit() {
+  $("#swap-editor").val($('#editor').summernote('code'));
+}
+  
+function before_delet_submit() {
+  if (document.getElementById("confirm").value == '确认')
+  {
+    return true;
+  }
+  else
+  {
+    $.notify({message: '请填写“确认”后进行删除'}, {type: 'danger'});
+    return false;
+  }
+}
 </script>
 
 <body>
@@ -74,8 +85,12 @@ require_once('config.php');
 $con=mysqli_connect(HOST, USERNAME, PASSWORD);
 mysqli_set_charset($con, "utf8");
 mysqli_select_db($con, 'experience_base');
-$result = mysqli_query($con, "SELECT * FROM eb_contents WHERE cid=$cid");
+$result = mysqli_query($con, "SELECT * FROM eb_contents WHERE cid=$cid AND status='publish'");
 $row = mysqli_fetch_array($result);
+if (!$row)
+{
+  echo "<script>location.href='404.php'</script>";
+}
 $c_author_id = $row['author_id'];
 
 if (count_comment($cid) != $row['comment_num'])
@@ -98,18 +113,31 @@ if (count_like($cid) != $row['like_num'])
         <?php echo_content_footer($row) ?>
       </div>
       <div style="margin-top: 10px;">
-      <span>
-        <?php echo_like_people($cid)?>
-        <form class="form" style="display: inline;" method="post" action="comment_action.php">
-          <button type="submit" style="padding: 0 5px; margin: 0 5px;" class="btn btn-primary btn-xs"><i class="icon-heart-empty"></i> 赞</button>
-          <input type="hidden" name="cid" value="<?php echo $cid; ?>">
-          <input type="hidden" name="type" value="like">
-        </from>
-      </span>
+        <span>
+          <?php echo_like_people($cid)?>
+          <form class="form" style="display: inline;" method="post" action="comment_action.php">
+            <button type="submit" name="like" style="padding: 0 5px; margin: 0 5px;" class="btn btn-primary btn-xs"><i class="icon-heart-empty"></i> 赞</button>
+            <input type="hidden" name="cid" value="<?php echo $cid; ?>">
+            <input type="hidden" name="type" value="like">
+          </form>
+        </span>
       </div>
 
-    <!-- <button id="edit-btn" class="btn btn-default btn-xs">修改</button> -->
-
+      <?php if (isset($_COOKIE["userid"]) && $c_author_id == $_COOKIE["userid"])
+      {?>
+        <form method="post" name="delet-form" action="content_edit_action.php" onsubmit="return before_delet_submit();">
+          <input type="hidden" name="type" value="delet">
+          <input type="hidden" name="cid" value="<?php echo $cid; ?>">
+          <input type="hidden" name="c_authur_id" value="<?php echo $c_author_id; ?>">
+          <button type="button" id="delet-btn" class="btn btn-default btn-xs" onclick="$('#del-confirm').toggle();">删除文章</button>
+          <div id="del-confirm">
+            <input type="text" class="form-control" style="width: 30%" id="confirm" placeholder="请输入“确认”来删除文章">
+            <button type="submit" id="delet" style="width: 30%" class="btn btn-danger btn-xs">删除</button>
+          </div>
+        </form>
+        <button type="button" id="edit-btn" style="margin-top: 5px;" class="btn btn-default btn-xs">编辑内容</button>
+      <?php
+      }?>
     </div>
 
     <div id="editor">
@@ -119,15 +147,18 @@ if (count_like($cid) != $row['like_num'])
     </div>
 
     <!--edit form-->
-    <form method="post" action="content_edit_action.php" onsubmit="return befor_submit();">
+    <form id="edit-submit" method="post" action="content_edit_action.php" onsubmit="return before_edit_submit();">
         <input type="text" id="swap-editor" name="editor"></input>
+        <input type="hidden" name="cid" value="<?php echo $cid; ?>">
+        <input type="hidden" name="c_authur_id" value="<?php echo $c_author_id; ?>">
+        <input type="hidden" name="type" value="edit">
         <div class="row" id="submit-btns">
-        <div class="col-xs-9">
-            <button type="submit" class="btn btn-primary btn-block">提交</button>
-        </div>  
-        <div class="col-xs-3">
-            <button type="button" id="cancel-btn" class="btn btn-warning btn-block">取消</button>
-        </div>
+          <div class="col-xs-9">
+              <button type="submit" name="edit" class="btn btn-primary btn-block">提交</button>
+          </div>  
+          <div class="col-xs-3">
+              <button type="button" id="cancel-btn" class="btn btn-warning btn-block">取消</button>
+          </div>
         </div>
     </form>
     

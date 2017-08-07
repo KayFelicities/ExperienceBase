@@ -31,10 +31,10 @@ function echo_banner($page_name)
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li <?php if ($page_name=="" ){echo 'class="active"';}?> ><a href="content_list.php?p=0&t=">所有经验</a></li>
           <li class="dropdown <?php if (in_array($page_name, array("软件", "硬件", "结构件", "综合")))echo "active "; ?>">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">分类<span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">产品<span class="caret"></span></a>
             <ul class="dropdown-menu">
+              <li><a href="content_list.php?p=0&t=">所有经验</a></li>
               <li><a href="content_list.php?p=0&t=软件">软件</a></li>
               <li><a href="content_list.php?p=0&t=硬件">硬件</a></li>
               <li><a href="content_list.php?p=0&t=结构件">结构件</a></li>
@@ -42,6 +42,7 @@ function echo_banner($page_name)
               <!--<li role="separator" class="divider"></li>-->
             </ul>
           </li>
+          <li <?php if ($page_name=="message" ){echo 'class="active"';}?> ><a href="message_board.php">留言板</a></li>
           <li <?php if ($page_name=="about" ){echo 'class="active"';}?> ><a href="about.php">关于</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -79,13 +80,13 @@ function echo_banner($page_name)
   <?php
 }
 
-function echo_content_item($no, $type="", $author_id="", $tag="")
+function echo_content_item($no, $type="", $author_id="", $tag="", $text="")
 {
     require_once('config.php');
     $con=mysqli_connect(HOST, USERNAME, PASSWORD);
     mysqli_set_charset($con, "utf8");
     mysqli_select_db($con, 'experience_base');
-    $result = mysqli_query($con, "SELECT * FROM eb_contents ".get_search_condition($type, $author_id, $tag)." ORDER BY cid DESC LIMIT $no,1");
+    $result = mysqli_query($con, "SELECT * FROM eb_contents ".get_search_condition($type, $author_id, $tag, $text)." ORDER BY cid DESC LIMIT $no,1");
     $row = mysqli_fetch_array($result);
     if ($row)
     {
@@ -154,13 +155,13 @@ function echo_content_footer($row)
 <?php
 }
 
-function echo_content_title($no, $type="", $author_id="", $tag="")
+function echo_content_title($no, $type="", $author_id="", $tag="", $text="")
 {
     require_once('config.php');
     $con=mysqli_connect(HOST, USERNAME, PASSWORD);
     mysqli_set_charset($con, "utf8");
     mysqli_select_db($con, 'experience_base');
-    $result = mysqli_query($con, "SELECT * FROM eb_contents ".get_search_condition($type, $author_id, $tag)." ORDER BY cid DESC LIMIT $no,1");
+    $result = mysqli_query($con, "SELECT * FROM eb_contents ".get_search_condition($type, $author_id, $tag, $text)." ORDER BY cid DESC LIMIT $no,1");
     $row = mysqli_fetch_array($result);
     if($row)
     {
@@ -180,13 +181,13 @@ function echo_content_title($no, $type="", $author_id="", $tag="")
     }
 }
 
-function count_content($type="", $author_id="", $tag="")
+function count_content($type="", $author_id="", $tag="", $text="")
 {
     require_once('config.php');
     $con=mysqli_connect(HOST, USERNAME, PASSWORD);
     mysqli_set_charset($con, "utf8");
     mysqli_select_db($con, 'experience_base');
-    $result = mysqli_query($con, "SELECT COUNT(*) AS count FROM eb_contents ".get_search_condition($type, $author_id, $tag));
+    $result = mysqli_query($con, "SELECT COUNT(*) AS count FROM eb_contents ".get_search_condition($type, $author_id, $tag, $text));
     $count = mysqli_fetch_array($result)['count'];
     mysqli_close($con);
     return $count;
@@ -283,9 +284,9 @@ function get_userinfo($uid)
     return $row;
 }
 
-function get_search_condition($se_type="", $se_userid="", $tag="")
+function get_search_condition($se_type="", $se_userid="", $tag="", $text="")
 {
-  $search_condition = "";
+  $search_condition = "WHERE status='publish' AND ";
   if ($se_type)
   {
     $search_condition .= "(extype1='$se_type' OR extype2='$se_type') AND ";
@@ -298,10 +299,17 @@ function get_search_condition($se_type="", $se_userid="", $tag="")
   {
     $search_condition .= "tags LIKE '%$tag%' AND ";
   }
-  
-  if ($search_condition)
+
+  $search_text = "";
+  if ($text)
   {
-    $search_condition = "WHERE " . substr($search_condition, 0, -4);  //去掉最后的AND
+    $search_text .= "(extype1 LIKE '%$text%' OR extype2 LIKE '%$text%' OR tags LIKE '%$text%' OR author_id='$text' OR title LIKE '%$text%')";
+  }
+  
+  $search_condition = substr($search_condition, 0, -4);  //去掉最后的AND
+  if ($search_text)
+  {
+    $search_condition .= " AND " . $search_text;
   }
   // print_r($search_condition);
   return $search_condition;

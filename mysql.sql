@@ -4,6 +4,7 @@ CREATE TABLE `eb_users` (
   `uid` int(10) unsigned NOT NULL auto_increment,
   `username` varchar(32) default NULL,
   `nickname` varchar(32) default NULL,
+  `fakename` varchar(32) default NULL,
   `sx_id` char(9) default NULL,
   `password` varchar(64) default NULL,
   `create_tm` datetime default NULL,
@@ -14,6 +15,7 @@ CREATE TABLE `eb_users` (
   `department` varchar(128) default 'sx',
   `pic_url` varchar(128) default NULL,
   `birthday` datetime default NULL,
+  `power` int(2) unsigned default '1',
   PRIMARY KEY  (`uid`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `mail` (`mail`),
@@ -36,6 +38,7 @@ CREATE TABLE `eb_contents` (
   `create_ip` char(16) default NULL,
   `modify_tm` datetime default NULL,
   `modify_ip` char(16) default NULL,
+  `last_tm` datetime default NULL,
   `content` mediumtext,
   `file_name` varchar(1024) default NULL,
   `author_id` int(10),
@@ -64,6 +67,22 @@ CREATE TABLE `eb_comments` (
   PRIMARY KEY  (`coid`),
   KEY `cid` (`cid`),
   KEY `co_author_id` (`co_author_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- 留言板
+CREATE TABLE `eb_message_board` (
+  `mid` int(10) unsigned NOT NULL auto_increment,
+  `parent_mid` int(10) unsigned default '0',
+  `create_tm` datetime default NULL,
+  `create_ip` char(16) default NULL,
+  `name` varchar(64) default 'visitor',
+  `email` varchar(64) default NULL,
+  `m_author_id` int(10),
+  `status` char(16) default 'publish',
+  `type` char(16) default 'message',
+  `comment` text,
+  PRIMARY KEY  (`mid`),
+  KEY `mid` (`mid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- 杂项

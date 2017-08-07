@@ -20,8 +20,9 @@
   $se_userid = isset($_GET['u']) ? $_GET['u'] : "";
   $se_tag = isset($_GET['tag']) ? $_GET['tag'] : "";
   $se_content = isset($_GET['c']) ? $_GET['c'] : "";
+  $se_text = isset($_GET['s']) ? $_GET['s'] : "";
 
-  $item_num = count_content($se_type, $se_userid, $se_tag);
+  $item_num = count_content($se_type, $se_userid, $se_tag, $se_text);
   $page_sum = ceil($item_num / $items_per_page);
   echo_banner($se_type);
 ?>
@@ -35,23 +36,26 @@
           <?php if($se_userid)echo get_userinfo($se_userid)['nickname']."的";?>
           <?php if($se_type)echo $se_type."分类下的";?>
           <?php if($se_tag)echo "包含“".$se_tag."”标签的";?>
+          <?php if($se_text)echo "搜索“".$se_text."”相关的";?>
           所有文章
         </small>
         <div class="col-xs-5 pull-right">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="搜索点什么...">
-            <span class="input-group-btn">
-              <button class="btn btn-default" type="button">搜索</button>
-            </span>
-          </div>
+          <form id="edit-submit" method="get" action="content_list.php">
+            <div class="input-group">
+              <input id="search-text" type="text" name="s" class="form-control" placeholder="搜索点什么...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="submit" >搜索</button>
+              </span>
+            </div>
+          </form>
         </div>
       </h3>
     </header>
     <div class="items items-hover">
       <?php
-      for ($count = $page*$items_per_page; $count < ($page + 1)*$items_per_page; $count++) 
+      for ($count = $page*$items_per_page; $count < ($page + 1)*$items_per_page; $count++)
       {
-        if (!echo_content_item($count, $se_type, $se_userid, $se_tag))
+        if (!echo_content_item($count, $se_type, $se_userid, $se_tag, $se_text))
         {
           break;
         }

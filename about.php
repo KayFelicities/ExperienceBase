@@ -70,7 +70,7 @@ $(document).ready(function() {
   }
 });
 
-function befor_submit() {
+function before_submit() {
   $("#swap-editor").val($('#editor').summernote('code'));
 }
 </script>
@@ -108,7 +108,7 @@ function befor_submit() {
   </div>
 
   <!--edit form-->
-  <form method="post" action="about_edit_action.php" onsubmit="return befor_submit();">
+  <form method="post" action="about_edit_action.php" onsubmit="return before_submit();">
     <input type="text" id="swap-editor" name="editor"></input>
     <div class="row" id="submit-btns">
       <div class="col-xs-9">
