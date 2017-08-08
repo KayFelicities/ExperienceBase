@@ -203,6 +203,10 @@ function chk_form()
               <input type="checkbox" id="accept-cb"> 接受<a herf="#">经验分享平台使用条款</a>  
             </label>
           </div>
+          <div class="form-group">
+            <p>为保证数据安全，本平台仅接受三星电气产品中心员工进行注册，请填写真实姓名和工号完成注册。因此带来的不便请谅解。</p>
+            <p style="color: red"><b>若您在注册过程中遇到问题，请务必联系665593，我们将竭诚为您服务。</b></p>
+          </div>
           <div class="row">
             <div class="col-xs-9">
               <button type="submit" id="signup-submit" class="btn btn-block btn-primary" disabled="disabled">提交</button>
@@ -217,7 +221,6 @@ function chk_form()
       <div class="bigtext">
         <p>+1</p>
       </div>
-
     </div>
 
 <?php echo_webfooter(); ?>

@@ -18,16 +18,74 @@
 <?php if (!isset($_COOKIE["userid"])){echo "请<a href='login.php'>登录</a>";}
 else
 {
-  $userinfo = get_userinfo($_COOKIE["userid"]);
+  $login_id = $_COOKIE["userid"];
+  $userinfo = get_userinfo($login_id);
+
+  $con=mysqli_connect(HOST, USERNAME, PASSWORD);
+  mysqli_set_charset($con, "utf8");
+  mysqli_select_db($con, 'experience_base');
+  mysqli_query($con, "UPDATE eb_users SET unread_num='0' WHERE uid='$login_id'");
+  mysqli_close($con);
 ?>
   <header>
     <h3><i></i>我的消息<small></small></h3>
   </header>
   <hr>
-  <p>并没有消息╮(╯_╰)╭</p>
+  
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        回复我的
+        <span class="pull-right">
+          <a href="#" class="btn btn-xs btn-default">更多</a>
+        </span>
+      </h3>
+    </div>
+    <div class="panel-body">
+      <?php
+      for ($count=0; $count < 10; $count++)
+      {
+        if (!echo_reply_me($login_id, $count, 1))
+        {
+          break;
+        }
+      }
+      if ($count==0)
+      {
+        echo "无";
+      }
+      ?>
+    </div>
+  </div>
+  
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        提到我的
+        <span class="pull-right">
+          <a href="#" class="btn btn-xs btn-default">更多</a>
+        </span>
+      </h3>
+    </div>
+    <div class="panel-body">
+      <?php
+      for ($count=0; $count < 10; $count++)
+      {
+        if (!echo_notice_me($login_id, $count, 1))
+        {
+          break;
+        }
+      }
+      if ($count==0)
+      {
+        echo "无";
+      }
+      ?>
+    </div>
+  </div>
+
 
 <?php }?>
-</div>
 
 <?php echo_webfooter(); ?>
 </body>

@@ -20,7 +20,7 @@ if(PHP_VERSION >= 6 || !get_magic_quotes_gpc())
     $_POST = array_map( 'addslashes', $_POST);
 }
 
-$cid=$_POST["cid"];
+$pid=$_POST["pid"];
 $c_authur_id = $_POST["c_authur_id"];
 $remote_ip = $_SERVER["REMOTE_ADDR"];
 $timenow = date("Y-m-d H:i:s");
@@ -32,7 +32,7 @@ if (!empty($_COOKIE["userid"]))
 if ($c_authur_id != $login_id)
 {
     echo "<script>$.notify({message: '权限错误'}, {type: 'danger'});</script>";
-    header("Refresh: 1; url=content.php?cid=$cid");
+    header("Refresh: 1; url=content.php?pid=$pid");
 }
 else
 {
@@ -43,25 +43,25 @@ else
 
     if($_POST["type"] == "edit") {
         $content=$_POST["editor"];
-        $insertsql= "UPDATE eb_contents 
+        $insertsql= "UPDATE eb_passages 
                     SET content='$content',modify_ip='$remote_ip',modify_tm='$timenow',last_tm='$timenow'
-                    WHERE cid=$cid";
+                    WHERE pid=$pid";
 
         if(mysqli_query($con, $insertsql))
         {
             echo "<script>$.notify({message: '修改成功'}, {type: 'success'});</script>";
-            header("Refresh: 1; url=content.php?cid=$cid");
+            header("Refresh: 1; url=content.php?pid=$pid");
         }
         else
         {
             echo mysqli_error($con);
             echo "<script>$.notify({message: '修改失败'}, {type: 'danger'});</script>";
-            header("Refresh: 1; url=content.php?cid=$cid");
+            header("Refresh: 1; url=content.php?pid=$pid");
         }
     }
     else if ($_POST["type"] == "delet")
     {
-        $insertsql= "UPDATE eb_contents SET status='delet' WHERE cid=$cid";
+        $insertsql= "UPDATE eb_passages SET status='delet' WHERE pid=$pid";
         if(mysqli_query($con, $insertsql))
         {
             echo "<script>$.notify({message: '删除成功'}, {type: 'success'});</script>";
@@ -71,7 +71,7 @@ else
         {
             echo mysqli_error($con);
             echo "<script>$.notify({message: '删除失败'}, {type: 'danger'});</script>";
-            header("Refresh: 1; url=content.php?cid=$cid");
+            header("Refresh: 1; url=content.php?pid=$pid");
         }
     }
     else{

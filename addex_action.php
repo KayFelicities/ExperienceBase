@@ -38,13 +38,13 @@ print_r($_FILES);
 $con=mysqli_connect(HOST, USERNAME, PASSWORD);
 mysqli_set_charset($con, "utf8");
 mysqli_select_db($con, 'experience_base');
-$insertsql= "INSERT INTO eb_contents(title, create_tm, author_id, content, extype1, extype2, tags, create_ip)
-VALUES('$title', '$timenow', '$author_id', '$editor', '$extype1', '$extype2', '$tags', '$remote_ip')";
+$insertsql= "INSERT INTO eb_passages(title, create_tm, author_id, content, extype1, extype2, tags, create_ip, last_tm)
+VALUES('$title', '$timenow', '$author_id', '$editor', '$extype1', '$extype2', '$tags', '$remote_ip', '$timenow')";
 
 if(mysqli_query($con, $insertsql))
 {
     $result = mysqli_query($con, "SELECT @@IDENTITY");
-    $cid = mysqli_fetch_array($result)[0];
+    $pid = mysqli_fetch_array($result)[0];
 
     if ($_FILES['file']['name'][0])
     {
@@ -65,18 +65,18 @@ if(mysqli_query($con, $insertsql))
 
           $file_name = $_FILES["file"]["name"][$i];
           $file_name_array = explode('.', $file_name);
-          $save_file_path = str_replace("/", "\\", CONTENT_FILE_STORE_PATH . sprintf("/%06d", $cid) . sprintf("_%02d.", $i) . end($file_name_array));
-          $pdf_file_path = str_replace("/", "\\", CONTENT_FILE_STORE_PATH . sprintf("/%06d", $cid) . sprintf("_%02d.pdf", $i));
+          $save_file_path = str_replace("/", "\\", CONTENT_FILE_STORE_PATH . sprintf("/%06d", $pid) . sprintf("_%02d.", $i) . end($file_name_array));
+          $pdf_file_path = str_replace("/", "\\", CONTENT_FILE_STORE_PATH . sprintf("/%06d", $pid) . sprintf("_%02d.pdf", $i));
           move_uploaded_file($_FILES["file"]["tmp_name"][$i], $save_file_path);
 
           if ($i == 0)
           {
-            $update_sql = "UPDATE eb_contents SET file_name='$file_name' WHERE cid='$cid'";
+            $update_sql = "UPDATE eb_passages SET file_name='$file_name' WHERE pid='$pid'";
           }
           else 
           {
             $separator = SEPARATOR;
-            $update_sql = "UPDATE eb_contents SET file_name=CONCAT_WS('$separator',file_name,'$file_name') WHERE cid='$cid'";
+            $update_sql = "UPDATE eb_passages SET file_name=CONCAT_WS('$separator',file_name,'$file_name') WHERE pid='$pid'";
           }
           mysqli_query($con, $update_sql);
 
@@ -135,7 +135,7 @@ if(mysqli_query($con, $insertsql))
     }
 
     echo ("<script>$.notify({message: '提交成功！'}, {type: 'success'});</script>");
-    header("Refresh: 1; url=content.php?cid=$cid");
+    header("Refresh: 1; url=content.php?pid=$pid");
 }
 else
 {
