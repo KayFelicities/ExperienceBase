@@ -2,7 +2,7 @@
 <html>
 <meta name="renderer" content="webkit"> 
 <meta charset="UTF-8">
-<title>经验分享平台</title>
+<title>经验共享平台</title>
 <link rel="bookmark" type="image/x-icon" href="img/+1.ico" />
 <link rel="shortcut icon" href="img/+1.ico">
 <link rel="icon" href="img/+1.ico">
@@ -200,7 +200,7 @@ function chk_form()
           </div>
           <div class="checkbox">
             <label>
-              <input type="checkbox" id="accept-cb"> 接受<a herf="#">经验分享平台使用条款</a>  
+              <input type="checkbox" id="accept-cb"> 接受<a herf="#">经验共享平台使用条款</a>  
             </label>
           </div>
           <div class="form-group">

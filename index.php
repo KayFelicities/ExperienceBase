@@ -2,7 +2,7 @@
 <html>
 <meta name="renderer" content="webkit"> 
 <meta charset="UTF-8">
-<title>经验分享平台</title>
+<title>经验共享平台</title>
 <link rel="bookmark" type="image/x-icon" href="img/+1.ico" />
 <link rel="shortcut icon" href="img/+1.ico">
 <link rel="icon" href="img/+1.ico">
@@ -34,7 +34,7 @@
         <div class="item active">
           <div class="container">
             <div class="carousel-caption">
-              <h1>经验分享平台</h1>
+              <h1>经验共享平台</h1>
               <p>为您提供最新、最全的经验，让我们每天都能经验+1</p>
               <p><a class="btn btn-lg btn-primary" href="about.php" role="button">了解更多</a></p>
             </div>

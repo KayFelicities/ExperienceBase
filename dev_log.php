@@ -2,7 +2,7 @@
 <html>
 <meta name="renderer" content="webkit"> 
 <meta charset="UTF-8">
-<title>经验分享平台</title>
+<title>经验共享平台</title>
 <link rel="bookmark" type="image/x-icon" href="img/+1.ico" />
 <link rel="shortcut icon" href="img/+1.ico">
 <link rel="icon" href="img/+1.ico">
@@ -145,6 +145,7 @@
   <ol>
     <li>搭建“我的消息”页面</li>
     <li>消息系统简单实现，可回复和点赞和通知到作者</li>
+    <li>添加文章最后动态时间，按动态时间进行文章排序</li>
   </ol>
 
   <hr>

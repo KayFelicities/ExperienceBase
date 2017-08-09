@@ -2,7 +2,7 @@
 <html>
 <meta name="renderer" content="webkit"> 
 <meta charset="UTF-8">
-<title>经验分享平台</title>
+<title>经验共享平台</title>
 <link rel="bookmark" type="image/x-icon" href="img/+1.ico" />
 <link rel="shortcut icon" href="img/+1.ico">
 <link rel="icon" href="img/+1.ico">
@@ -21,6 +21,7 @@
   $se_tag = isset($_GET['tag']) ? $_GET['tag'] : "";
   $se_content = isset($_GET['c']) ? $_GET['c'] : "";
   $se_text = isset($_GET['s']) ? $_GET['s'] : "";
+  $order_type = isset($_GET['o']) ? $_GET['o'] : "last";
 
   $item_num = count_content($se_type, $se_userid, $se_tag, $se_text);
   $page_sum = ceil($item_num / $items_per_page);
@@ -38,6 +39,16 @@
           <?php if($se_tag)echo "包含“".$se_tag."”标签的";?>
           <?php if($se_text)echo "搜索“".$se_text."”相关的";?>
           所有文章
+           <span style="font-size: 12px; margin-left: 10px;"> 
+            <?php
+              $href_last = sprintf('"content_list.php?p=%s&t=%s&u=%s&tag=%s&c=%s&s=%s&o=last"',
+                  $page, $se_type, $se_userid, $se_tag, $se_content, $se_text);
+              $href_new = sprintf('"content_list.php?p=%s&t=%s&u=%s&tag=%s&c=%s&s=%s&o=new"',
+                  $page, $se_type, $se_userid, $se_tag, $se_content, $se_text);
+              if ($order_type == "last"){echo '<b>按动态时间排序</b>|<a href='.$href_new.'>按发表时间排序</a>';}
+              else {echo '<a href='.$href_last.'>按动态时间排序</a>|<b>按发表时间排序</b>';}
+            ?>
+           </span> 
         </small>
         <div class="col-xs-5 pull-right">
           <form id="edit-submit" method="get" action="content_list.php">
@@ -55,7 +66,7 @@
       <?php
       for ($count = $page*$items_per_page; $count < ($page + 1)*$items_per_page; $count++)
       {
-        if (!echo_content_item($count, $se_type, $se_userid, $se_tag, $se_text))
+        if (!echo_content_item($count, $se_type, $se_userid, $se_tag, $se_text, $order_type))
         {
           break;
         }

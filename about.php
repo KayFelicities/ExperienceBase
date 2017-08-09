@@ -2,7 +2,7 @@
 <html>
 <meta name="renderer" content="webkit"> 
 <meta charset="UTF-8">
-<title>经验分享平台</title>
+<title>经验共享平台</title>
 <link rel="bookmark" type="image/x-icon" href="img/+1.ico" />
 <link rel="shortcut icon" href="img/+1.ico">
 <link rel="icon" href="img/+1.ico">
@@ -81,7 +81,7 @@ function before_submit() {
 
 <div class="container">
   <header>
-    <h3><i></i> 经验分享平台 <small>A1班 工匠组</small><button id="edit-btn" class="btn btn-default btn-xs">修改</button></h3>
+    <h3><i></i> 经验共享平台 <small>A1班 工匠组</small><button id="edit-btn" class="btn btn-default btn-xs">修改</button></h3>
   </header>
   <hr>
 

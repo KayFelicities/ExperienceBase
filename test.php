@@ -1,72 +1,54 @@
 <!DOCTYPE html >
 <html>
-
 <head>
+  <link rel="stylesheet" href="style/css/carousel.css">
 
-
-<link rel="stylesheet" href="style/css/carousel.css">
-
-<script src="style/js/jquery.js"></script>
-<link rel="stylesheet" href="style/css/bootstrap.css">
-<script src="style/js/bootstrap.js"></script>
+  <script src="style/js/jquery.js"></script>
+  <link rel="stylesheet" href="style/css/bootstrap.css">
+  <script src="style/js/bootstrap.js"></script>
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link href="style/summernote/summernote.css" rel="stylesheet">
-<script src="style/summernote/summernote.js"></script>
-<script src="style/summernote/summernote-zh-CN.js"></script>
+  <link href="style/summernote/summernote.css" rel="stylesheet">
+  <script src="style/summernote/summernote.js"></script>
+  <script src="style/summernote/summernote-zh-CN.js"></script>
 
-  <title>bootstrap-markdown</title>
-  <style>
-    .note-alarm {
-      float: right;
-      margin-top: 10px;
-      margin-right: 10px;
-    }
-  </style>
+<style>
+  .title-center {
+    width: 60%;
+    text-align: center;
+    margin: 60px 0 10px;
+    font-weight: 200;
+    margin-bottom: 40px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
 </head>
 
 <body>
-  <div id="summernote"></div>
 
+  <div class="container">
+    <div class="title-center">
+      <h2>Bootstrap相关优质项目推荐</h2>
+      <p>这些项目或者是对Bootstrap进行了有益的补充，或者是基于Bootstrap开发的</p>
+    </div>
 
-  <script type="text/javascript">
-    //调用富文本编辑
-    $(document).ready(function() {
-        var $summernote = $('#summernote').summernote({
-            height: 300,
-            minHeight: null,
-            maxHeight: null,
-            focus: true,
-            //调用图片上传
-            callbacks: {
-                onImageUpload: function (files) {
-                    sendFile($summernote, files[0]);
-                }
-            }
-        });
-
-        //ajax上传图片
-        function sendFile($summernote, file) {
-            var formData = new FormData();
-            formData.append("file", file);
-            formData.append("dir", 'test');
-            $.ajax({
-                url: "upload_img_ajax.php",//路径是你控制器中上传图片的方法，下面controller里面我会写到
-                data: formData,
-                cache: false,
-                contentType: false,
-                processData: false,
-                type: 'POST',
-                success: function (data) {
-                    $summernote.summernote('insertImage', data, function ($image) {
-                        $image.attr('src', data);
-                    });
-                }
-            });
-        }
-    });
-    </script>
-
-
+    <div class="row">
+      <div class="col-sm-6 col-md-4 col-lg-3 ">
+        <div class="thumbnail">
+          <a href="content_list.php?p=0&t=软件">
+            <img src="img/software.jpg" width="300px" height="150px">
+          </a>
+          <div class="caption">
+            <h3>
+                <a href="content_list.php?p=0&t=软件">软件经验<br><small>test</small></a>
+            </h3>
+            <p>嵌入式编程经验库</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>

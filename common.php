@@ -22,26 +22,18 @@ function echo_banner($page_name)
     <div class="container">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">经验分享平台</span>
+          <span class="sr-only">经验共享平台</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="index.php">经验分享平台</a>
+        <a class="navbar-brand" href="index.php">经验共享平台</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
+          <li <?php if (in_array($page_name, array("软件", "硬件", "结构件", "综合", "product"))){echo 'class="active"';}?>><a href="product_page.php">用电产品</a></li>
+          <li <?php if (in_array($page_name, array("文化", "案例", "心得", "culture"))){echo 'class="active"';}?>><a href="culture_page.php">企业文化</a></li>
           <li <?php if ($page_name=="" ){echo 'class="active"';}?> ><a href="content_list.php?p=0&t=">所有经验</a></li>
-          <li class="dropdown <?php if (in_array($page_name, array("软件", "硬件", "结构件", "综合")))echo "active "; ?>">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">产品<span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="content_list.php?p=0&t=软件">软件</a></li>
-              <li><a href="content_list.php?p=0&t=硬件">硬件</a></li>
-              <li><a href="content_list.php?p=0&t=结构件">结构件</a></li>
-              <li><a href="content_list.php?p=0&t=综合">综合</a></li>
-              <!--<li role="separator" class="divider"></li>-->
-            </ul>
-          </li>
           <li <?php if ($page_name=="message" ){echo 'class="active"';}?> ><a href="message_board.php">留言板</a></li>
           <li <?php if ($page_name=="about" ){echo 'class="active"';}?> ><a href="about.php">关于</a></li>
         </ul>
@@ -103,13 +95,14 @@ function get_readable_tm($tm)
   }
 }
 
-function echo_content_item($no, $type="", $author_id="", $tag="", $text="")
+function echo_content_item($no, $type="", $author_id="", $tag="", $text="", $order_type="last")
 {
     require_once('config.php');
     $con=mysqli_connect(HOST, USERNAME, PASSWORD);
     mysqli_set_charset($con, "utf8");
     mysqli_select_db($con, 'experience_base');
-    $result = mysqli_query($con, "SELECT * FROM eb_passages ".get_search_condition($type, $author_id, $tag, $text)." ORDER BY priority DESC,last_tm DESC,pid DESC LIMIT $no,1");
+    $order = $order_type == "last" ? " ORDER BY priority DESC,last_tm DESC,pid DESC" : " ORDER BY priority DESC,pid DESC";
+    $result = mysqli_query($con, "SELECT * FROM eb_passages ".get_search_condition($type, $author_id, $tag, $text).$order." LIMIT $no,1");
     $row = mysqli_fetch_array($result);
     if ($row)
     {
@@ -142,6 +135,36 @@ function echo_content_item($no, $type="", $author_id="", $tag="", $text="")
         mysqli_close($con);
         return false;
     }
+}
+
+function echo_content_card($pid)
+{
+  require_once('config.php');
+  $con=mysqli_connect(HOST, USERNAME, PASSWORD);
+  mysqli_set_charset($con, "utf8");
+  mysqli_select_db($con, 'experience_base');
+  $result = mysqli_query($con, "SELECT * FROM eb_passages WHERE pid='$pid'");
+  $row = mysqli_fetch_array($result);
+  if ($row)
+  {?>
+    <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+        <a href="content.php?pid=<?php echo $pid;?>">
+          <img src="img/software.jpg">
+        </a>
+        <div class="caption">
+          <h3>
+              <a href="content.php?pid=<?php echo $pid;?>">
+                <?php echo $row['title'];?><br>
+              </a>
+                <small><?php echo get_userinfo($row['author_id'])['nickname'];?></small>
+          </h3>
+          <p><?php echo mb_substr(strip_tags($row['content']), 0, 100, 'utf-8').'...';?></p>
+        </div>
+      </div>
+    </div>
+<?php
+  }
 }
 
 function echo_content_footer($row)
@@ -227,7 +250,7 @@ function count_comment($pid)
     $con=mysqli_connect(HOST, USERNAME, PASSWORD);
     mysqli_set_charset($con, "utf8");
     mysqli_select_db($con, 'experience_base');
-    $result = mysqli_query($con, "SELECT COUNT(*) AS count FROM eb_comments WHERE pid='$pid' and type='comment'");
+    $result = mysqli_query($con, "SELECT COUNT(*) AS count FROM eb_comments WHERE status='publish' and pid='$pid' and type='comment'");
     $count = mysqli_fetch_array($result)['count'];
     mysqli_close($con);
     return $count;

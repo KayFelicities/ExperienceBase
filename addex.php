@@ -2,7 +2,7 @@
 <html>
 <meta name="renderer" content="webkit"> 
 <meta charset="UTF-8">
-<title>经验分享平台</title>
+<title>经验共享平台</title>
 <link rel="bookmark" type="image/x-icon" href="img/+1.ico">
 <link rel="shortcut icon" href="img/+1.ico">
 <link rel="icon" href="img/+1.ico">
@@ -45,8 +45,8 @@ $(document).ready(function() {
     $("#extype2").append("<option>内部异常分析</option>");
     $("#extype2").append("<option>技术规范</option>");
     $("#extype2").append("<option>管理制度</option>");
-    $("#extype2").append("<option>开发经验分享</option>");
-    $("#extype2").append("<option>测试经验分享</option>");
+    $("#extype2").append("<option>开发经验共享</option>");
+    $("#extype2").append("<option>测试经验共享</option>");
     $("#extype2").append("<option>行业信息</option>");
 
   $("#extype1").change(function() {
@@ -59,8 +59,8 @@ $(document).ready(function() {
         $("#extype2").append("<option>内部异常分析</option>");
         $("#extype2").append("<option>技术规范</option>");
         $("#extype2").append("<option>管理制度</option>");
-        $("#extype2").append("<option>开发经验分享</option>");
-        $("#extype2").append("<option>测试经验分享</option>");
+        $("#extype2").append("<option>开发经验共享</option>");
+        $("#extype2").append("<option>测试经验共享</option>");
         $("#extype2").append("<option>行业信息</option>");
         break;
       case "硬件":
@@ -68,8 +68,8 @@ $(document).ready(function() {
         $("#extype2").append("<option>内部异常分析</option>");
         $("#extype2").append("<option>技术规范</option>");
         $("#extype2").append("<option>管理制度</option>");
-        $("#extype2").append("<option>开发经验分享</option>");
-        $("#extype2").append("<option>测试经验分享</option>");
+        $("#extype2").append("<option>开发经验共享</option>");
+        $("#extype2").append("<option>测试经验共享</option>");
         $("#extype2").append("<option>行业信息</option>");
         break;
       case "结构件":
@@ -77,8 +77,8 @@ $(document).ready(function() {
         $("#extype2").append("<option>内部异常分析</option>");
         $("#extype2").append("<option>技术规范</option>");
         $("#extype2").append("<option>管理制度</option>");
-        $("#extype2").append("<option>开发经验分享</option>");
-        $("#extype2").append("<option>测试经验分享</option>");
+        $("#extype2").append("<option>开发经验共享</option>");
+        $("#extype2").append("<option>测试经验共享</option>");
         $("#extype2").append("<option>行业信息</option>");
         break;
       case "综合":
@@ -86,8 +86,8 @@ $(document).ready(function() {
         $("#extype2").append("<option>内部异常分析</option>");
         $("#extype2").append("<option>技术规范</option>");
         $("#extype2").append("<option>管理制度</option>");
-        $("#extype2").append("<option>开发经验分享</option>");
-        $("#extype2").append("<option>测试经验分享</option>");
+        $("#extype2").append("<option>开发经验共享</option>");
+        $("#extype2").append("<option>测试经验共享</option>");
         $("#extype2").append("<option>行业信息</option>");
         $("#extype2").append("<option>其他</option>");
         break;
