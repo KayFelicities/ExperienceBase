@@ -31,8 +31,9 @@ function echo_banner($page_name)
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li <?php if (in_array($page_name, array("软件", "硬件", "结构件", "综合", "product"))){echo 'class="active"';}?>><a href="product_page.php">用电产品</a></li>
-          <li <?php if (in_array($page_name, array("文化", "案例", "心得", "culture"))){echo 'class="active"';}?>><a href="culture_page.php">企业文化</a></li>
+          <li <?php if ($page_name == "product"){echo 'class="active"';}?>><a href="product_page.php">用电产品</a></li>
+          <li <?php if ($page_name == "culture"){echo 'class="active"';}?>><a href="culture_page.php">文化熏陶</a></li>
+          <li <?php if ($page_name == "growth"){echo 'class="active"';}?>><a href="growth_page.php">个人成长</a></li>
           <li <?php if ($page_name=="" ){echo 'class="active"';}?> ><a href="content_list.php?p=0&t=">所有经验</a></li>
           <li <?php if ($page_name=="message" ){echo 'class="active"';}?> ><a href="message_board.php">留言板</a></li>
           <li <?php if ($page_name=="about" ){echo 'class="active"';}?> ><a href="about.php">关于</a></li>
@@ -137,7 +138,7 @@ function echo_content_item($no, $type="", $author_id="", $tag="", $text="", $ord
     }
 }
 
-function echo_content_card($pid)
+function echo_content_card($pid, $pic)
 {
   require_once('config.php');
   $con=mysqli_connect(HOST, USERNAME, PASSWORD);
@@ -150,7 +151,7 @@ function echo_content_card($pid)
     <div class="col-sm-6 col-md-4">
       <div class="thumbnail">
         <a href="content.php?pid=<?php echo $pid;?>">
-          <img src="img/software.jpg">
+          <img src="img/<?php echo $pic;?>.jpg">
         </a>
         <div class="caption">
           <h3>
@@ -335,9 +336,9 @@ function get_userinfo($uid)
     return $row;
 }
 
-function echo_user_link($uid)
+function get_user_link($uid)
 {
-    echo '<a href=userpage.php?u=' . $uid . '>' . get_userinfo($uid)['nickname'] . '</a>';
+    return '<a href=userpage.php?u=' . $uid . '>' . get_userinfo($uid)['nickname'] . '</a>';
 }
 
 function get_passage_info($pid)
@@ -402,7 +403,7 @@ function echo_reply_me($uid, $no=0, $num=1)
     {
     ?>
       <p>
-        <?php echo_user_link($row['c_author_id']);?>在《<?php echo_passage_link($row['pid'], $row['cid']);?>》中回复你: 
+        <?php echo get_user_link($row['c_author_id']);?>在《<?php echo_passage_link($row['pid'], $row['cid']);?>》中回复你: 
         <a href="content.php?pid=<?php echo $row['pid'] . '#c' . $row['cid'];?>">
           <?php echo mb_substr(strip_tags($row['comment']), 0, 20, 'utf-8').'...';?>
         </a>
@@ -414,7 +415,7 @@ function echo_reply_me($uid, $no=0, $num=1)
     {
     ?>
       <p>
-        <?php echo_user_link($row['c_author_id']);?>赞了你的文章《<?php echo_passage_link($row['pid']);?>》
+        <?php echo get_user_link($row['c_author_id']);?>赞了你的文章《<?php echo_passage_link($row['pid']);?>》
         <span class="pull-right"><?php echo $row['create_tm'];?></span>
       </p>
     <?php

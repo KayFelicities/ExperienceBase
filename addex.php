@@ -57,8 +57,6 @@ $(document).ready(function() {
       case "软件":
         $("#extype2").append("<option>外部异常分析</option>");
         $("#extype2").append("<option>内部异常分析</option>");
-        $("#extype2").append("<option>技术规范</option>");
-        $("#extype2").append("<option>管理制度</option>");
         $("#extype2").append("<option>开发经验共享</option>");
         $("#extype2").append("<option>测试经验共享</option>");
         $("#extype2").append("<option>行业信息</option>");
@@ -66,8 +64,6 @@ $(document).ready(function() {
       case "硬件":
         $("#extype2").append("<option>外部异常分析</option>");
         $("#extype2").append("<option>内部异常分析</option>");
-        $("#extype2").append("<option>技术规范</option>");
-        $("#extype2").append("<option>管理制度</option>");
         $("#extype2").append("<option>开发经验共享</option>");
         $("#extype2").append("<option>测试经验共享</option>");
         $("#extype2").append("<option>行业信息</option>");
@@ -75,8 +71,6 @@ $(document).ready(function() {
       case "结构件":
         $("#extype2").append("<option>外部异常分析</option>");
         $("#extype2").append("<option>内部异常分析</option>");
-        $("#extype2").append("<option>技术规范</option>");
-        $("#extype2").append("<option>管理制度</option>");
         $("#extype2").append("<option>开发经验共享</option>");
         $("#extype2").append("<option>测试经验共享</option>");
         $("#extype2").append("<option>行业信息</option>");
@@ -84,11 +78,24 @@ $(document).ready(function() {
       case "综合":
         $("#extype2").append("<option>外部异常分析</option>");
         $("#extype2").append("<option>内部异常分析</option>");
-        $("#extype2").append("<option>技术规范</option>");
-        $("#extype2").append("<option>管理制度</option>");
         $("#extype2").append("<option>开发经验共享</option>");
         $("#extype2").append("<option>测试经验共享</option>");
         $("#extype2").append("<option>行业信息</option>");
+        $("#extype2").append("<option>其他</option>");
+        break;
+      case "文化熏陶":
+        $("#extype2").append("<option>企业文化</option>");
+        $("#extype2").append("<option>文化案例共享</option>");
+        $("#extype2").append("<option>优秀心得共享</option>");
+        $("#extype2").append("<option>其他</option>");
+        break;
+      case "个人成长":
+        $("#extype2").append("<option>沟通表达</option>");
+        $("#extype2").append("<option>职业生涯</option>");
+        $("#extype2").append("<option>人际关系</option>");
+        $("#extype2").append("<option>财富管理</option>");
+        $("#extype2").append("<option>家庭生活</option>");
+        $("#extype2").append("<option>修身养性</option>");
         $("#extype2").append("<option>其他</option>");
         break;
       default:
@@ -97,7 +104,7 @@ $(document).ready(function() {
   });
 
   $("#tagselect").select2({
-    placeholder: "选择标签（可输入新标签）",
+    placeholder: "请添加关键词（每个关键词请以回车确认）",
     maximumSelectionLength: 5,
     minimumResultsForSearch: 3,
     tags: true
@@ -143,6 +150,8 @@ function before_submit() {
               <option>硬件</option>
               <option>结构件</option>
               <option>综合</option>
+              <option>文化熏陶</option>
+              <option>个人成长</option>
             </select>
           </div>
           <div id="software-options" class="col-xs-2" style="padding: 0;">

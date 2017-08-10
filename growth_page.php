@@ -41,16 +41,19 @@ if (strpos($_SERVER['HTTP_USER_AGENT'],'MSIE'))
 </style>
 
 <body>
-  <?php include("common.php"); echo_banner("product"); ?>
+  <?php include("common.php"); echo_banner("growth"); ?>
 
   <div class="container">
     <div class="title-center">
-      <h2>用电产品经验共享</h2>
-      <p>为您提供最新最优质的用电产品开发、测试、行业等经验文档</p>
-      <a class="btn btn-default" href="content_list.php?p=0&t=软件">软件</a>
-      <a class="btn btn-default" href="content_list.php?p=0&t=硬件">硬件</a>
-      <a class="btn btn-default" href="content_list.php?p=0&t=结构件">结构件</a>
-      <a class="btn btn-default" href="content_list.php?p=0&t=综合">综合</a>
+      <h2>个人成长经验共享</h2>
+      <p>为您提供最新最优质的个人成长、管理验文档</p>
+      <a class="btn btn-default" href="content_list.php?p=0&t=沟通表达">沟通表达</a>
+      <a class="btn btn-default" href="content_list.php?p=0&t=职业生涯">职业生涯</a>
+      <a class="btn btn-default" href="content_list.php?p=0&t=人际关系">人际关系</a>
+      <a class="btn btn-default" href="content_list.php?p=0&t=财富管理">财富管理</a>
+      <a class="btn btn-default" href="content_list.php?p=0&t=家庭生活">家庭生活</a>
+      <a class="btn btn-default" href="content_list.php?p=0&t=修身养性">修身养性</a>
+      <a class="btn btn-default" href="content_list.php?p=0&t=其他">其他</a>
     </div>
 
     <div class="row">

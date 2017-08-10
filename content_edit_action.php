@@ -21,7 +21,7 @@ if(PHP_VERSION >= 6 || !get_magic_quotes_gpc())
 }
 
 $pid=$_POST["pid"];
-$c_authur_id = $_POST["c_authur_id"];
+$p_author_id = $_POST["p_author_id"];
 $remote_ip = $_SERVER["REMOTE_ADDR"];
 $timenow = date("Y-m-d H:i:s");
 $login_id = 0;
@@ -29,7 +29,7 @@ if (!empty($_COOKIE["userid"]))
 {
     $login_id = $_COOKIE["userid"];
 }
-if ($c_authur_id != $login_id)
+if ($p_author_id != $login_id)
 {
     echo "<script>$.notify({message: '权限错误'}, {type: 'danger'});</script>";
     header("Refresh: 1; url=content.php?pid=$pid");

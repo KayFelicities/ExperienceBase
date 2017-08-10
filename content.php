@@ -151,7 +151,7 @@ if (count_like($pid) != $row['like_num'])
     <form id="edit-submit" method="post" action="content_edit_action.php" onsubmit="return before_edit_submit();">
         <input type="text" id="swap-editor" name="editor"></input>
         <input type="hidden" name="pid" value="<?php echo $pid; ?>">
-        <input type="hidden" name="c_authur_id" value="<?php echo $p_author_id; ?>">
+        <input type="hidden" name="p_author_id" value="<?php echo $p_author_id; ?>">
         <input type="hidden" name="type" value="edit">
         <div class="row" id="submit-btns">
           <div class="col-xs-9">
@@ -169,53 +169,60 @@ if (count_like($pid) != $row['like_num'])
         <?php
         if ($row['file_name'])
         {
-          $file_array = explode(SEPARATOR, $row['file_name']);
-          for ($file_count = 0; $file_count < count($file_array); $file_count++)
+          if (isset($_COOKIE["userid"]))
           {
-              $file_name = $file_array[$file_count];
-              $file_name_array = explode('.', $file_name);
-              $save_file_path = CONTENT_FILE_PATH . sprintf("/%06d", $pid) . sprintf("_%02d.", $file_count) . end($file_name_array);
-              // echo "<div><span><a download=\"$file_name\" href=\"$save_file_path\">$file_name</a>";
-              echo "<div><span>$file_name";
-              $store_file_path = CONTENT_FILE_STORE_PATH . sprintf("/%06d", $pid) . sprintf("_%02d.pdf", $file_count);
-              $view_file_path = CONTENT_FILE_PATH . sprintf("/%06d", $pid) . sprintf("_%02d.pdf", $file_count);
-              if (file_exists($store_file_path))
-              {
-                $pdfview = "pdfview".$file_count;
-                $pdfbed = "pdfbed".$file_count;
-                echo "<span> </span><button class=\"btn btn-success btn-xs\" onclick=\"$('#$pdfview').toggle('fast');$('html,body').animate({scrollTop:$('#$pdfview').offset().top}, 200);\">预览/收起</button></span>";
-                echo "<span> </span><button class=\"btn btn-info btn-xs openpdf-btn\"><a href='pdfview.php?c=$pid&f=$file_count', target='_Blank'>全屏预览</a></button>";
-                echo "</span></div>";
-              }
-              else{print_r($view_file_path);}
-              ?>
+            $file_array = explode(SEPARATOR, $row['file_name']);
+            for ($file_count = 0; $file_count < count($file_array); $file_count++)
+            {
+                $file_name = $file_array[$file_count];
+                $file_name_array = explode('.', $file_name);
+                $save_file_path = CONTENT_FILE_PATH . sprintf("/%06d", $pid) . sprintf("_%02d.", $file_count) . end($file_name_array);
+                // echo "<div><span><a download=\"$file_name\" href=\"$save_file_path\">$file_name</a>";
+                echo "<div><span>$file_name";
+                $store_file_path = CONTENT_FILE_STORE_PATH . sprintf("/%06d", $pid) . sprintf("_%02d.pdf", $file_count);
+                $view_file_path = CONTENT_FILE_PATH . sprintf("/%06d", $pid) . sprintf("_%02d.pdf", $file_count);
+                if (file_exists($store_file_path))
+                {
+                  $pdfview = "pdfview".$file_count;
+                  $pdfbed = "pdfbed".$file_count;
+                  echo "<span> </span><button class=\"btn btn-success btn-xs\" onclick=\"$('#$pdfview').toggle('fast');$('html,body').animate({scrollTop:$('#$pdfview').offset().top}, 200);\">预览/收起</button></span>";
+                  echo "<span> </span><button class=\"btn btn-info btn-xs openpdf-btn\"><a href='pdfview.php?c=$pid&f=$file_count', target='_Blank'>全屏预览</a></button>";
+                  echo "</span></div>";
+                }
+                else{print_r($view_file_path);}
+                ?>
 
-              <div id="<?php echo $pdfview ?>" class="pdfview">
-                <div id="<?php echo $pdfbed ?>"></div>
-                <button class="btn btn-success btn-xs" style="float: right;" onclick="$('#<?php echo $pdfview?>').toggle('fast');$('html,body').animate({scrollTop:$('#filelist').offset().top}, 200);">收起预览</button>
-                <div style="height: 20px;"></div>
-              </div>
-              <script src="style/js/pdfobject.js"></script>
-              <script>
-              if(PDFObject.supportsPDFs)
-              {
-                var options = {
-                  pdfOpenParams: {
-                    pagemode: "thumbs",
-                    navpanes: 0,
-                    toolbar: 0,
-                    statusbar: 0,
-                    view: "FitV"
-                  }
-                };
-                PDFObject.embed("<?php echo $view_file_path?>", "#<?php echo $pdfbed ?>", options);
-              }
-              else
-              {
-                $("#<?php echo $pdfview ?>").html("抱歉，当前浏览器不支持预览，推荐使用Chrome");
-              }
-              </script>
-  <?php
+                <div id="<?php echo $pdfview ?>" class="pdfview">
+                  <div id="<?php echo $pdfbed ?>"></div>
+                  <button class="btn btn-success btn-xs" style="float: right;" onclick="$('#<?php echo $pdfview?>').toggle('fast');$('html,body').animate({scrollTop:$('#filelist').offset().top}, 200);">收起预览</button>
+                  <div style="height: 20px;"></div>
+                </div>
+                <script src="style/js/pdfobject.js"></script>
+                <script>
+                if(PDFObject.supportsPDFs)
+                {
+                  var options = {
+                    pdfOpenParams: {
+                      pagemode: "thumbs",
+                      navpanes: 0,
+                      toolbar: 0,
+                      statusbar: 0,
+                      view: "FitV"
+                    }
+                  };
+                  PDFObject.embed("<?php echo $view_file_path?>", "#<?php echo $pdfbed ?>", options);
+                }
+                else
+                {
+                  $("#<?php echo $pdfview ?>").html("抱歉，当前浏览器不支持预览，推荐使用Chrome");
+                }
+                </script>
+    <?php
+            }
+          }
+          else
+          {
+            echo "<div> <p><a href='login.php'>登录</a>后查看附件</p> </div>";
           }
         }
         else
@@ -232,7 +239,7 @@ if (count_like($pid) != $row['like_num'])
       </header>
 
 <?php
-$result = mysqli_query($con, "SELECT * FROM eb_comments WHERE status='publish' and pid=$pid and type='comment'");
+$result = mysqli_query($con, "SELECT * FROM eb_comments WHERE status='publish' and pid=$pid and parent_cid='0' and type='comment'");
 while ($row = mysqli_fetch_array($result))
 {?>
       <div class="comments-list" id="c<?php echo $row['cid'];?>">
@@ -245,8 +252,51 @@ while ($row = mysqli_fetch_array($result))
             <div><a href="userpage.php?u=<?php echo $row['c_author_id'];?>"><strong><?php echo get_userinfo($row['c_author_id'])['nickname'];?></strong></a></div>
             <div class="text"><?php echo $row['comment'];?></div>
             <div class="actions">
-              <a href="##">回复</a>
+              <a href="##" onclick="$('#rec<?php echo $row['cid'];?>').show();
+                                      $('#ct<?php echo $row['cid'];?>').focus();
+                                      $('#ct<?php echo $row['cid'];?>').attr('placeholder', '回复 <?php echo get_userinfo($row['c_author_id'])['nickname'];?> :');
+                                      $('#cm<?php echo $row['cid'];?>').attr('value', '<?php echo $row['c_author_id'];?>')">回复</a>
             </div>
+
+<?php
+            $inline_cid = $row['cid'];
+            $inline_res = mysqli_query($con, "SELECT * FROM eb_comments WHERE status='publish' and pid=$pid and parent_cid='$inline_cid' and type='comment'");
+            while ($inline_row = mysqli_fetch_array($inline_res))
+            {?>
+              <div class="comments-list" id="c<?php echo $inline_row['cid'];?>">
+                <div class="comment">
+                  <a href="userpage.php?u=<?php echo $inline_row['c_author_id'];?>" class="avatar">
+                    <img class="avatar-m" src="<?php echo get_avatar($inline_row['c_author_id']); ?>"></img>
+                  </a>
+                  <div class="content">
+                    <div class="pull-right text-muted"><?php echo $inline_row['create_tm']; ?></div>
+                    <div><a href="userpage.php?u=<?php echo $inline_row['c_author_id'];?>"><strong><?php echo get_userinfo($inline_row['c_author_id'])['nickname'];?></strong></a></div>
+                    <div class="text"><?php echo $inline_row['comment'];?></div>
+                    <div class="actions">
+                      <a href="##" onclick="$('#rec<?php echo $row['cid'];?>').show();
+                                              $('#ct<?php echo $row['cid'];?>').focus();
+                                              $('#ct<?php echo $row['cid'];?>').attr('placeholder', '回复 <?php echo get_userinfo($inline_row['c_author_id'])['nickname'];?> :');
+                                              $('#cm<?php echo $row['cid'];?>').attr('value', '<?php echo $inline_row['c_author_id'];?>')">回复</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <?php
+            }?>
+
+            <form id="rec<?php echo $row['cid'];?>" class="form" style="display: none;" method="post" action="comment_action.php">
+              <input type="hidden" name="pid" value="<?php echo $pid; ?>">
+              <input type="hidden" name="p_author_id" value="<?php echo $p_author_id; ?>">
+              <input  name="parent_cid" value="<?php echo $row['cid']; ?>">
+              <input  name="parent_c_author_id" value="<?php echo $row['c_author_id']; ?>">
+              <input  id="cm<?php echo $row['cid'];?>" name="mentioned_id" value="">
+              <input type="hidden" name="type" value="comment">
+              <div class="form-group">
+                  <textarea id="ct<?php echo $row['cid'];?>" class="form-control" name="comment" rows="2" placeholder="回复@<?php echo get_userinfo($row['c_author_id'])['nickname'];?> :" required></textarea>
+                  <button type="submit" class="btn btn-primary btn-ubmargin pull-right">提交</button>
+                  <div style="margin: 50px"></div>
+              </div>
+            </form>
           </div>
         </div>
       </div>

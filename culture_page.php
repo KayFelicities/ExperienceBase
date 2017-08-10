@@ -47,15 +47,15 @@ if (strpos($_SERVER['HTTP_USER_AGENT'],'MSIE'))
     <div class="title-center">
       <h2>企业文化经验共享</h2>
       <p>为您提供最新最优质的企业文化、案例分享、心得体会等经验文档</p>
-      <a class="btn btn-default" href="content_list.php?p=0&t=文化熏陶">文化熏陶</a>
+      <a class="btn btn-default" href="content_list.php?p=0&t=文化熏陶">企业文化</a>
       <a class="btn btn-default" href="content_list.php?p=0&t=案例分享">案例分享</a>
       <a class="btn btn-default" href="content_list.php?p=0&t=心得体会">心得体会</a>
     </div>
 
     <div class="row">
-      <?php echo_content_card('152');?>
-      <?php echo_content_card('154');?>
-      <?php echo_content_card('153');?>
+      <?php echo_content_card('152', '03');?>
+      <?php echo_content_card('154', '01');?>
+      <?php echo_content_card('155', '02');?>
     </div>
   </div>
 
