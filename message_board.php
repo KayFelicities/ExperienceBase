@@ -56,19 +56,19 @@ require_once('config.php');
 $con=mysqli_connect(HOST, USERNAME, PASSWORD);
 mysqli_set_charset($con, "utf8");
 mysqli_select_db($con, 'experience_base');
-$result = mysqli_query($con, "SELECT * FROM eb_message_board WHERE parent_mid='0' and status='publish' ORDER BY mid DESC");
+$result = mysqli_query($con, "SELECT * FROM eb_message_board WHERE parent_mid='0' and status='publish' ORDER BY priority DESC,mid DESC");
 while ($row = mysqli_fetch_array($result))
 {?>
     <div class="comments-list">
         <div class="comment">
             <div class="content">
-            <div class="pull-right text-muted"><?php echo $row['create_tm']; ?></div>
+            <div class="pull-right text-muted"><?php echo get_readable_tm($row['create_tm']); ?></div>
             <div><strong>
                 <i class="icon icon-angle-right"></i><?php echo $row['name'];?>
             </strong></div>
-            <div class="text"><?php echo $row['comment'];?></div>
+            <div class="text"><?php if ($row['priority'] > 0){echo '<b>[置顶]</b>';} echo $row['comment'];?></div>
             <div class="actions">
-                <a href="##" class="pull-right">回复</a>
+                <!-- <a href="##" class="pull-right">回复</a> -->
             </div>
             </div>
         </div>

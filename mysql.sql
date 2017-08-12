@@ -56,6 +56,8 @@ CREATE TABLE `eb_passages` (
   `comment_num` int(10) unsigned default '0',
   `like_num` int(10) unsigned default '0',
   `priority` int(1) unsigned default '0',
+  `img1` varchar(64) default NULL,
+  `img2` varchar(64) default NULL,
   PRIMARY KEY  (`pid`),
   KEY `author_id` (`author_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
@@ -92,6 +94,7 @@ CREATE TABLE `eb_message_board` (
   `type` char(16) default 'message',
   `comment` text,
   `mentioned_uids` varchar(128) default NULL,
+  `priority` int(1) unsigned default '0',
   PRIMARY KEY  (`mid`),
   KEY `mid` (`mid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

@@ -32,12 +32,6 @@ if (strpos($_SERVER['HTTP_USER_AGENT'],'MSIE'))
     margin-right: auto;
     font-family: "Microsoft YaHei";
 }
-
-.thumbnail .caption {
-    height: 200px;
-    overflow-y: hidden;
-    color: #555;
-}
 </style>
 
 <body>

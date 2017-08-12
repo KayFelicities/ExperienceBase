@@ -18,16 +18,19 @@ function echo_webfooter()
 
 function echo_banner($page_name)
 {?>
-  <nav class="navbar navbar-inverse navbar-fixed-top">
+  <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <a class="navbar-brand" href="index.php">
+          <img alt="Brand" src="img/head_100.png">
+        </a>
+        <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
           <span class="sr-only">经验共享平台</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="index.php">经验共享平台</a>
+        </button> -->
+        <!-- <a class="navbar-brand" href="index.php">经验共享平台</a> -->
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">

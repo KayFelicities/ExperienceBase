@@ -6758,9 +6758,9 @@ select[multiple].input-group-sm>.input-group-btn>.btn {
 .navbar-brand {
   float: left;
   height: 50px;
-  padding: 15px 15px;
+  padding: 7px 15px;
   font-size: 18px;
-  font-family: "微软雅黑";
+  font-family: "Microsoft YaHei";
   line-height: 20px;
 }
 
@@ -6771,6 +6771,7 @@ select[multiple].input-group-sm>.input-group-btn>.btn {
 
 .navbar-brand>img {
   display: block;
+  height: 40px;
 }
 
 @media (min-width: 768px) {
@@ -6822,6 +6823,10 @@ select[multiple].input-group-sm>.input-group-btn>.btn {
   padding-top: 10px;
   padding-bottom: 10px;
   line-height: 20px;
+}
+
+.navbar-nav>li {
+  font-family: "Microsoft YaHei"
 }
 
 @media (max-width: 767px) {
@@ -7630,7 +7635,11 @@ a.thumbnail.active {
 
 .thumbnail .caption {
   padding: 9px;
-  color: #333;
+   /* color: #333;  */
+  height: 200px;
+  overflow-y: hidden;
+  color: #555; 
+
 }
 
 .alert {
