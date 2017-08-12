@@ -347,7 +347,7 @@ function get_avatar($uid)
   $avatar = USER_AVATAR_PATH.sprintf("/%06d.png", $uid);
   if (!file_exists($avatar_store))
   {
-    $avatar = "img/avatar.png";
+    $avatar = USER_AVATAR_PATH."/default.png";
   }
   return $avatar;
 }

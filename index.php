@@ -64,13 +64,13 @@
           </div>
         </div>
         <div class="item">
-          <img class="second-slide" src="img/img2.png" alt="Second slide">
+          <img class="second-slide" src="<?php echo IMG_FILE_PATH; ?>/others/slide2.png" alt="Second slide">
           <!-- <div class="brief">
             <p>工作分配</p>
           </div> -->
         </div>
         <div class="item">
-          <img class="third-slide" src="img/img3.png" alt="Third slide">
+          <img class="third-slide" src="<?php echo IMG_FILE_PATH; ?>/others/slide3.png" alt="Third slide">
           <!-- <div class="brief">
             <p>时间节点</p>
           </div> -->
