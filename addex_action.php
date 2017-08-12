@@ -79,53 +79,6 @@ if(mysqli_query($con, $insertsql))
             $update_sql = "UPDATE eb_passages SET file_name=CONCAT_WS('$separator',file_name,'$file_name') WHERE pid='$pid'";
           }
           mysqli_query($con, $update_sql);
-
-          if (FILE_PREVIEW)
-          {
-            switch(end($file_name_array))
-            {
-              case "doc":
-              case "docx":
-                $word = new COM("Word.application") or error_handler("Unable to instanciate word!");
-                $word->Visible = false;
-                $word->Documents->Open($save_file_path);
-                $word->ActiveDocument->SaveAs($pdf_file_path, 17); 
-                $word->ActiveDocument->Close();
-                $word->Quit();
-                $word = null;
-                break;
-              case "xls":
-              case "xlsx":
-                $excel = new COM("Excel.application") or error_handler("Unable to instanciate excel!");
-                $excel->Visible = false; $excel->Workbooks->Open($save_file_path);
-                $count = $excel->ActiveWorkbook->Sheets->Count;
-                //轮询给每个workbook设定pagesetup参数，横版，papersize，缩放(适合页宽)
-                for($i = 1; $i <= $count; $i ++)
-                {
-                  $excel->ActiveWorkbook->Sheets($i)->Activate;
-                  $excel->ActiveWorkbook->ActiveSheet->PageSetup->Orientation = 2; // Landscape 2 // Portrait 1
-                  $excel->ActiveWorkbook->ActiveSheet->PageSetup->PaperSize = 9; //xlPaperA4 9
-                  $excel->ActiveWorkbook->ActiveSheet->PageSetup->Zoom = false;
-                  $excel->ActiveWorkbook->ActiveSheet->PageSetup->FitToPagesWide = 1; // true
-                }
-                $excel->ActiveWorkbook->ExportAsFixedFormat(0, $pdf_file_path, 0, true, true);
-                $excel->ActiveWorkbook->Close(false);
-                $excel->Quit();
-                $excel = null;
-                break;
-              case "ppt":
-              case "pptx":
-                $ppt = new COM("PowerPoint.application") or error_handler("Unable to instanciate PowerPoint!");
-                $ppt->Visible = true;
-                $ppt->Presentations->Open($save_file_path);
-                $ppt->ActivePresentation->SaveAs($pdf_file_path, 32);
-                $ppt->ActivePresentation->Close();
-                $ppt->Quit(); 
-                $ppt = null;
-                break;
-            }
-            exec("233 ".$pdf_file_path);
-          }
         }
       }
     }

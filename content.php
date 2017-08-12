@@ -189,7 +189,7 @@ if (count_like($pid) != $row['like_num'])
                   echo "<span> </span><button class=\"btn btn-info btn-xs openpdf-btn\"><a href='pdfview.php?c=$pid&f=$file_count', target='_Blank'>全屏预览</a></button>";
                   echo "</span></div>";
                 }
-                else{print_r($view_file_path);}
+                else{echo '<span style="color: red;">（文件转码中，请稍后刷新查看。若超过5分钟文件依然无法预览，请联系管理员665593）</span>';}
                 ?>
 
                 <div id="<?php echo $pdfview ?>" class="pdfview">

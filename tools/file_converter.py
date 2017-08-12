@@ -4,7 +4,7 @@ import glob
 import time
 from win32com import client as wc
 
-WORK_FILE_PATH = 'C:\\Users\\wangke\\Desktop\\VirtualBox\\python\\ExperienceBaseBackend'
+WORK_FILE_PATH = 'E:\\Seafile\\ExBaseFiles\\content_files'
 
 def file_scan():
     """file_scan"""
@@ -24,6 +24,7 @@ def file_scan():
                 doc.SaveAs(pdf_file, 17)
                 doc.Close()
                 word.Quit()
+                os.system('233 ' + pdf_file)
             except Exception:
                 print('doc trans error')
         elif file.split('.')[-1] in ['ppt', 'pptx']:
@@ -33,12 +34,12 @@ def file_scan():
                 doc.SaveAs(pdf_file, 32)
                 doc.Close()
                 ppt.Quit()
+                os.system('233 ' + pdf_file)
             except Exception:
                 print('error')
-        os.system('233 ' + pdf_file)
 
 
 if __name__ == '__main__':
     while True:
         file_scan()
-        time.sleep(5)
+        time.sleep(10)

@@ -212,7 +212,7 @@ function echo_content_footer($row)
     &nbsp; &nbsp;
     <a href="content.php?pid=<?php echo $row['pid'];?>#excomments" class="text-muted"><i class="icon-comments"></i> <?php echo $row['comment_num'];?></a> 
     &nbsp; &nbsp;
-    <a href="content.php?pid=<?php echo $row['pid'];?>#excomments" class="text-muted"><i class="icon-heart-empty"></i> <?php echo $row['like_num'];?></a> 
+    <a href="content.php?pid=<?php echo $row['pid'];?>" class="text-muted"><i class="icon-heart-empty"></i> <?php echo $row['like_num'];?></a> 
     &nbsp; &nbsp;
     <span class="text-muted"><i class="icon-time"></i> <?php echo $row['create_tm'];?></span> 
     &nbsp;
