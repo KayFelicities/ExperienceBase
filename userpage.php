@@ -31,6 +31,13 @@ else
 {
   $userid = $userid != '0' ? $userid : $_COOKIE["userid"];
   $userinfo = get_userinfo($userid);
+  $sxinfo = get_sxinfo($userinfo['sx_id']);
+  $unit = 'sx';
+  if ($sxinfo)
+  {
+    $unit = $sxinfo['unit1'];
+    if ($sxinfo['unit2']) $unit .= '，' . $sxinfo['unit2'];
+  }
   if ($userinfo)
   {
 ?>
@@ -42,7 +49,7 @@ else
     <div class="col-xs-3">
       <img class="avatar-xxxl" src="<?php echo get_avatar($userid);?>" />
       <h3><?php echo $userinfo['nickname'];?> </h3>
-      <h5><?php echo $userinfo['department'];?> </h5>
+      <h5><?php echo $unit;?> </h5>
     </div>
 
     <div class="col-xs-9">
@@ -60,7 +67,7 @@ else
           <h3 class="panel-title">
             收藏的文章(共0篇)
             <span class="pull-right">
-              <a href="content_list.php?u=<?php echo $userid;?>" class="btn btn-xs btn-default">更多</a>
+              <a href="##" class="btn btn-xs btn-default">更多</a>
             </span>
           </h3>
         </div>

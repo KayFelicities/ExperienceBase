@@ -32,6 +32,9 @@ if (strpos($_SERVER['HTTP_USER_AGENT'],'MSIE'))
     margin-right: auto;
     font-family: "Microsoft YaHei";
 }
+.title-center>.btn{
+  margin-bottom: 3px;
+}
 </style>
 
 <body>
@@ -47,11 +50,7 @@ if (strpos($_SERVER['HTTP_USER_AGENT'],'MSIE'))
       <a class="btn btn-default" href="content_list.php?p=0&t=综合">综合</a>
     </div>
 
-    <div class="row">
-      <?php echo_content_card('152', '03');?>
-      <?php echo_content_card('154', '01');?>
-      <?php echo_content_card('155', '02');?>
-    </div>
+    <?php echo_passage_recommendation('product');?>
   </div>
 
 

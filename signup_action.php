@@ -27,7 +27,7 @@ $password=$_POST['password'];
 $nickname=$_POST['nickname'];
 $lasturl=$_POST['lasturl'];
 $sx_id=$_POST['sx_id'];
-$department=$_POST['department1'].','.$_POST['department2'];
+// $department=$_POST['department1'].','.$_POST['department2'];
 $remote_ip = $_SERVER["REMOTE_ADDR"];
 $timenow = date('Y-m-d H:i:s');
 
@@ -36,7 +36,7 @@ $con=mysqli_connect(HOST, USERNAME, PASSWORD);
 mysqli_set_charset($con, "utf8");
 mysqli_select_db($con, 'experience_base');
 
-$result = mysqli_query($con, "SELECT nickname FROM eb_signup WHERE sx_id='$sx_id'");
+$result = mysqli_query($con, "SELECT name FROM eb_sx_list WHERE sx_id='$sx_id'");
 $row = mysqli_fetch_array($result);
 if (!$row)
 {?>
@@ -44,7 +44,7 @@ if (!$row)
     <a class="btn btn-primary pull-right" href="login.php?lu=<?php echo $lasturl; ?>">确定</a>
 <?php
 }
-elseif ($row['nickname'] != $nickname)
+elseif ($row['name'] != $nickname)
 {?>
     <div class="alert alert-danger" role="alert"><p>注册失败: 您提供的工号与姓名不匹配！</p></div>
     <a class="btn btn-primary pull-right" href="login.php?lu=<?php echo $lasturl; ?>">确定</a>
@@ -62,8 +62,8 @@ else
   }
   else
   {
-    $insertsql= "INSERT INTO eb_users(username, password, nickname, sx_id, create_tm, create_ip, department)
-                VALUES('$username', '$password', '$nickname', '$sx_id', '$timenow', '$remote_ip', '$department')";
+    $insertsql= "INSERT INTO eb_users(username, password, nickname, sx_id, create_tm, create_ip)
+                VALUES('$username', '$password', '$nickname', '$sx_id', '$timenow', '$remote_ip')";
 
     if(!(mysqli_query($con, $insertsql)))
     {?>

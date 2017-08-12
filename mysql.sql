@@ -108,3 +108,14 @@ CREATE TABLE `eb_others` (
   `modify_tm` datetime default NULL,
   PRIMARY KEY  (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- sx用户名单
+CREATE TABLE `eb_sx_list` (
+  `sx_id` char(12) default NULL,
+  `name` char(12) default NULL,
+  `unit1` varchar(64) default NULL,
+  `unit2` varchar(64) default NULL,
+  `unit3` varchar(64) default NULL,
+  `job` varchar(128) default NULL,
+  PRIMARY KEY  (`sx_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

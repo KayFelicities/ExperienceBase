@@ -141,7 +141,7 @@ function echo_content_item($no, $type="", $author_id="", $tag="", $text="", $ord
     }
 }
 
-function echo_content_card($pid, $pic)
+function echo_content_card($pid)
 {
   require_once('config.php');
   $con=mysqli_connect(HOST, USERNAME, PASSWORD);
@@ -154,7 +154,7 @@ function echo_content_card($pid, $pic)
     <div class="col-sm-6 col-md-4">
       <div class="thumbnail">
         <a href="content.php?pid=<?php echo $pid;?>">
-          <img src="img/<?php echo $pic;?>.jpg">
+          <img src="<?php echo(IMG_FILE_PATH.'/link_pic/'.$row['img1']);?>">
         </a>
         <div class="caption">
           <h3>
@@ -169,6 +169,31 @@ function echo_content_card($pid, $pic)
     </div>
 <?php
   }
+}
+
+function echo_passage_recommendation($page_type)
+{
+  require_once('config.php');
+  $con=mysqli_connect(HOST, USERNAME, PASSWORD);
+  mysqli_set_charset($con, "utf8");
+  mysqli_select_db($con, 'experience_base');
+  switch ($page_type)
+  {
+    case 'product':
+      $result = mysqli_query($con, "SELECT * FROM eb_others WHERE name='product_page_pids'");
+      $row = mysqli_fetch_array($result);
+      break;
+    default:
+      $row = NULL;
+  }
+  if ($row)
+  {
+    $pids = explode(",", str_replace('，', ',', $row['content']));
+    echo '<div class="row">';
+    foreach ($pids as $pid) echo_content_card($pid);
+    echo '</div>';
+  }
+
 }
 
 function echo_content_footer($row)
@@ -325,6 +350,18 @@ function get_avatar($uid)
     $avatar = "img/avatar.png";
   }
   return $avatar;
+}
+
+function get_sxinfo($sx_id)
+{
+    include_once("config.php");
+    $con=mysqli_connect(HOST, USERNAME, PASSWORD);
+    mysqli_set_charset($con, "utf8");
+    mysqli_select_db($con, 'experience_base');
+    $result = mysqli_query($con, "SELECT * FROM eb_sx_list WHERE sx_id='$sx_id'");
+    $row = mysqli_fetch_array($result);
+    mysqli_close($con);
+    return $row;
 }
 
 function get_userinfo($uid)

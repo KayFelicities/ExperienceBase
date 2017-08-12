@@ -15,6 +15,8 @@
 <link rel="stylesheet" href="style/css/animate.css">
 <script src="style/js/bootstrap-notify.js"></script>
 
+<?php if (isset($_COOKIE["userid"])){echo "<script>location.href='index.php'</script>";}?>
+
 <style>
   .login, .signup{
     float: left;
@@ -33,6 +35,11 @@
   .bigtext{
     text-align: center;
     font-size: 220px;
+  }
+
+  .logo{
+    height: 220px;
+    margin-left: 100px;
   }
 </style>
 
@@ -155,11 +162,7 @@ function chk_form()
           <input type="hidden" name="lasturl" value="<?php echo (isset($_GET['lu']) ? $_GET['lu'] : $_SERVER['HTTP_REFERER']);?>">
           <div class="form-group">
             <label>用户名</label>
-            <input type="text" class="form-control" name="username" maxlength="32" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" placeholder="请保持与OA用户名相同，用于登录" required autofocus>
-          </div>
-          <div class="form-group">
-            <label>工号</label>
-            <input type="text" class="form-control" name="sx_id" maxlength="32" onkeyup="this.value=this.value.replace(/\D/g,'')" placeholder="" required>
+            <input type="text" class="form-control" name="username" maxlength="32" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" placeholder="请保持与OA用户名相同（一般是姓名全拼），用于登录" required autofocus>
           </div>
           <div class="form-group">
             <label>密码</label>
@@ -171,9 +174,13 @@ function chk_form()
           </div>
           <div class="form-group">
             <label>姓名</label>
-            <input type="text" class="form-control" name="nickname" maxlength="16" placeholder="用于网站显示，请使用真实姓名" required>
+            <input type="text" class="form-control" name="nickname" maxlength="16" placeholder="请使用真实姓名" required>
           </div>
           <div class="form-group">
+            <label>工号</label>
+            <input type="text" class="form-control" name="sx_id" maxlength="32" onkeyup="this.value=this.value.replace(/\D/g,'')" placeholder="请填写真实工号" required>
+          </div>
+          <!-- <div class="form-group">
             <label>部门</label>
             <div class="row">
               <div id="main-options" class="col-xs-6" style="padding-right: 0;">
@@ -193,7 +200,7 @@ function chk_form()
                 </select>
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="form-group">
             <label id="chklabel">请填写</label>
             <input type="text" class="form-control" name="sumchk" maxlength="3" placeholder="" required>
@@ -205,7 +212,7 @@ function chk_form()
           </div>
           <div class="form-group">
             <p>为保证数据安全，本平台仅接受三星电气产品中心员工进行注册，请填写真实姓名和工号完成注册。因此带来的不便请谅解。</p>
-            <p style="color: red"><b>若您在注册过程中遇到问题，请务必联系665593，我们将竭诚为您服务。</b></p>
+            <p style="color: red"><b>若您在注册过程中遇到问题，请务必联系王珂（665593），我们将竭诚为您服务。</b></p>
           </div>
           <div class="row">
             <div class="col-xs-9">
@@ -220,7 +227,8 @@ function chk_form()
 
       <div class="bigtext">
         <p>+1</p>
-      </div>
+      </div> 
+      <!-- <img src="img/logo_500.png" class="logo"></img> -->
     </div>
 
 <?php echo_webfooter(); ?>
