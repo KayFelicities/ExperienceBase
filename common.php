@@ -121,7 +121,10 @@ function echo_content_item($no, $type="", $author_id="", $tag="", $text="", $ord
         </h4>
       </div>
       <div class="item-content">
-        <div class="media pull-right"></div>
+        
+        <div class="media pull-right">
+          <?php if ($img = ($row['img1'])) echo '<img src="'.IMG_FILE_PATH.'/link_pic/'.$img.'" height="70px" width="140px" alt="">';?>
+        </div>
         <div class="text">
           <?php echo mb_substr(strip_tags($row['content']), 0, 200, 'utf-8').'...';?>
         </div>

@@ -9506,7 +9506,7 @@ button.close {
 }
 
 .item-content .media img {
-  width: 70px;
+  /* width: 70px; */
 }
 
 .items .item-footer {
