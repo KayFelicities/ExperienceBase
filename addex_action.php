@@ -34,7 +34,7 @@ if (isset($_COOKIE["userid"]))
 {
     $author_id = $_COOKIE["userid"];
 }
-print_r($_FILES);
+// print_r($_FILES);
 $con=mysqli_connect(HOST, USERNAME, PASSWORD);
 mysqli_set_charset($con, "utf8");
 mysqli_select_db($con, 'experience_base');
@@ -84,7 +84,7 @@ if(mysqli_query($con, $insertsql))
     }
     else
     {
-      print_r('未上传文件');
+      // print_r('未上传文件');
     }
 
     echo ("<script>$.notify({message: '提交成功！'}, {type: 'success'});</script>");

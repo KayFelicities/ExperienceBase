@@ -81,13 +81,11 @@ $(document).ready(function() {
         $("#extype2").append("<option>开发经验共享</option>");
         $("#extype2").append("<option>测试经验共享</option>");
         $("#extype2").append("<option>行业信息</option>");
-        $("#extype2").append("<option>其他</option>");
         break;
       case "文化熏陶":
         $("#extype2").append("<option>企业文化</option>");
-        $("#extype2").append("<option>文化案例共享</option>");
-        $("#extype2").append("<option>优秀心得共享</option>");
-        $("#extype2").append("<option>其他</option>");
+        $("#extype2").append("<option>文化案例</option>");
+        $("#extype2").append("<option>优秀心得</option>");
         break;
       case "个人成长":
         $("#extype2").append("<option>沟通表达</option>");
@@ -96,7 +94,10 @@ $(document).ready(function() {
         $("#extype2").append("<option>财富管理</option>");
         $("#extype2").append("<option>家庭生活</option>");
         $("#extype2").append("<option>修身养性</option>");
-        $("#extype2").append("<option>其他</option>");
+        break;
+      case "经验共享平台":
+        $("#extype2").append("<option>用户指南</option>");
+        $("#extype2").append("<option>平台活动</option>");
         break;
       default:
         alert("err");
@@ -150,8 +151,11 @@ function before_submit() {
               <option>硬件</option>
               <option>结构件</option>
               <option>综合</option>
+              <?php if (get_userinfo($_COOKIE["userid"])['group'] == 'manager'){?>
               <option>文化熏陶</option>
               <option>个人成长</option>
+              <option>经验共享平台</option>
+              <?php }?>
             </select>
           </div>
           <div id="software-options" class="col-xs-2" style="padding: 0;">

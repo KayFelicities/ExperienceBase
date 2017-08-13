@@ -32,7 +32,7 @@ $con=mysqli_connect(HOST, USERNAME, PASSWORD);
 mysqli_set_charset($con, "utf8");
 mysqli_select_db($con, 'experience_base');
 
-$result = mysqli_query($con, "SELECT * FROM eb_users WHERE username='$username'");
+$result = mysqli_query($con, "SELECT * FROM eb_users WHERE username='$username' OR sx_id='$username'");
 $row = mysqli_fetch_array($result);
 if ($row['password'] == $password)
 {

@@ -2,9 +2,50 @@
 import os
 import glob
 import time
-from win32com import client as wc
+import pythoncom
+import win32com.client as client
+from timeout import timeout, Timeout
 
 WORK_FILE_PATH = 'E:\\Seafile\\ExBaseFiles\\content_files'
+# WORK_FILE_PATH = 'g:\\test'
+
+
+def chk_pdf(pdf_file):
+    """chk_pdf"""
+    chk_file = open(pdf_file, 'r', encoding='utf-8', errors='ignore')
+    chk_text = chk_file.read(32)
+    chk_file.close()
+    if chk_text.find('E-SafeNet') >= 0:
+        os.system('233 "%s"'%pdf_file)
+
+
+@timeout(20)
+def word2pdf(word_file, pdf_file):
+    """convert word to pdf"""
+    pythoncom.CoInitialize()
+    word = client.Dispatch('Word.Application')
+    doc = word.Documents.Open(word_file, ReadOnly=1)
+    doc.SaveAs(pdf_file, 17)
+    doc.Close()
+    word.Quit()
+    os.system('233 "%s"'%pdf_file)
+    time.sleep(1)
+    chk_pdf(pdf_file)
+
+
+@timeout(20)
+def ppt2pdf(ppt_file, pdf_file):
+    """convert word to pdf"""
+    pythoncom.CoInitialize()
+    ppt = client.Dispatch('PowerPoint.application')
+    doc = ppt.Presentations.Open(ppt_file, ReadOnly=1, Untitled=0, WithWindow=0)
+    doc.SaveAs(pdf_file, 32)
+    doc.Close()
+    ppt.Quit()
+    os.system('233 "%s"'%pdf_file)
+    time.sleep(1)
+    chk_pdf(pdf_file)
+
 
 def file_scan():
     """file_scan"""
@@ -16,27 +57,26 @@ def file_scan():
         pdf_file = '.'.join(file.split('.')[:-1]) + '.pdf'
         if os.path.isfile(pdf_file):
             continue
-        print('trans ' + file)
+        print('convert ' + file)
         if file.split('.')[-1] in ['doc', 'docx']:
             try:
-                word = wc.Dispatch('Word.Application')
-                doc = word.Documents.Open(file)
-                doc.SaveAs(pdf_file, 17)
-                doc.Close()
-                word.Quit()
-                os.system('233 ' + pdf_file)
+                word2pdf(file, pdf_file)
+            except Timeout:
+                if os.path.isfile(pdf_file):
+                    os.remove(pdf_file)
+                print('doc convert timeout')
             except Exception:
-                print('doc trans error')
+                print('doc convert error')
+
         elif file.split('.')[-1] in ['ppt', 'pptx']:
             try:
-                ppt = wc.Dispatch('PowerPoint.application')
-                doc = ppt.Presentations.Open(file)
-                doc.SaveAs(pdf_file, 32)
-                doc.Close()
-                ppt.Quit()
-                os.system('233 ' + pdf_file)
+                ppt2pdf(file, pdf_file)
+            except Timeout:
+                if os.path.isfile(pdf_file):
+                    os.remove(pdf_file)
+                print('ppt convert timeout')
             except Exception:
-                print('error')
+                print('ppt convert error')
 
 
 if __name__ == '__main__':
