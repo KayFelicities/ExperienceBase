@@ -41,6 +41,10 @@
     height: 220px;
     margin-left: 100px;
   }
+
+body {
+  background: #f8f8f8 url(img/bak.gif);
+}
 </style>
 
 <script>

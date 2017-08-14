@@ -87,7 +87,7 @@ if (count_like($pid) != $row['like_num'])
       <?php 
       if (is_file(IMG_FILE_STORE_PATH.'/link_pic/'.$row['pid'].'.jpg'))
       {
-        echo '<img class="pull-right" src="'.IMG_FILE_PATH.'/link_pic/'.$row['pid'].'.jpg" height="100px" width="200px" alt="">';
+        echo '<img class="pull-right" style="border-radius: 5px;" src="'.IMG_FILE_PATH.'/link_pic/'.$row['pid'].'.jpg" height="100px" width="200px" alt="">';
       }
       ?>
       <div style="margin-top: 10px;">

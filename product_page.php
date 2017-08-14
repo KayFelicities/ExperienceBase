@@ -22,15 +22,17 @@ if (strpos($_SERVER['HTTP_USER_AGENT'],'MSIE'))
 
 <style>
 .title-center {
-    width: 60%;
+    width: 100%;
     text-align: center;
-    margin: 120px 0 10px;
+    padding: 120px 0 80px;
     font-weight: 200;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     display: block;
     margin-left: auto;
     margin-right: auto;
     font-family: "Microsoft YaHei";
+    color: #000;
+    display: block;
 }
 .title-center>.btn{
   margin-bottom: 3px;
@@ -40,16 +42,16 @@ if (strpos($_SERVER['HTTP_USER_AGENT'],'MSIE'))
 <body>
   <?php include("common.php"); echo_banner("product"); ?>
 
-  <div class="container">
-    <div class="title-center">
-      <h2>用电产品经验共享</h2>
-      <p>为您提供最新最优质的用电产品开发、测试、行业等经验文档</p>
-      <a class="btn btn-default" href="content_list.php?p=0&t=软件">软件</a>
-      <a class="btn btn-default" href="content_list.php?p=0&t=硬件">硬件</a>
-      <a class="btn btn-default" href="content_list.php?p=0&t=结构件">结构件</a>
-      <a class="btn btn-default" href="content_list.php?p=0&t=综合">综合</a>
-    </div>
+  <div class="title-center">
+    <h2>用电产品经验共享</h2>
+    <p>为您提供最新最优质的用电产品开发、测试、行业等经验文档</p>
+    <a class="btn btn-default" href="content_list.php?p=0&t=软件">软件</a>
+    <a class="btn btn-default" href="content_list.php?p=0&t=硬件">硬件</a>
+    <a class="btn btn-default" href="content_list.php?p=0&t=结构件">结构件</a>
+    <a class="btn btn-default" href="content_list.php?p=0&t=综合">综合</a>
+  </div>
 
+  <div class="container">
     <?php echo_passage_recommendation('product');?>
   </div>
 

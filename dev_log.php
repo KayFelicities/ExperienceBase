@@ -181,6 +181,17 @@
   <ol>
     <li>文章修改</li>
     <li>消息系统完善</li>
+    <li>限制用户文档上传数量为2</li>
+  </ol>
+
+  <h4>2017.08.14:</h4>
+  <ol>
+    <li>图片上传插件更换为cropit，致谢<a href="http://scottcheng.github.io/cropit/">cropit</a></li>
+    <li>头像更改、文章配图更改实现</li>
+    <li>添加经验页用户离开时弹出提示</li>
+    <li>修改登录页背景</li>
+    <li>首页幻灯片更改为slippry，致谢<a href="http://slippry.com/">slippry</a></li>
+    <li>首页推荐文章</li>
   </ol>
 
   <hr>

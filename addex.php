@@ -43,8 +43,6 @@
 $(document).ready(function() {
     $("#extype2").append("<option>外部异常分析</option>");
     $("#extype2").append("<option>内部异常分析</option>");
-    $("#extype2").append("<option>技术规范</option>");
-    $("#extype2").append("<option>管理制度</option>");
     $("#extype2").append("<option>开发经验共享</option>");
     $("#extype2").append("<option>测试经验共享</option>");
     $("#extype2").append("<option>行业信息</option>");
@@ -111,6 +109,13 @@ $(document).ready(function() {
     tags: true
   });
   
+  window.onbeforeunload = function(evt) {
+    if (!$("#swap-editor").val())
+    {
+       return "确认离开当前页面吗？未保存的数据将会丢失";
+    }
+   }
+
   <?php 
   if (isset($_GET['pid']))
   {

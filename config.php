@@ -8,9 +8,7 @@
   
    define('CONTENT_FILE_STORE_PATH', 'E:/Seafile/ExBaseFiles/content_files');
    define('IMG_FILE_STORE_PATH', 'E:/Seafile/ExBaseFiles/img_files');
-   define('USER_AVATAR_STORE_PATH', 'E:/Seafile/ExBaseFiles/avatars');
    define('CONTENT_FILE_PATH', '/ExperienceBase/exfiles/content_files');
    define('IMG_FILE_PATH', '/ExperienceBase/exfiles/img_files');
-   define('USER_AVATAR_PATH', '/ExperienceBase/exfiles/avatars');
    define('FILE_PREVIEW', true);
 ?>

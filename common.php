@@ -130,7 +130,12 @@ function echo_content_item($no, $type="", $author_id="", $tag="", $text="", $ord
       <div class="item-content">
         
         <div class="media pull-right">
-          <?php if (is_file(IMG_FILE_STORE_PATH.'/link_pic/'.$row['pid'].'.jpg')) echo '<img src="'.IMG_FILE_PATH.'/link_pic/'.$row['pid'].'.jpg" height="70px" width="140px" alt="">';?>
+          <?php 
+            if (is_file(IMG_FILE_STORE_PATH.'/link_pic/'.$row['pid'].'.jpg'))
+            {
+              echo '<img style="border-radius: 5px;" src="'.IMG_FILE_PATH.'/link_pic/'.$row['pid'].'.jpg" height="70px" width="140px" alt="">';
+            }
+          ?>
         </div>
         <div class="text">
           <?php echo mb_substr(strip_tags($row['content']), 0, 200, 'utf-8').'...';?>
@@ -198,6 +203,10 @@ function echo_passage_recommendation($page_type)
   mysqli_select_db($con, 'experience_base');
   switch ($page_type)
   {
+    case 'main':
+      $result = mysqli_query($con, "SELECT * FROM eb_others WHERE name='main_page_pids'");
+      $row = mysqli_fetch_array($result);
+      break;
     case 'product':
       $result = mysqli_query($con, "SELECT * FROM eb_others WHERE name='product_page_pids'");
       $row = mysqli_fetch_array($result);

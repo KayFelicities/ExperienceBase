@@ -17,6 +17,7 @@ body {
   margin: 0;
 }
 
+
 article,
 aside,
 details,
@@ -5325,6 +5326,18 @@ fieldset[disabled] a.btn {
   pointer-events: none;
 }
 
+.btn-empty {
+  color: #eee;
+  background-color: transparent;
+  border-color: #ccc;
+}
+
+.btn-empty:hover {
+  color: #fff;
+  background-color: transparent;
+  border-color: #fff;
+}
+
 .btn-default {
   color: #333;
   background-color: #fff;
@@ -6746,7 +6759,7 @@ select[multiple].input-group-sm>.input-group-btn>.btn {
 
 .navbar-fixed-top {
   top: 0;
-  border-width: 0 0 1px;
+  border-width: 0 0 0px;
 }
 
 .navbar-fixed-bottom {
@@ -9901,4 +9914,7 @@ button.close {
 }
 
 
+body {
+  background: #f8f8f8;
+}
 /*# sourceMappingURL=bootstrap.css.map */
