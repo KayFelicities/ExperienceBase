@@ -43,7 +43,7 @@ if (strpos($_SERVER['HTTP_USER_AGENT'],'MSIE'))
   <div class="container">
     <div class="title-center">
       <h2>个人成长经验共享</h2>
-      <p>为您提供最新最优质的个人成长、管理验文档</p>
+      <p>为您提供最新最优质的个人成长、个人管理文档 <a href="content_list.php?t=个人成长">查看全部</a></p>
       <a class="btn btn-default" href="content_list.php?p=0&t=沟通表达">沟通表达</a>
       <a class="btn btn-default" href="content_list.php?p=0&t=职业生涯">职业生涯</a>
       <a class="btn btn-default" href="content_list.php?p=0&t=人际关系">人际关系</a>

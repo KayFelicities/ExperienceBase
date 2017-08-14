@@ -20,11 +20,12 @@ else
 {
   $login_id = $_COOKIE["userid"];
   $userinfo = get_userinfo($login_id);
+  $timenow = date("Y-m-d H:i:s");
 
   $con=mysqli_connect(HOST, USERNAME, PASSWORD);
   mysqli_set_charset($con, "utf8");
   mysqli_select_db($con, 'experience_base');
-  mysqli_query($con, "UPDATE eb_users SET unread_num='0' WHERE uid='$login_id'");
+  mysqli_query($con, "UPDATE eb_users SET unread_num='0',last_read_tm='$timenow' WHERE uid='$login_id'");
   mysqli_close($con);
 ?>
   <header>

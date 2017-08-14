@@ -11,17 +11,12 @@
 <script src="style/js/jquery.js"></script>
 <script src="style/js/bootstrap.js"></script>
 
-<!--editor-->
-<link href="style/summernote/summernote.css" rel="stylesheet">
-<script src="style/summernote/summernote.js"></script>
-<script src="style/summernote/summernote-zh-CN.js"></script>
-
 <!--notify-->
 <link rel="stylesheet" href="style/css/animate.css">
 <script src="style/js/bootstrap-notify.js"></script>
 
 <style>
-  #submit-btns, #swap-editor, #del-confirm{
+  #submit-btns, #swap-editor, #del-confirm, #change-type{
     display: none;
   }
   .comments
@@ -42,26 +37,6 @@
 </style>
 
 <script>
-$(document).ready(function() {
-  $("#edit-btn").click(function() {
-    $("#editor").summernote({
-      height: 300,
-      focus: true,
-    });
-    $("#swap-editor").val($('#editor').summernote('code'));
-    $("#submit-btns").show();
-  });
-  $("#cancel-btn").click(function() {
-    $("#editor").summernote('destroy');
-    $("#editor").html($("#swap-editor").val());
-    $("#submit-btns").hide();
-  });
-});
-  
-function before_edit_submit() {
-  $("#swap-editor").val($('#editor').summernote('code'));
-}
-  
 function before_delet_submit() {
   if (document.getElementById("confirm").value == '确认')
   {
@@ -108,7 +83,13 @@ if (count_like($pid) != $row['like_num'])
 }
 ?>
     <div class="content-header">
-        <h1><?php echo $row['title']?></h1>
+      <h1><?php echo $row['title']?></h1>
+      <?php 
+      if (is_file(IMG_FILE_STORE_PATH.'/link_pic/'.$row['pid'].'.jpg'))
+      {
+        echo '<img class="pull-right" src="'.IMG_FILE_PATH.'/link_pic/'.$row['pid'].'.jpg" height="100px" width="200px" alt="">';
+      }
+      ?>
       <div style="margin-top: 10px;">
         <?php echo_content_footer($row) ?>
       </div>
@@ -126,42 +107,29 @@ if (count_like($pid) != $row['like_num'])
 
       <?php if (isset($_COOKIE["userid"]) && $p_author_id == $_COOKIE["userid"])
       {?>
+        <div style="margin-top: 5px;"></div>
         <form method="post" name="delet-form" action="content_edit_action.php" onsubmit="return before_delet_submit();">
           <input type="hidden" name="type" value="delet">
           <input type="hidden" name="pid" value="<?php echo $pid; ?>">
           <input type="hidden" name="p_author_id" value="<?php echo $p_author_id; ?>">
-          <button type="button" id="delet-btn" class="btn btn-default btn-xs" onclick="$('#del-confirm').toggle();">删除文章</button>
+          <button type="button" id="delet-btn" class="btn btn-default btn-xs" onclick="$('#del-confirm').show();">删除文章</button>
+          <a class="btn btn-default btn-xs" href="addex.php?pid=<?php echo $row['pid']?>">修改</a>
+          <a class="btn btn-default btn-xs" href="img_select.php?type=passage&pid=<?php echo $row['pid']?>">设置文章配图</a>
           <div id="del-confirm">
             <input type="text" class="form-control" style="width: 30%" id="confirm" placeholder="请输入“确认”来删除文章">
-            <button type="submit" id="delet" style="width: 30%" class="btn btn-danger btn-xs">删除</button>
+            <button type="submit" id="delet" style="width: 3%" class="btn btn-danger btn-xs">删除</button>
+            <a style="width: 27%" class="btn btn-success btn-xs" onclick="$('#del-confirm').hide();">取消</a>
           </div>
         </form>
-        <button type="button" id="edit-btn" style="margin-top: 5px;" class="btn btn-default btn-xs">编辑内容</button>
       <?php
       }?>
     </div>
 
-    <div id="editor">
+    <div id="content">
     <?php
         echo $row['content'];
     ?>
     </div>
-
-    <!--edit form-->
-    <form id="edit-submit" method="post" action="content_edit_action.php" onsubmit="return before_edit_submit();">
-        <input type="text" id="swap-editor" name="editor"></input>
-        <input type="hidden" name="pid" value="<?php echo $pid; ?>">
-        <input type="hidden" name="p_author_id" value="<?php echo $p_author_id; ?>">
-        <input type="hidden" name="type" value="edit">
-        <div class="row" id="submit-btns">
-          <div class="col-xs-9">
-              <button type="submit" name="edit" class="btn btn-primary btn-block">提交</button>
-          </div>  
-          <div class="col-xs-3">
-              <button type="button" id="cancel-btn" class="btn btn-warning btn-block">取消</button>
-          </div>
-        </div>
-    </form>
     
     <div>
         <hr>
@@ -248,14 +216,14 @@ while ($row = mysqli_fetch_array($result))
             <img class="avatar-m" src="<?php echo get_avatar($row['c_author_id']); ?>"></img>
           </a>
           <div class="content">
-            <div class="pull-right text-muted"><?php echo $row['create_tm']; ?></div>
+            <div class="pull-right text-muted"><?php echo get_readable_tm($row['create_tm']); ?></div>
             <div><a href="userpage.php?u=<?php echo $row['c_author_id'];?>"><strong><?php echo get_userinfo($row['c_author_id'])['nickname'];?></strong></a></div>
             <div class="text"><?php echo $row['comment'];?></div>
             <div class="actions">
               <a href="##" onclick="$('#rec<?php echo $row['cid'];?>').show();
                                       $('#ct<?php echo $row['cid'];?>').focus();
-                                      $('#ct<?php echo $row['cid'];?>').attr('placeholder', '回复 <?php echo get_userinfo($row['c_author_id'])['nickname'];?> :');
-                                      $('#cm<?php echo $row['cid'];?>').attr('value', '<?php echo $row['c_author_id'];?>')">回复</a>
+                                      $('#ct<?php echo $row['cid'];?>').attr('placeholder', '');
+                                      $('#cr<?php echo $row['cid'];?>').attr('value', '')">回复</a>
             </div>
 
 <?php
@@ -269,14 +237,14 @@ while ($row = mysqli_fetch_array($result))
                     <img class="avatar-m" src="<?php echo get_avatar($inline_row['c_author_id']); ?>"></img>
                   </a>
                   <div class="content">
-                    <div class="pull-right text-muted"><?php echo $inline_row['create_tm']; ?></div>
+                    <div class="pull-right text-muted"><?php echo get_readable_tm($inline_row['create_tm']); ?></div>
                     <div><a href="userpage.php?u=<?php echo $inline_row['c_author_id'];?>"><strong><?php echo get_userinfo($inline_row['c_author_id'])['nickname'];?></strong></a></div>
                     <div class="text"><?php echo $inline_row['comment'];?></div>
                     <div class="actions">
                       <a href="##" onclick="$('#rec<?php echo $row['cid'];?>').show();
                                               $('#ct<?php echo $row['cid'];?>').focus();
                                               $('#ct<?php echo $row['cid'];?>').attr('placeholder', '回复 <?php echo get_userinfo($inline_row['c_author_id'])['nickname'];?> :');
-                                              $('#cm<?php echo $row['cid'];?>').attr('value', '<?php echo $inline_row['c_author_id'];?>')">回复</a>
+                                              $('#cr<?php echo $row['cid'];?>').attr('value', '<?php echo $inline_row['c_author_id'];?>')">回复</a>
                     </div>
                   </div>
                 </div>
@@ -287,9 +255,9 @@ while ($row = mysqli_fetch_array($result))
             <form id="rec<?php echo $row['cid'];?>" class="form" style="display: none;" method="post" action="comment_action.php">
               <input type="hidden" name="pid" value="<?php echo $pid; ?>">
               <input type="hidden" name="p_author_id" value="<?php echo $p_author_id; ?>">
-              <input  name="parent_cid" value="<?php echo $row['cid']; ?>">
-              <input  name="parent_c_author_id" value="<?php echo $row['c_author_id']; ?>">
-              <input  id="cm<?php echo $row['cid'];?>" name="mentioned_id" value="">
+              <input type="hidden" name="parent_cid" value="<?php echo $row['cid']; ?>">
+              <input type="hidden" name="parent_c_author_id" value="<?php echo $row['c_author_id']; ?>">
+              <input type="hidden" id="cr<?php echo $row['cid'];?>" name="reply_to_uid" value="">
               <input type="hidden" name="type" value="comment">
               <div class="form-group">
                   <textarea id="ct<?php echo $row['cid'];?>" class="form-control" name="comment" rows="2" placeholder="回复@<?php echo get_userinfo($row['c_author_id'])['nickname'];?> :" required></textarea>

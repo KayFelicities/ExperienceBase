@@ -82,8 +82,13 @@ function echo_banner($page_name)
 function get_readable_tm($tm)
 {
   $time = strtotime($tm);
-  $t=time()-$time;
-  $f=array(
+  $sec = time()-$time;
+  if ($sec > 2592000 * 2)
+  { // ignore tm two months ago 
+    return $tm;
+  }
+
+  $convert = array(
       '31536000'=>'年',
       '2592000'=>'个月',
       '604800'=>'星期',
@@ -92,9 +97,11 @@ function get_readable_tm($tm)
       '60'=>'分钟',
       '1'=>'秒'
   );
-  foreach ($f as $k=>$v)    {
-      if (0 !=$c=floor($t/(int)$k)) {
-          return $c.$v.'前';
+  foreach ($convert as $level=>$unit)
+  {
+      if (0 != $num = floor($sec / (int)$level))
+      {
+          return $num.$unit.'前';
       }
   }
 }
@@ -123,7 +130,7 @@ function echo_content_item($no, $type="", $author_id="", $tag="", $text="", $ord
       <div class="item-content">
         
         <div class="media pull-right">
-          <?php if ($img = ($row['img1'])) echo '<img src="'.IMG_FILE_PATH.'/link_pic/'.$img.'" height="70px" width="140px" alt="">';?>
+          <?php if (is_file(IMG_FILE_STORE_PATH.'/link_pic/'.$row['pid'].'.jpg')) echo '<img src="'.IMG_FILE_PATH.'/link_pic/'.$row['pid'].'.jpg" height="70px" width="140px" alt="">';?>
         </div>
         <div class="text">
           <?php echo mb_substr(strip_tags($row['content']), 0, 200, 'utf-8').'...';?>
@@ -157,14 +164,23 @@ function echo_content_card($pid)
     <div class="col-sm-6 col-md-4">
       <div class="thumbnail">
         <a href="content.php?pid=<?php echo $pid;?>">
-          <img src="<?php echo(IMG_FILE_PATH.'/link_pic/'.$row['img1']);?>">
+          <img src="<?php echo(IMG_FILE_PATH.'/link_pic/'.$row['pid'].'.jpg');?>">
         </a>
         <div class="caption">
           <h3>
               <a href="content.php?pid=<?php echo $pid;?>">
                 <?php echo $row['title'];?><br>
               </a>
-                <small><?php echo get_userinfo($row['author_id'])['nickname'];?></small>
+                <small>
+                  <!-- <?php echo get_userinfo($row['author_id'])['nickname'];?> -->
+                  <a href="content_list.php?t=<?php echo $row['extype1'];?>" class="text-muted">
+                    <?php echo $row['extype1'];?>
+                  </a>
+                  <span> ></span>
+                  <a href="content_list.php?t=<?php echo $row['extype2'];?>" class="text-muted">
+                    <?php echo $row['extype2'];?>
+                  </a>
+                </small>
           </h3>
           <p><?php echo mb_substr(strip_tags($row['content']), 0, 100, 'utf-8').'...';?></p>
         </div>
@@ -184,6 +200,14 @@ function echo_passage_recommendation($page_type)
   {
     case 'product':
       $result = mysqli_query($con, "SELECT * FROM eb_others WHERE name='product_page_pids'");
+      $row = mysqli_fetch_array($result);
+      break;
+    case 'culture':
+      $result = mysqli_query($con, "SELECT * FROM eb_others WHERE name='culture_page_pids'");
+      $row = mysqli_fetch_array($result);
+      break;
+    case 'growth':
+      $result = mysqli_query($con, "SELECT * FROM eb_others WHERE name='growth_page_pids'");
       $row = mysqli_fetch_array($result);
       break;
     default:
@@ -346,11 +370,11 @@ function is_i_liked($pid)
 function get_avatar($uid)
 {
   require_once('config.php');
-  $avatar_store = USER_AVATAR_STORE_PATH.sprintf("/%06d.png", $uid);
-  $avatar = USER_AVATAR_PATH.sprintf("/%06d.png", $uid);
+  $avatar_store = IMG_FILE_STORE_PATH.'/avatar/'.$uid.'.png';
+  $avatar = IMG_FILE_PATH.'/avatar/'.$uid.'.png';
   if (!file_exists($avatar_store))
   {
-    $avatar = USER_AVATAR_PATH."/default.png";
+    $avatar = IMG_FILE_PATH.'/avatar/'.'/default.png';
   }
   return $avatar;
 }
@@ -438,7 +462,9 @@ function echo_reply_me($uid, $no=0, $num=1)
   $con=mysqli_connect(HOST, USERNAME, PASSWORD);
   mysqli_set_charset($con, "utf8");
   mysqli_select_db($con, 'experience_base');
-  $result = mysqli_query($con, "SELECT * FROM eb_comments WHERE status='publish' AND p_author_id='$uid' ORDER BY cid DESC LIMIT $no,$num");
+  $result = mysqli_query($con, "SELECT * FROM eb_comments WHERE status='publish' AND
+                          (p_author_id='$uid' OR reply_to_uid='$uid' OR parent_c_author_id='$uid') AND c_author_id!='$uid'
+                          ORDER BY cid DESC LIMIT $no,$num");
   $row = mysqli_fetch_array($result);
   if ($row)
   {
@@ -450,7 +476,7 @@ function echo_reply_me($uid, $no=0, $num=1)
         <a href="content.php?pid=<?php echo $row['pid'] . '#c' . $row['cid'];?>">
           <?php echo mb_substr(strip_tags($row['comment']), 0, 20, 'utf-8').'...';?>
         </a>
-        <span class="pull-right"><?php echo $row['create_tm'];?></span>
+        <span class="pull-right"><?php echo get_readable_tm($row['create_tm']);?></span>
       </p>
     <?php
     }
@@ -459,7 +485,7 @@ function echo_reply_me($uid, $no=0, $num=1)
     ?>
       <p>
         <?php echo get_user_link($row['c_author_id']);?>赞了你的文章《<?php echo_passage_link($row['pid']);?>》
-        <span class="pull-right"><?php echo $row['create_tm'];?></span>
+        <span class="pull-right"><?php echo get_readable_tm($row['create_tm']);?></span>
       </p>
     <?php
     }

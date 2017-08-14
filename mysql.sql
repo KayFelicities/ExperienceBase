@@ -73,6 +73,7 @@ CREATE TABLE `eb_comments` (
   `status` char(16) default 'publish',
   `type` char(16) default 'comment',
   `comment` text,
+  `reply_to_uid` int(10) default '0',
   `mentioned_uids` varchar(128) default NULL,
   `parent_cid` int(10) unsigned default '0',
   `parent_c_author_id` int(10) unsigned default '0',

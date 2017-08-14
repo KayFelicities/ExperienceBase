@@ -1,54 +1,87 @@
-<!DOCTYPE html >
+<!DOCTYPE html>
 <html>
-<head>
-  <link rel="stylesheet" href="style/css/carousel.css">
+  <head>
+     <title>cropit</title> 
+    <!-- <link rel="stylesheet" href="style/css/bootstrap.css"> -->
+    <script src="style/js/jquery.js"></script>
+    <script src="style/js/bootstrap.js"></script>
+    <script src="style/js/jquery.cropit.js"></script>
 
-  <script src="style/js/jquery.js"></script>
-  <link rel="stylesheet" href="style/css/bootstrap.css">
-  <script src="style/js/bootstrap.js"></script>
-  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-  <link href="style/summernote/summernote.css" rel="stylesheet">
-  <script src="style/summernote/summernote.js"></script>
-  <script src="style/summernote/summernote-zh-CN.js"></script>
+  <style>
+      .cropit-preview {
+        background-color: #f8f8f8;
+        background-size: cover;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        margin-top: 7px;
+        width: 300px;
+        height: 150px;
+      }
 
-<style>
-  .title-center {
-    width: 60%;
-    text-align: center;
-    margin: 60px 0 10px;
-    font-weight: 200;
-    margin-bottom: 40px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-</style>
-</head>
+      .cropit-preview-background {
+        opacity: .2;
+      }
 
-<body>
+      input.cropit-image-zoom-input {
+        position: relative;
+      }
 
-  <div class="container">
-    <div class="title-center">
-      <h2>Bootstrap相关优质项目推荐</h2>
-      <p>这些项目或者是对Bootstrap进行了有益的补充，或者是基于Bootstrap开发的</p>
-    </div>
+      #image-cropper {
+        overflow: hidden;
+      }
+  </style>
+  </head>
 
-    <div class="row">
-      <div class="col-sm-6 col-md-4 col-lg-3 ">
-        <div class="thumbnail">
-          <a href="content_list.php?p=0&t=软件">
-            <img src="img/software.jpg" width="300px" height="150px">
-          </a>
-          <div class="caption">
-            <h3>
-                <a href="content_list.php?p=0&t=软件">软件经验<br><small>test</small></a>
-            </h3>
-            <p>嵌入式编程经验库</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</body>
+  <script>
+  function img_submit() {
+    var imageData = $('#image-cropper').cropit('export', {
+      type: 'image/jpeg',
+      quality: .9,
+    });
 
+    if (imageData)
+    {
+      $('#jpg-src').val(imageData);
+      alert(imageData);
+      return true;
+    }
+    else
+    {
+      alert('test');
+      return false;
+    }
+  }
+  </script>
+
+  <body>
+
+<?php
+  if (isset($_POST['jpg']))
+  {
+    $base_img = $_POST['jpg'];
+    $path = './test.jpg';
+    $base_img = explode('base64,', $base_img, 2)[1];
+    file_put_contents($path, base64_decode($base_img));
+    echo '<script>alert("done");</script>';
+  }
+?>
+
+     <div id="image-cropper">
+      <div class="cropit-preview"></div>
+      <input type="range" class="cropit-image-zoom-input" />
+      <input type="file" class="cropit-image-input" />
+      <form method="post" onsubmit="return img_submit();">
+        <input type="text" id="jpg-src" name="jpg" />
+        <button class="btn btn-default">btn</button>
+      </form>
+    </div> 
+
+    <script>
+      $('#image-cropper').cropit({
+        // imageBackground: true,
+        maxZoom: 1.5,
+        exportZoom: 2,
+      });
+    </script>
+  </body>
 </html>

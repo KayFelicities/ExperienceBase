@@ -34,7 +34,7 @@
     margin-top: 10px;
   }
   
-  #swap-editor, #swap-tags {
+  #swap-editor, #swap-tags, #file-list, #pid {
     display: none;
   }
 </style>
@@ -110,6 +110,45 @@ $(document).ready(function() {
     minimumResultsForSearch: 3,
     tags: true
   });
+  
+  <?php 
+  if (isset($_GET['pid']))
+  {
+      if (!isset($_COOKIE["userid"]))
+      {
+        echo "$.notify({message: '请先登录'}, {type: 'danger'}); window.location.href='login.php';";
+      }
+      $pid = $_GET['pid'];
+      require_once('config.php');
+      $con=mysqli_connect(HOST, USERNAME, PASSWORD);
+      mysqli_set_charset($con, "utf8");
+      mysqli_select_db($con, 'experience_base');
+      $result = mysqli_query($con, "SELECT * FROM eb_passages WHERE pid=$pid AND status='publish'");
+      $row = mysqli_fetch_array($result);
+      if (!$row or $row['author_id'] != $_COOKIE["userid"])
+      {
+        echo "$.notify({message: '权限错误'}, {type: 'danger'});";
+      }
+      else
+      {?>
+        $("#pid").val("<?php echo $pid;?>");
+        $("#extype1").val("<?php echo $row['extype1'];?>");
+        $("#extype1").trigger('change');
+        $("#extype2").val("<?php echo $row['extype2'];?>");
+        $("#title").val("<?php echo $row['title'];?>");
+        $("#editor").html("<?php echo addslashes($row['content']);?>");
+        $("#file-select").hide();
+        $("#file-list").show();
+      <?php
+        $tags = explode(SEPARATOR, $row['tags']); 
+        foreach ($tags as $tag)
+        {
+          echo '$("#tagselect").append("<option selected=\"selected\">'.$tag.'</option>");';
+        }
+      }
+  }
+?>
+
 })
 
 function before_submit() {
@@ -138,6 +177,7 @@ function before_submit() {
     </div>
 
     <form name="addex" method="post" enctype="multipart/form-data" action="addex_action.php" onsubmit="return before_submit();">
+      <input type="text" name="pid" id="pid"/>
       <input type="text" name="editor" id="swap-editor" />
       <input type="text" name="tags" id="swap-tags" />
       <div class="container">
@@ -163,7 +203,7 @@ function before_submit() {
             </select>
           </div>
           <div class="col-xs-8">
-            <input name="title" class="form-control" placeholder="请输入标题" required autofocus></input>
+            <input name="title" id="title" class="form-control" placeholder="请输入标题" required autofocus></input>
           </div>
         </div>
 
@@ -207,7 +247,14 @@ function before_submit() {
         </script>
 
         <!--file-->
-        <div class="row">
+        <div id="file-list">
+          <?php 
+            $file_array = explode(SEPARATOR, $row['file_name']); 
+            foreach ($file_array as $file) {echo "<p>".$file."</p>";}
+          ?>
+          <p>(文件暂不支持更改)</p>
+        </div>
+        <div class="row" id="file-select">
           <div class="col-xs-6" style="margin-top:20px">
             <div class="form-group">
               <p>插入经验文档：(支持上传文件类型：doc/docx/ppt/pptx/pdf)</p>
@@ -219,7 +266,7 @@ function before_submit() {
                         // uploadUrl: './uploader.php',
                         allowedFileExtensions : ['doc', 'docx', 'ppt', 'pptx', 'pdf'],
                         // minFileCount: 0,
-                        maxFilesNum: 10,
+                        maxFileCount: 2,
                         showUpload: false,
                         showRemove: true,
                         showCaption: true,//是否显示输入框

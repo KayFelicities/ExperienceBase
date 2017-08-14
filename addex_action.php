@@ -38,61 +38,80 @@ if (isset($_COOKIE["userid"]))
 $con=mysqli_connect(HOST, USERNAME, PASSWORD);
 mysqli_set_charset($con, "utf8");
 mysqli_select_db($con, 'experience_base');
-$insertsql= "INSERT INTO eb_passages(title, create_tm, author_id, content, extype1, extype2, tags, create_ip, last_tm)
-VALUES('$title', '$timenow', '$author_id', '$editor', '$extype1', '$extype2', '$tags', '$remote_ip', '$timenow')";
 
-if(mysqli_query($con, $insertsql))
-{
-    $result = mysqli_query($con, "SELECT @@IDENTITY");
-    $pid = mysqli_fetch_array($result)[0];
+$edit_pid=$_POST["pid"];
+if (!$edit_pid)
+{//new
+  $insertsql= "INSERT INTO eb_passages(title, create_tm, author_id, content, extype1, extype2, tags, create_ip, last_tm)
+  VALUES('$title', '$timenow', '$author_id', '$editor', '$extype1', '$extype2', '$tags', '$remote_ip', '$timenow')";
 
-    if ($_FILES['file']['name'][0])
-    {
-      for ($i = 0; $i < count($_FILES['file']['name']); $i++)
+  if(mysqli_query($con, $insertsql))
+  {
+      $result = mysqli_query($con, "SELECT @@IDENTITY");
+      $pid = mysqli_fetch_array($result)[0];
+
+      if ($_FILES['file']['name'][0])
       {
-        if ($_FILES["file"]["error"][$i] > 0)
+        for ($i = 0; $i < count($_FILES['file']['name']); $i++)
         {
-          echo ("<script>$.notify({message: '".$_FILES["file"]["name"][$i]."上传失败:".$_FILES["file"]["error"][$i]."'}, {type: 'danger'});</script>");
-        }
-        else
-        {
-          echo ("<script>$.notify({message: '正在上传".$_FILES["file"]["name"][$i]."，请稍后。'}, {type: 'info'});</script>");
-
-          if (!is_dir(CONTENT_FILE_STORE_PATH))
+          if ($_FILES["file"]["error"][$i] > 0)
           {
-              mkdir(CONTENT_FILE_STORE_PATH, 0777, true);
+            echo ("<script>$.notify({message: '".$_FILES["file"]["name"][$i]."上传失败:".$_FILES["file"]["error"][$i]."'}, {type: 'danger'});</script>");
           }
-
-          $file_name = $_FILES["file"]["name"][$i];
-          $file_name_array = explode('.', $file_name);
-          $save_file_path = str_replace("/", "\\", CONTENT_FILE_STORE_PATH . sprintf("/%06d", $pid) . sprintf("_%02d.", $i) . end($file_name_array));
-          $pdf_file_path = str_replace("/", "\\", CONTENT_FILE_STORE_PATH . sprintf("/%06d", $pid) . sprintf("_%02d.pdf", $i));
-          move_uploaded_file($_FILES["file"]["tmp_name"][$i], $save_file_path);
-
-          if ($i == 0)
+          else
           {
-            $update_sql = "UPDATE eb_passages SET file_name='$file_name' WHERE pid='$pid'";
+            echo ("<script>$.notify({message: '正在上传".$_FILES["file"]["name"][$i]."，请稍后。'}, {type: 'info'});</script>");
+
+            if (!is_dir(CONTENT_FILE_STORE_PATH))
+            {
+                mkdir(CONTENT_FILE_STORE_PATH, 0777, true);
+            }
+
+            $file_name = $_FILES["file"]["name"][$i];
+            $file_name_array = explode('.', $file_name);
+            $save_file_path = str_replace("/", "\\", CONTENT_FILE_STORE_PATH . sprintf("/%06d", $pid) . sprintf("_%02d.", $i) . end($file_name_array));
+            $pdf_file_path = str_replace("/", "\\", CONTENT_FILE_STORE_PATH . sprintf("/%06d", $pid) . sprintf("_%02d.pdf", $i));
+            move_uploaded_file($_FILES["file"]["tmp_name"][$i], $save_file_path);
+
+            if ($i == 0)
+            {
+              $update_sql = "UPDATE eb_passages SET file_name='$file_name' WHERE pid='$pid'";
+            }
+            else 
+            {
+              $separator = SEPARATOR;
+              $update_sql = "UPDATE eb_passages SET file_name=CONCAT_WS('$separator',file_name,'$file_name') WHERE pid='$pid'";
+            }
+            mysqli_query($con, $update_sql);
           }
-          else 
-          {
-            $separator = SEPARATOR;
-            $update_sql = "UPDATE eb_passages SET file_name=CONCAT_WS('$separator',file_name,'$file_name') WHERE pid='$pid'";
-          }
-          mysqli_query($con, $update_sql);
         }
       }
-    }
-    else
-    {
-      // print_r('未上传文件');
-    }
+      else
+      {
+        // print_r('未上传文件');
+      }
 
-    echo ("<script>$.notify({message: '提交成功！'}, {type: 'success'});</script>");
-    header("Refresh: 1; url=content.php?pid=$pid");
+      echo ("<script>$.notify({message: '提交成功！'}, {type: 'success'});</script>");
+      header("Refresh: 1; url=content.php?pid=$pid");
+  }
+  else
+  {
+      echo mysqli_error($con);
+  }
 }
 else
-{
-    echo mysqli_error($con);
+{//edit
+  $insertsql= "UPDATE eb_passages SET title='$title',content='$editor',extype1='$extype1',extype2='$extype2',tags='$tags',last_tm='$timenow',modify_tm='$timenow',modify_ip='$remote_ip'
+                WHERE pid='$edit_pid'";
+  if(mysqli_query($con, $insertsql))
+  {
+      echo ("<script>$.notify({message: '修改成功！'}, {type: 'success'});</script>");
+      header("Refresh: 1; url=content.php?pid=$edit_pid");
+  }
+  else
+  {
+      echo mysqli_error($con);
+  }
 }
 mysqli_close($con);
 ?>

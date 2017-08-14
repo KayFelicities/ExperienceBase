@@ -10,53 +10,6 @@
 <script src="style/js/jquery.js"></script>
 <script src="style/js/bootstrap.js"></script>
 
-<!--imgcrop-->
-<script src="style/js/angular.js"></script>
-<script src="style/js/ng-img-crop.js"></script>
-<link rel="stylesheet" type="text/css" href="style/css/ng-img-crop.css">
-
-<style>
-.cropArea {
-  background: #E4E4E4;
-  overflow: hidden;
-  width:300px;
-  height:200px;
-}
-#swapimg {
-  display: none;
-}
-#myavatar
-{
-  /*float: right;*/
-}
-</style>
-
-<script>
-function delCookie(name) {
-  var d = new Date();
-  d.setTime(d.getTime() - 1);
-  var expires = "expires="+d.toUTCString();
-  document.cookie = name + "=" + "" + "; " + expires;
-}
-
-angular.module('app', ['ngImgCrop'])
-.controller('Ctrl', function($scope) {
-  $scope.myImage='';
-  $scope.myCroppedImage='';
-
-  var handleFileSelect=function(evt) {
-    var file=evt.currentTarget.files[0];
-    var reader = new FileReader();
-    reader.onload = function (evt) {
-      $scope.$apply(function($scope){
-        $scope.myImage=evt.target.result;
-      });
-    };
-    reader.readAsDataURL(file);
-  };
-  angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
-});
-</script>
 
 <body>
 <?php include("common.php"); echo_banner("myconfig"); ?>
@@ -68,17 +21,7 @@ angular.module('app', ['ngImgCrop'])
   </header>
   <hr>
   <form method="post" action="myconfig_action.php">
-    <div id="myavatar">
-      <img class="avatar-xxxl" src="<?php echo get_avatar($_COOKIE["userid"]);?>" />
-      <div ng-app="app" ng-controller="Ctrl">
-        <div>选择新头像: <input type="file" id="fileInput" /></div>
-        <div class="cropArea">
-          <img-crop image="myImage" result-image="myCroppedImage" result-image-size="400" area-type="square"></img-crop>
-        </div>
-        <input class="text" id="swapimg" name="imgbase64" value="{{myCroppedImage}}">
-        <button class="btn btn-primary">保存</button>
-      </div>
-    </div>
+    <a class="btn btn-default" href="img_select.php?type=avatar&uid=<?php echo $_COOKIE["userid"];?>">更改头像</a>
   </form>
 <?php }?>
 </div>

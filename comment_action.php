@@ -33,7 +33,7 @@ $pid=$_POST["pid"];
 
 $comment=isset($_POST["comment"]) ? $_POST["comment"] : "";
 $parent_cid=isset($_POST["parent_cid"]) ? $_POST["parent_cid"] : "0";
-$mentioned_id=isset($_POST["mentioned_id"]) ? $_POST["mentioned_id"] : "";
+$reply_to_uid=isset($_POST["reply_to_uid"]) ? $_POST["reply_to_uid"] : "";
 $parent_c_author_id=isset($_POST["parent_c_author_id"]) ? $_POST["parent_c_author_id"] : "0";
 $comment_type=$_POST["type"];
 $p_author_id=$_POST["p_author_id"];
@@ -57,15 +57,15 @@ else
         mysqli_set_charset($con, "utf8");
         mysqli_select_db($con, 'experience_base');
 
-        if ($mentioned_id)
+        if ($reply_to_uid)
         {
-            $result = mysqli_query($con, "SELECT * FROM eb_users WHERE uid='$mentioned_id'");
+            $result = mysqli_query($con, "SELECT * FROM eb_users WHERE uid='$reply_to_uid'");
             $row = mysqli_fetch_array($result);
             $comment = "回复 " . $row['nickname'] . ": " . $comment;
         }
 
-        $insertsql_add= "INSERT INTO eb_comments(pid, p_author_id, create_tm, create_ip, c_author_id, comment, type, parent_cid, parent_c_author_id, mentioned_uids)
-                                    VALUES('$pid', '$p_author_id', '$timenow', '$remote_ip', '$login_id', '$comment', '$comment_type', '$parent_cid', '$parent_c_author_id', '$mentioned_id')";
+        $insertsql_add= "INSERT INTO eb_comments(pid, p_author_id, create_tm, create_ip, c_author_id, comment, type, parent_cid, parent_c_author_id, reply_to_uid)
+                                    VALUES('$pid', '$p_author_id', '$timenow', '$remote_ip', '$login_id', '$comment', '$comment_type', '$parent_cid', '$parent_c_author_id', '$reply_to_uid')";
         if ($comment_type == 'comment')
         {
             $insertsql_update= "UPDATE eb_passages SET comment_num=comment_num+1,last_tm='$timenow' WHERE pid='$pid'";
@@ -77,8 +77,18 @@ else
 
         if(mysqli_query($con, $insertsql_add) and mysqli_query($con, $insertsql_update))
         {
-            mysqli_query($con, "UPDATE eb_users SET unread_num=unread_num+1 WHERE uid='$p_author_id'");
-            if ($mentioned_id){mysqli_query($con, "UPDATE eb_users SET unread_num=unread_num+1 WHERE uid='$mentioned_id'");}
+            if ($login_id != $p_author_id)
+            { // note to passage author
+                mysqli_query($con, "UPDATE eb_users SET unread_num=unread_num+1 WHERE uid='$p_author_id'");
+            }
+            if ($parent_c_author_id and $parent_c_author_id != $login_id)
+            { // note to parent comment user
+                mysqli_query($con, "UPDATE eb_users SET unread_num=unread_num+1 WHERE uid='$parent_c_author_id'");
+            }
+            if ($reply_to_uid and $reply_to_uid != $login_id)
+            { // note to user reply to 
+                mysqli_query($con, "UPDATE eb_users SET unread_num=unread_num+1 WHERE uid='$reply_to_uid'");
+            }
             echo ("<script>$.notify({message: '评论成功！'}, {type: 'success'});</script>");
             header("Refresh: 1; url=content.php?pid=$pid");
         }
