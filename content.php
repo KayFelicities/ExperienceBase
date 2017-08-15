@@ -60,7 +60,12 @@ require_once('config.php');
 $con=mysqli_connect(HOST, USERNAME, PASSWORD);
 mysqli_set_charset($con, "utf8");
 mysqli_select_db($con, 'experience_base');
-$result = mysqli_query($con, "SELECT * FROM eb_passages WHERE pid=$pid AND status='publish'");
+$search_condition = "SELECT * FROM eb_passages WHERE pid=$pid AND status='publish'";
+if (isset($_COOKIE["userid"]) and get_userinfo($_COOKIE["userid"])['power'] > 1)
+{
+  $search_condition = "SELECT * FROM eb_passages WHERE pid=$pid";
+}
+$result = mysqli_query($con, $search_condition);
 $row = mysqli_fetch_array($result);
 if (!$row)
 {
@@ -105,7 +110,7 @@ if (count_like($pid) != $row['like_num'])
         </span>
       </div>
 
-      <?php if (isset($_COOKIE["userid"]) && $p_author_id == $_COOKIE["userid"])
+      <?php if (isset($_COOKIE["userid"]) && ($p_author_id == $_COOKIE["userid"] or get_userinfo($_COOKIE["userid"])['power'] > 4))
       {?>
         <div style="margin-top: 5px;"></div>
         <form method="post" name="delet-form" action="content_edit_action.php" onsubmit="return before_delet_submit();">

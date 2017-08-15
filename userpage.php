@@ -53,14 +53,6 @@ else
     </div>
 
     <div class="col-xs-9">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">关注的内容</h3>
-        </div>
-        <div class="panel-body">
-          无
-        </div>
-      </div>
 
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -101,6 +93,25 @@ else
           ?>
         </div>
       </div>
+      
+      <?php 
+      if ($userid == $_COOKIE["userid"])
+      {?>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            草稿箱
+            <span class="pull-right">
+              <a href="##" class="btn btn-xs btn-default">更多</a>
+            </span>
+          </h3>
+        </div>
+        <div class="panel-body">
+          无
+        </div>
+      </div>
+      <?php
+      }?>
     </div>
 
 <?php 

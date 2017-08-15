@@ -39,6 +39,8 @@
   }
 </style>
 
+<?php include("common.php"); ?>
+
 <script>
 $(document).ready(function() {
     $("#extype2").append("<option>外部异常分析</option>");
@@ -102,12 +104,12 @@ $(document).ready(function() {
     }
   });
 
-  $("#tagselect").select2({
-    placeholder: "请添加关键词（每个关键词请以回车确认）",
-    maximumSelectionLength: 5,
-    minimumResultsForSearch: 3,
-    tags: true
-  });
+  // $("#tagselect").select2({
+  //   placeholder: "请添加关键词（每个关键词请以回车确认）",
+  //   maximumSelectionLength: 5,
+  //   minimumResultsForSearch: 3,
+  //   tags: true
+  // });
   
   window.onbeforeunload = function(evt) {
     if (!$("#swap-editor").val())
@@ -128,9 +130,14 @@ $(document).ready(function() {
       $con=mysqli_connect(HOST, USERNAME, PASSWORD);
       mysqli_set_charset($con, "utf8");
       mysqli_select_db($con, 'experience_base');
-      $result = mysqli_query($con, "SELECT * FROM eb_passages WHERE pid=$pid AND status='publish'");
+      $search_condition = "SELECT * FROM eb_passages WHERE pid=$pid AND status='publish'";
+      if (isset($_COOKIE["userid"]) and get_userinfo($_COOKIE["userid"])['power'] > 1)
+      {
+        $search_condition = "SELECT * FROM eb_passages WHERE pid=$pid";
+      }
+      $result = mysqli_query($con, $search_condition);
       $row = mysqli_fetch_array($result);
-      if (!$row or $row['author_id'] != $_COOKIE["userid"])
+      if (!$row or $row['author_id'] != $_COOKIE["userid"] and get_userinfo($_COOKIE["userid"])['power'] < 4)
       {
         echo "$.notify({message: '权限错误'}, {type: 'danger'});";
       }
@@ -145,11 +152,8 @@ $(document).ready(function() {
         $("#file-select").hide();
         $("#file-list").show();
       <?php
-        $tags = explode(SEPARATOR, $row['tags']); 
-        foreach ($tags as $tag)
-        {
-          echo '$("#tagselect").append("<option selected=\"selected\">'.$tag.'</option>");';
-        }
+        $tags = str_replace(SEPARATOR, ',', $row['tags']);
+        echo '$("#tags").val("'.$tags.'");';
       }
   }
 ?>
@@ -161,7 +165,6 @@ function before_submit() {
   if (isset($_COOKIE["userid"]))
 {?>
       $("#swap-editor").val($("#editor").summernote('code'));
-      $("#swap-tags").val($("#tagselect").val());
       $.notify({message: '经验正在提交中，请稍后……'}, {type: 'info', delay: 0});
   <?php
   }
@@ -176,7 +179,7 @@ function before_submit() {
 </script>
 
 <body>
-  <?php include("common.php"); echo_banner("add_ex"); ?>
+  <?php echo_banner("add_ex"); ?>
 
     <div style="margin:50px;">
     </div>
@@ -184,7 +187,7 @@ function before_submit() {
     <form name="addex" method="post" enctype="multipart/form-data" action="addex_action.php" onsubmit="return before_submit();">
       <input type="text" name="pid" id="pid"/>
       <input type="text" name="editor" id="swap-editor" />
-      <input type="text" name="tags" id="swap-tags" />
+      <!-- <input type="text" name="tags" id="swap-tags" /> -->
       <div class="container">
         <div class="page-header">
           <h1>添加经验<small></small></h1>
@@ -196,7 +199,7 @@ function before_submit() {
               <option>硬件</option>
               <option>结构件</option>
               <option>综合</option>
-              <?php if (get_userinfo($_COOKIE["userid"])['group'] == 'manager'){?>
+              <?php if (get_userinfo($_COOKIE["userid"])['power'] > 1){?>
               <option>文化熏陶</option>
               <option>个人成长</option>
               <option>经验共享平台</option>
@@ -285,12 +288,20 @@ function before_submit() {
           </div>
 
           <!--Tags-->
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-xs-6" style="margin-bottom: 10px">
               <select id="tagselect" name="labels" class="form-control" multiple="multiple" required>
                 <optgroup label="请自行输入标签">
                 </optgroup>
               </select>
+            </div>
+          </div> -->
+
+          <!--Tags-->
+          <div class="form-group">
+            <p>请添加至少1个关键词，关键次间以逗号(,)分隔:</p>
+            <div class="row" style="margin-bottom: 10px">
+              <div class="col-xs-6"> <input type="text" class="form-control" id="tags" name="tags" placeholder="关键词" required> </div>
             </div>
           </div>
 

@@ -109,7 +109,7 @@
     if ($type == 'passage' && isset($_GET['pid']))
     {
       $pid = $_GET['pid'];
-      if (get_passage_info($pid)['author_id'] == $login_id or get_userinfo($login_id)['group'] == 'manager')
+      if (get_passage_info($pid)['author_id'] == $login_id or get_userinfo($login_id)['power'] > 1)
       {
         $path = IMG_FILE_STORE_PATH.'/link_pic/'.$_GET['pid'].'.jpg';
       }

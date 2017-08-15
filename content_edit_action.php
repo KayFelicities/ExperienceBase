@@ -19,7 +19,7 @@ if(PHP_VERSION >= 6 || !get_magic_quotes_gpc())
 {
     $_POST = array_map( 'addslashes', $_POST);
 }
-
+include("common.php");
 $pid=$_POST["pid"];
 $p_author_id = $_POST["p_author_id"];
 $remote_ip = $_SERVER["REMOTE_ADDR"];
@@ -29,7 +29,7 @@ if (!empty($_COOKIE["userid"]))
 {
     $login_id = $_COOKIE["userid"];
 }
-if ($p_author_id != $login_id)
+if ($p_author_id != $login_id and get_userinfo($_COOKIE["userid"])['power'] < 4)
 {
     echo "<script>$.notify({message: '权限错误'}, {type: 'danger'});</script>";
     header("Refresh: 1; url=content.php?pid=$pid");

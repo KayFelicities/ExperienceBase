@@ -84,18 +84,25 @@
     <ul class="pagination">
     <?php if($page == 0){?>
       <li class="disabled"><span aria-hidden="true">上一页</span></li>
-    <?php }else{?>
-      <li class="previous"><a href="content_list.php?p=<?php echo ($page-1)?>"><span aria-hidden="true">上一页</span></a></li>
+    <?php }else{
+      $param = sprintf('p=%s&t=%s&u=%s&tag=%s&c=%s&s=%s&o=%s',$page-1, $se_type, $se_userid, $se_tag, $se_content, $se_text, $order_type);
+    ?>
+      <li class="previous"><a href="content_list.php?<?php echo ($param)?>"><span aria-hidden="true">上一页</span></a></li>
     <?php }
     for ($count=0; $count < $page_sum; $count++)
-    {?>
-      <li <?php if($page == $count)echo "class='active'"?>><a href="content_list.php?p=<?php echo $count?>"><?php echo ($count + 1)?></a></li>
+    {
+      $param = sprintf('p=%s&t=%s&u=%s&tag=%s&c=%s&s=%s&o=%s',$count, $se_type, $se_userid, $se_tag, $se_content, $se_text, $order_type);
+    ?>
+      <li <?php if($page == $count)echo "class='active'"?>><a href="content_list.php?<?php echo $param?>"><?php echo ($count + 1)?></a></li>
     <?php 
     }
     if($page >= $page_sum-1){?>
       <li class="disabled"><span aria-hidden="true">下一页</span></li>
-    <?php }else{?>
-      <li class="next"><a href="content_list.php?p=<?php echo ($page+1)?>"><span aria-hidden="true">下一页</span></a></li>
+    <?php }else
+    {
+      $param = sprintf('p=%s&t=%s&u=%s&tag=%s&c=%s&s=%s&o=%s',$page+1, $se_type, $se_userid, $se_tag, $se_content, $se_text, $order_type);
+    ?>
+      <li class="next"><a href="content_list.php?<?php echo ($param)?>"><span aria-hidden="true">下一页</span></a></li>
     <?php }?>
     </ul>
   </nav>

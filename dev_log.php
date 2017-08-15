@@ -191,7 +191,13 @@
     <li>添加经验页用户离开时弹出提示</li>
     <li>修改登录页背景</li>
     <li>首页幻灯片更改为slippry，致谢<a href="http://slippry.com/">slippry</a></li>
+    <li>首页活动图片添加</li>
     <li>首页推荐文章</li>
+  </ol>
+
+  <h4>2017.08.15:</h4>
+  <ol>
+    <li>优化关键词录入方式</li>
   </ol>
 
   <hr>
