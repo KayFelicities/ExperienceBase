@@ -81,7 +81,13 @@ function before_submit() {
 
 <div class="container">
   <header>
-    <h3><i></i> 经验共享平台 <small>A1班 工匠组</small><button id="edit-btn" class="btn btn-default btn-xs">修改</button></h3>
+    <h3><i></i> 经验共享平台 
+      <small>A1班 工匠组</small>
+      <?php 
+      if (isset($_COOKIE["userid"]) and get_userinfo($_COOKIE["userid"])['power'] > 1)
+        echo '<button id="edit-btn" class="btn btn-default btn-xs">修改</button>';
+      ?>
+    </h3>
   </header>
   <hr>
 

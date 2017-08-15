@@ -95,7 +95,7 @@ else
       </div>
       
       <?php 
-      if ($userid == $_COOKIE["userid"])
+      if (isset($_COOKIE["userid"]) and $userid == $_COOKIE["userid"])
       {?>
       <div class="panel panel-default">
         <div class="panel-heading">

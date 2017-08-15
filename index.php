@@ -24,9 +24,9 @@
 
   #highlights .point h2{
     margin-bottom: 20px;
-    /* color: #34a855; */
-    /* color: #4286f5; */
-    /* color: #ffcc00; */
+    /* color: #34a855; green*/
+    /* color: #4286f5; blue*/
+    /* color: #ffcc00; yellow*/
 }
 
 #highlights .inner {
@@ -50,6 +50,7 @@
     $(document).ready(function(){
       $("#slippry").slippry({
         // transition: 'horizontal',
+        pause: 5000,
         adaptiveHeight: false,
         elements: 'div',
       });
@@ -65,12 +66,9 @@
       <div>
         <a href="content.php?pid=185"><img src="<?php echo IMG_FILE_PATH.'/others/slide1.jpg'?>" alt=""></a>
       </div>
-      <!-- <li>
-        <a href="#slide2"><img src="<?php echo IMG_FILE_PATH.'/others/slide2.jpg'?>"></a>
-      </li>
-      <li>
-        <a href="#slide3"><img src="<?php echo IMG_FILE_PATH.'/others/slide3.jpg'?>"></a>
-      </li> -->
+      <div>
+      <a href="about.php"><img src="<?php echo IMG_FILE_PATH.'/others/slide2.jpg'?>" alt=""></a>
+      </div>
     </div>
   <!-- </div> -->
 

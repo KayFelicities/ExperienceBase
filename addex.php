@@ -299,7 +299,7 @@ function before_submit() {
 
           <!--Tags-->
           <div class="form-group">
-            <p>请添加至少1个关键词，关键次间以逗号(,)分隔:</p>
+            <p>请添加至少1个关键词，关键词间以逗号(,)分隔:</p>
             <div class="row" style="margin-bottom: 10px">
               <div class="col-xs-6"> <input type="text" class="form-control" id="tags" name="tags" placeholder="关键词" required> </div>
             </div>

@@ -63,8 +63,8 @@ while ($row = mysqli_fetch_array($result))
         <div class="comment">
             <div class="content">
             <div class="pull-right text-muted"><?php echo get_readable_tm($row['create_tm']); ?></div>
-            <div><strong>
-                <i class="icon icon-angle-right"></i><?php echo $row['name'];?>
+            <div style="color: #4286f5;"><strong>
+                ><?php echo $row['name'];?>
             </strong></div>
             <div class="text"><?php if ($row['priority'] > 0){echo '<b>[置顶]</b>';} echo $row['comment'];?></div>
             <div class="actions">
