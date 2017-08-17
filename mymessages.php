@@ -38,7 +38,7 @@ else
       <h3 class="panel-title">
         回复我的
         <span class="pull-right">
-          <a href="#" class="btn btn-xs btn-default">更多</a>
+          <a href="message_list.php?t=mymessage" class="btn btn-xs btn-default">更多</a>
         </span>
       </h3>
     </div>
@@ -64,7 +64,7 @@ else
       <h3 class="panel-title">
         提到我的
         <span class="pull-right">
-          <a href="#" class="btn btn-xs btn-default">更多</a>
+          <a href="##" class="btn btn-xs btn-default">更多</a>
         </span>
       </h3>
     </div>

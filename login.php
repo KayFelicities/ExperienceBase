@@ -209,14 +209,20 @@ function chk_form()
             <label id="chklabel">请填写</label>
             <input type="text" class="form-control" name="sumchk" maxlength="3" placeholder="" required>
           </div>
+          <div class="form-group">
+            <p>使用条款：</p>
+            <ol>
+              <li>我们非常重视数据安全，数据库和文档每天都会进行多机备份，但依然无法规避所有风险，我们无法承诺100%确保您的数据安全。因此我们建议您保留文档的备份。</li>
+              <li>上传至本平台的文档，我们将转换成pdf向用户提供预览，原文件不提供下载服务。</li>
+              <li>请勿发表违反公司规定、违反国家法律的内容。如果您发表这些内容，我们将删除这些内容。情节严重的封号处理。</li>
+              <li>为保证数据安全，本平台仅接受三星电气用电产品中心员工进行注册，请填写真实姓名和工号完成注册。因此带来的不便请谅解。</li>
+            </ol>
+            <p style="color: red"><b>若您在注册过程中遇到问题，请务必联系王珂（665593），我们将竭诚为您服务。</b></p>
+          </div>
           <div class="checkbox">
             <label>
-              <input type="checkbox" id="accept-cb"> 接受<a herf="#">经验共享平台使用条款</a>  
+              <input type="checkbox" id="accept-cb"> 接受以上使用条款</a>  
             </label>
-          </div>
-          <div class="form-group">
-            <p>为保证数据安全，本平台仅接受三星电气产品中心员工进行注册，请填写真实姓名和工号完成注册。因此带来的不便请谅解。</p>
-            <p style="color: red"><b>若您在注册过程中遇到问题，请务必联系王珂（665593），我们将竭诚为您服务。</b></p>
           </div>
           <div class="row">
             <div class="col-xs-9">

@@ -56,6 +56,7 @@ function echo_banner($page_name)
               <li><a href="userpage.php?u=0">我的主页</a></li>
                <li><a href="mymessages.php">消息 <span class="badge"><?php echo $unread_badge;?></span></a></li> 
               <li><a href="myconfig.php">设置</a></li>
+              <li><a href="mission_page.php?uid=<?php echo $_COOKIE["userid"];?>"><span class="badge">new</span>任务完成情况</a></li>
               <li><a href="javascript:delCookie('userid');window.location.href='<?php echo $_SERVER["PHP_SELF"]."?".$_SERVER["QUERY_STRING"]?>';">退出登录</a></li>
             </ul>
           </li>
