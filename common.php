@@ -24,12 +24,9 @@ function echo_banner($page_name)
         <a class="navbar-brand" href="index.php">
           <img alt="Brand" src="img/head_100.png">
         </a>
-        <!-- <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">经验共享平台</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button> -->
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+        </button>
         <!-- <a class="navbar-brand" href="index.php">经验共享平台</a> -->
       </div>
       <div id="navbar" class="navbar-collapse collapse">
@@ -37,7 +34,31 @@ function echo_banner($page_name)
           <li <?php if ($page_name == "product"){echo 'class="active"';}?>><a href="product_page.php">用电产品</a></li>
           <li <?php if ($page_name == "culture"){echo 'class="active"';}?>><a href="culture_page.php">文化熏陶</a></li>
           <li <?php if ($page_name == "growth"){echo 'class="active"';}?>><a href="growth_page.php">个人成长</a></li>
-          <li <?php if ($page_name=="" ){echo 'class="active"';}?> ><a href="content_list.php?p=0&t=">所有经验</a></li>
+          <li class="dropdown <?php if ($page_name=="content_list" ){echo 'active';}?>">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">分类 <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="content_list.php?p=0&t=">所有经验</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="content_list.php?p=0&t=软件">软件</a></li>
+              <li><a href="content_list.php?p=0&t=硬件">硬件</a></li>
+              <li><a href="content_list.php?p=0&t=结构件">结构件</a></li>
+              <li><a href="content_list.php?p=0&t=综合">综合</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="content_list.php?p=0&t=文化熏陶">查看所有文化分类</a></li>
+              <li><a href="content_list.php?p=0&t=企业文化">企业文化</a></li>
+              <li><a href="content_list.php?p=0&t=文化案例">文化案例</a></li>
+              <li><a href="content_list.php?p=0&t=优秀心得">优秀心得</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="content_list.php?p=0&t=个人成长">查看所有个人成长分类</a></li>
+              <li><a href="content_list.php?p=0&t=沟通表达">沟通表达</a></li>
+              <li><a href="content_list.php?p=0&t=职业生涯">职业生涯</a></li>
+              <li><a href="content_list.php?p=0&t=人际关系">人际关系</a></li>
+              <li><a href="content_list.php?p=0&t=财富管理">财富管理</a></li>
+              <li><a href="content_list.php?p=0&t=家庭生活">家庭生活</a></li>
+              <li><a href="content_list.php?p=0&t=修身养性">修身养性</a></li>
+            </ul>
+          </li>
+
           <li <?php if ($page_name=="message" ){echo 'class="active"';}?> ><a href="message_board.php">留言板</a></li>
           <li <?php if ($page_name=="about" ){echo 'class="active"';}?> ><a href="about.php">关于</a></li>
         </ul>
@@ -125,6 +146,7 @@ function echo_content_item($no, $type="", $author_id="", $tag="", $text="", $ord
           <a href="content.php?pid=<?php echo $row['pid'];?>">
             <?php if($row['priority'] > 0){echo '[置顶]';} echo $row['title'];?>
           </a>
+          <small><?php if (isset($_COOKIE["userid"]) and get_userinfo($_COOKIE["userid"])['power'] > 1)echo $row['pid'];?></small>
           <small class="pull-right"><?php echo get_readable_tm($row['last_tm']);?></small>
         </h4>
       </div>
@@ -272,7 +294,7 @@ function echo_content_footer($row)
 <?php
 }
 
-function echo_content_title($no, $type="", $author_id="", $tag="", $text="")
+function echo_content_title($no, $with_tm=true, $type="", $author_id="", $tag="", $text="")
 {
     require_once('config.php');
     $con=mysqli_connect(HOST, USERNAME, PASSWORD);
@@ -285,7 +307,9 @@ function echo_content_title($no, $type="", $author_id="", $tag="", $text="")
     ?>
       <p>
         <a href="content.php?pid=<?php echo $row['pid'];?>"><?php echo $row['title'];?></a>
-        <span class="pull-right"><?php echo $row['create_tm'];?></span>
+        <?php
+        if ($with_tm) echo ('<span class="pull-right">'.$row['create_tm'].'</span>');
+        ?>
       </p>
     <?php
         mysqli_close($con);

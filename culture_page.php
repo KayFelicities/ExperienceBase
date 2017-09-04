@@ -22,17 +22,15 @@ if (strpos($_SERVER['HTTP_USER_AGENT'],'MSIE'))
 
 <style>
 .title-center {
-    width: 100%;
-    text-align: center;
-    padding: 120px 0 80px;
-    font-weight: 200;
-    margin-bottom: 20px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    font-family: "Microsoft YaHei";
-    color: #000;
-    display: block;
+  width: 60%;
+  text-align: center;
+  margin: 120px 0 10px;
+  font-weight: 200;
+  margin-bottom: 40px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: "Microsoft YaHei";
 }
 .title-center>.btn{
   margin-bottom: 3px;
@@ -42,16 +40,19 @@ if (strpos($_SERVER['HTTP_USER_AGENT'],'MSIE'))
 <body>
   <?php include("common.php"); echo_banner("culture"); ?>
 
-  <div class="title-center">
-    <h2>企业文化经验共享</h2>
-    <p>为您提供最新最优质的企业文化、案例分享、心得体会等经验文档</p>
-    <a class="btn btn-default" href="content_list.php?p=0&t=文化熏陶">查看全部</a>
-    <a class="btn btn-default" href="content_list.php?p=0&t=企业文化">企业文化</a>
-    <a class="btn btn-default" href="content_list.php?p=0&t=文化案例">文化案例</a>
-    <a class="btn btn-default" href="content_list.php?p=0&t=优秀心得">优秀心得</a>
-  </div>
-
   <div class="container">
+    <div class="title-center">
+      <h2>企业文化经验共享</h2>
+      <p>为您提供最新最优质的企业文化、案例分享、心得体会等经验文档</p>
+      <a class="btn btn-default" href="content_list.php?p=0&t=文化熏陶">查看全部</a>
+      <a class="btn btn-default" href="content_list.php?p=0&t=企业文化">企业文化</a>
+      <a class="btn btn-default" href="content_list.php?p=0&t=文化案例">文化案例</a>
+      <a class="btn btn-default" href="content_list.php?p=0&t=优秀心得">优秀心得</a>
+    </div>
+
+    <div class="page-header">
+      <h3>推荐阅读<small></small></h3>
+    </div>
     <?php echo_passage_recommendation('culture');?>
   </div>
 

@@ -19,7 +19,7 @@ def chk_pdf(pdf_file):
         os.system('233 "%s"'%pdf_file)
 
 
-@timeout(20)
+@timeout(300)
 def word2pdf(word_file, pdf_file):
     """convert word to pdf"""
     pythoncom.CoInitialize()
@@ -33,7 +33,7 @@ def word2pdf(word_file, pdf_file):
     chk_pdf(pdf_file)
 
 
-@timeout(20)
+@timeout(300)
 def ppt2pdf(ppt_file, pdf_file):
     """convert word to pdf"""
     pythoncom.CoInitialize()
@@ -67,6 +67,8 @@ def file_scan():
                 print('doc convert timeout')
             except Exception:
                 print('doc convert error')
+                if os.path.isfile(pdf_file):
+                    os.remove(pdf_file)
 
         elif file.split('.')[-1] in ['ppt', 'pptx']:
             try:
@@ -77,6 +79,8 @@ def file_scan():
                 print('ppt convert timeout')
             except Exception:
                 print('ppt convert error')
+                if os.path.isfile(pdf_file):
+                    os.remove(pdf_file)
 
 
 if __name__ == '__main__':

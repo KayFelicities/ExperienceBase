@@ -16,6 +16,7 @@
 <div style="margin: 60px"></div>
 <div class="container">
 <?php 
+  require_once('config.php');
   $con=mysqli_connect(HOST, USERNAME, PASSWORD);
   mysqli_set_charset($con, "utf8");
   mysqli_select_db($con, 'experience_base');
@@ -39,15 +40,18 @@
     $userinfo = get_userinfo($uid_count);
     if (!$userinfo) break;
 
-    $result = mysqli_query($con, "SELECT COUNT(*) AS count FROM eb_passages WHERE author_id='$uid_count'");
+    $result = mysqli_query($con, "SELECT COUNT(*) AS count FROM eb_passages WHERE status='publish' AND author_id='$uid_count' AND pid<=334");
     $passage_num = mysqli_fetch_array($result)['count'];
-    $result = mysqli_query($con, "SELECT COUNT(*) AS count FROM eb_comments WHERE type='like' AND c_author_id='$uid_count'");
+    $result = mysqli_query($con, "SELECT COUNT(*) AS count FROM eb_comments WHERE status='publish' AND type='like' AND c_author_id='$uid_count'");
     $like_num = mysqli_fetch_array($result)['count'];
-    $result = mysqli_query($con, "SELECT COUNT(*) AS count FROM eb_comments WHERE type='comment' AND c_author_id='$uid_count'");
+    $result = mysqli_query($con, "SELECT COUNT(*) AS count FROM eb_comments WHERE status='publish' AND type='comment' AND c_author_id='$uid_count'");
     $comment_num = mysqli_fetch_array($result)['count'];
 
-    echo '<p>'.$userinfo['nickname'].':文章'.$passage_num.',点赞'.$like_num.',评论'.$comment_num;
-    if ($passage_num >= 3 and $like_num >= 5 and $comment_num >=5){echo '>已完成</p>';$complete_user_count += 1;}
+    if ($passage_num >= 3 and $like_num >= 5 and $comment_num >=5)
+    {
+        echo '<p>'.$userinfo['nickname'].':文章'.$passage_num.',点赞'.$like_num.',评论'.$comment_num;
+        echo '>已完成</p>';$complete_user_count += 1;
+    }
     else echo '</p>';
 
     $uid_count += 1;

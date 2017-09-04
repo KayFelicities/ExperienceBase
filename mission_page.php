@@ -26,7 +26,7 @@ else
   $con=mysqli_connect(HOST, USERNAME, PASSWORD);
   mysqli_set_charset($con, "utf8");
   mysqli_select_db($con, 'experience_base');
-  $result = mysqli_query($con, "SELECT COUNT(*) AS count FROM eb_passages WHERE author_id='$uid'");
+  $result = mysqli_query($con, "SELECT COUNT(*) AS count FROM eb_passages WHERE author_id='$uid' AND status='publish' AND pid<=334");
   $passage_num = mysqli_fetch_array($result)['count'];
   $result = mysqli_query($con, "SELECT COUNT(*) AS count FROM eb_comments WHERE type='like' AND c_author_id='$uid'");
   $like_num = mysqli_fetch_array($result)['count'];
@@ -47,16 +47,21 @@ else
         </div>
         <div class="panel-body">
         <?php
-        echo '<p>发表文章'.$passage_num.'篇（目标3篇）</p>';
-        echo '<p>点赞文章'.$like_num.'篇（目标5篇）</p>';
-        echo '<p>评论文章'.$comment_num.'篇（目标5篇）</p>';
+        // echo '<p>发表文章'.$passage_num.'篇（目标3篇）</p>';
+        // echo '<p>点赞文章'.$like_num.'篇（目标5篇）</p>';
+        // echo '<p>评论文章'.$comment_num.'篇（目标5篇）</p>';
         if ($passage_num >= 3 and $like_num >= 5 and $comment_num >=5)
-        {
-            echo '<p>恭喜您已完成千元红包任务，请留意平台动态，我们会在23号与您共享千元红包！</p>';
+        {?>
+            <p>感谢您对平台的支持。</p>
+            <!-- <img src="<?php echo IMG_FILE_PATH;?>/others/0823.jpg"></img> -->
+            <p style="color: red;"><b>进群后请改群昵称为自己的姓名以便我们核对，请不要拉没完成任务的人进群，否则我们将取消您的获奖资格！</b></p>
+            <p style="color: red;"><b>红包按人数分配，每个人都有份，因此您不需要守着手机，我们会在所有完成任务的用户都进群后开始发红包。</b></p>
+            <p style="color: red;"><b>红包金额是随机的，我们会发5个200元的红包，具体能分到多少钱完全随机！</b></p>
+    <?php
         }
         else
         {
-            echo '<p>您尚未完成千元红包任务，快去<a href="addex.php">上传经验文档</a>、给同事的文章点赞、评论吧！</p>';
+            echo '<p>活动已截止。您尚未完成千元红包任务，期待下次活动吧~</p>';
         }
         ?>
         </div>

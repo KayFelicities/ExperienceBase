@@ -25,7 +25,7 @@
 
   $item_num = count_content($se_type, $se_userid, $se_tag, $se_text);
   $page_sum = ceil($item_num / $items_per_page);
-  echo_banner($se_type);
+  echo_banner('content_list');
 ?>
 <div style="margin: 60px"></div>
 <div class="container">

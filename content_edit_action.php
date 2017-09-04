@@ -59,9 +59,9 @@ else
             header("Refresh: 1; url=content.php?pid=$pid");
         }
     }
-    else if ($_POST["type"] == "delet")
+    else if ($_POST["type"] == "delete")
     {
-        $insertsql= "UPDATE eb_passages SET status='delet' WHERE pid=$pid";
+        $insertsql= "UPDATE eb_passages SET status='delete' WHERE pid=$pid";
         if(mysqli_query($con, $insertsql))
         {
             echo "<script>$.notify({message: '删除成功'}, {type: 'success'});</script>";

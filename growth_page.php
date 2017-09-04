@@ -51,9 +51,11 @@ if (strpos($_SERVER['HTTP_USER_AGENT'],'MSIE'))
       <a class="btn btn-default" href="content_list.php?p=0&t=财富管理">财富管理</a>
       <a class="btn btn-default" href="content_list.php?p=0&t=家庭生活">家庭生活</a>
       <a class="btn btn-default" href="content_list.php?p=0&t=修身养性">修身养性</a>
-      <a class="btn btn-default" href="content_list.php?p=0&t=其他">其他</a>
     </div>
-
+    
+    <div class="page-header">
+      <h3>推荐阅读<small></small></h3>
+    </div>
     <?php echo_passage_recommendation('growth');?>
   </div>
 

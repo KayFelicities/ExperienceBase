@@ -81,7 +81,7 @@ else
           <?php
           for ($count=0; $count < 5; $count++)
           {
-            if (!echo_content_title($count, "", $userid))
+            if (!echo_content_title($count, $with_tm=true, $type="", $author_id=$userid, $tag="", $text=""))
             {
               break;
             }

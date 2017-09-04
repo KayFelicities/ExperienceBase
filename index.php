@@ -43,7 +43,10 @@
 <?php
     if (strpos($_SERVER['HTTP_USER_AGENT'],'MSIE'))
     {?>
-       <script>alert("系统检测到您正在使用IE浏览器(IE内核)，我们强烈建议您使用Chrome(内核)浏览器浏览本网站！");</script>
+       <script>
+          alert("系统检测到您正在使用IE浏览器(IE内核)，我们强烈建议您使用Chrome(内核)浏览器浏览本网站！");
+          window.open("http://10.9.52.233/experiencebase/content.php?pid=183"); 
+        </script>
 <?php }?>
 
 <script>
@@ -64,10 +67,10 @@
   <!-- <div id="slide-container"> -->
     <div id="slippry">
       <div>
-        <a href="content.php?pid=185"><img src="<?php echo IMG_FILE_PATH.'/others/slide1.jpg'?>" alt=""></a>
+        <a href="about.php"><img src="<?php echo IMG_FILE_PATH.'/others/slide2.jpg'?>" alt=""></a>
       </div>
       <div>
-      <a href="about.php"><img src="<?php echo IMG_FILE_PATH.'/others/slide2.jpg'?>" alt=""></a>
+        <a href="content.php?pid=185"><img src="<?php echo IMG_FILE_PATH.'/others/slide1.jpg'?>" alt=""></a>
       </div>
     </div>
   <!-- </div> -->
