@@ -69,9 +69,6 @@
       <div>
         <a href="about.php"><img src="<?php echo IMG_FILE_PATH.'/others/slide2.jpg'?>" alt=""></a>
       </div>
-      <div>
-        <a href="content.php?pid=185"><img src="<?php echo IMG_FILE_PATH.'/others/slide1.jpg'?>" alt=""></a>
-      </div>
     </div>
   <!-- </div> -->
 
